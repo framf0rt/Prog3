@@ -1,5 +1,6 @@
 #ifndef SPRITE_H
 #define SPRITE_H
+#include <string>
 class Sprite
 {
 public:
@@ -7,6 +8,8 @@ public:
 
 
 	~Sprite();
+private:
+	std::string s;
 };
 #endif
 
