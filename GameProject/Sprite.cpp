@@ -17,4 +17,4 @@ Sprite::~Sprite()
 {
 }
 
-string s = "hej";
+
