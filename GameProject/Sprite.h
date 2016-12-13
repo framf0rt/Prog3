@@ -10,6 +10,8 @@ public:
 	~Sprite();
 private:
 	std::string s;
+
+
 };
 #endif
 
