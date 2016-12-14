@@ -7,17 +7,19 @@ namespace engine {
 	class Sprite
 	{
 	public:
-		Sprite(const SDL_Rect& r, std::string path);
 		SDL_Rect getRect() const { return rect; }
 		void draw();
-
+		virtual void keyDown(const SDL_Event& eve) {};
+		virtual void tick() {};
 		~Sprite();
-		
-	private:
+		Sprite(const SDL_Rect& r, std::string path);
+	protected:
 		SDL_Rect rect;
+	private:
+		
 		SDL_Texture* texture;
-
-
+		Sprite(const Sprite&) = delete;
+		const Sprite& operator=(const Sprite&) = delete;
 	};
 }
 #endif

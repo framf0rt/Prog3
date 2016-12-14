@@ -3,9 +3,11 @@
 #include "GameEngine.h"
 #include <SDL.h>
 #include <vector>
-#include "Sprite.h"
+#include "SpritePlayer.h"
 #include <SDL_image.h>
 using namespace std;
+
+#define FPS 60
 
 namespace engine {
 	//void GameEngine::addSprite(Sprite* sprite) {
@@ -13,20 +15,42 @@ namespace engine {
 	//}
 	
 	void GameEngine::run() {
-		SDL_RenderClear(getRen());
-		//SDL_Texture* text = IMG_LoadTexture(ren, "c:/Prog3/assets/Sprites/Player.png");
+		bool running = true;
 		
-		Sprite* s = new Sprite({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/Player.png");
-		
-		// yvghj
-		s->draw();
-		//SDL_RenderCopy(ren, text, NULL, NULL);
-		SDL_RenderPresent(getRen());
 
-		SDL_Delay(5000);
+		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/Player.png");
 
-		//SDL_DestroyTexture(text);
+		const int TIDPERVARV = 1000 / FPS;
+		while (running) {
+			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
+			s->tick();
+			SDL_Event eve;
+			while (SDL_PollEvent(&eve)) {
+				switch (eve.type)
+				{
+				case SDL_KEYDOWN:
+					s->keyDown(eve);
+					break;
+				case SDL_QUIT:
+					running = false;
+					break;
+				default:
+					break;
+				}
+			
+			}
+
+			SDL_RenderClear(getRen());
+			s->draw();
+			SDL_RenderPresent(getRen());
+
 		
+			int delay = nextTick - SDL_GetTicks();
+			if (delay > 0)
+				SDL_Delay(delay);
+
+		}
+
 	}
 	
 
