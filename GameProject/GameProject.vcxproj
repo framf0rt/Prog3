@@ -150,12 +150,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h" />
-    <ClInclude Include="Main.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
