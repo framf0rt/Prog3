@@ -5,6 +5,8 @@
 #include <vector>
 #include "SpritePlayer.h"
 #include <SDL_image.h>
+#include "SpriteEnemy.h"
+#include <iostream>
 using namespace std;
 
 #define FPS 120
@@ -17,13 +19,16 @@ namespace engine {
 	void GameEngine::run() {
 		bool running = true;
 		
+		SpriteEnemy* se = SpriteEnemy::getInstance({ 200,200, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png", 20);
+		cout << se->getHp() << endl;
 
 		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/Player.png");
+		
 
 		const int TIDPERVARV = 1000 / FPS;
 		while (running) {
 			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
-			s->tick();
+			
 			SDL_Event eve;
 			while (SDL_PollEvent(&eve)) {
 				switch (eve.type)
@@ -43,9 +48,12 @@ namespace engine {
 				}
 			
 			}
-
+			s->tick();
+			
 			SDL_RenderClear(getRen());
+			
 			s->draw();
+			se->draw();
 			SDL_RenderPresent(getRen());
 
 		

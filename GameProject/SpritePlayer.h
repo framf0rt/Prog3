@@ -1,10 +1,11 @@
 #ifndef SPRITEPLAYER_H
 #define SPRITEPLAYER_H
 #include "Sprite.h"
+#include "SpriteMovable.h"
 
 namespace engine {
 	class SpritePlayer :
-		public Sprite
+		public SpriteMovable
 	{
 
 	public:
@@ -16,16 +17,18 @@ namespace engine {
 	protected:
 		SpritePlayer(const SDL_Rect& r, std::string path);
 	private:
-		void deltaTime();
+		//void deltaTime();
 		float dtJump();
 		Uint32 timeOfJump;
 		const int JUMP_SPEED = 300;
-		long last;
-		float dt;
+		/*long last;
+		float dt;*/
 		bool jumped;
 		int direction;
 		const int MOVEMENT_SPEED = 150;
 		bool moving;
+		Uint32 tKeyDownRight;
+		Uint32 tKeyDownLeft;
 	
 
 	};
