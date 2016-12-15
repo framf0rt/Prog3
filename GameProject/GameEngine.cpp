@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 using namespace std;
 
-#define FPS 60
+#define FPS 120
 
 namespace engine {
 	//void GameEngine::addSprite(Sprite* sprite) {
@@ -29,9 +29,13 @@ namespace engine {
 				switch (eve.type)
 				{
 				case SDL_KEYDOWN:
-					s->keyDown(eve);
+					s->move(eve);
+					break;
+				case SDL_KEYUP:
+					s->move(eve);
 					break;
 				case SDL_QUIT:
+
 					running = false;
 					break;
 				default:

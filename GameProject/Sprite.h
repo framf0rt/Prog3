@@ -13,7 +13,9 @@ namespace engine {
 		virtual void tick() {};
 		~Sprite();
 		Sprite(const SDL_Rect& r, std::string path);
+		virtual void move(const SDL_Event& eve) {};
 	protected:
+		
 		SDL_Rect rect;
 	private:
 		
