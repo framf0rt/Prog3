@@ -6,7 +6,7 @@ namespace engine {
 		public Sprite
 	{
 	public:
-		
+		virtual void tick() {};
 		~SpriteMovable();
 		
 	protected:

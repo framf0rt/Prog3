@@ -19,11 +19,11 @@ namespace engine {
 	void GameEngine::run() {
 		bool running = true;
 		
-		SpriteEnemy* se = SpriteEnemy::getInstance({ 200,200, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png", 20);
-		cout << se->getHp() << endl;
+		
 
 		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/Player.png");
-		
+		SpriteEnemy* se = SpriteEnemy::getInstance({ 200,200, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png", 20, s);
+		cout << se->getHp() << endl;
 
 		const int TIDPERVARV = 1000 / FPS;
 		while (running) {
@@ -49,6 +49,7 @@ namespace engine {
 			
 			}
 			s->tick();
+			se->tick();
 			
 			SDL_RenderClear(getRen());
 			
@@ -71,7 +72,7 @@ namespace engine {
 	GameEngine::GameEngine()
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
-		win = SDL_CreateWindow("GameEngine", 100, 100, 500, 500, 0);
+		win = SDL_CreateWindow("GameEngine", 100, 100, 1000, 1000, 0);
 		ren = SDL_CreateRenderer(win, -1, 0);
 	}
 

@@ -22,6 +22,8 @@ namespace engine {
 	private:
 		
 		SDL_Texture* texture;
+
+		
 		Sprite(const Sprite&) = delete;
 		const Sprite& operator=(const Sprite&) = delete;
 	};

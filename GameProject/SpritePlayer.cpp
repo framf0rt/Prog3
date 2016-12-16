@@ -95,10 +95,11 @@ namespace engine {
 		
 	}
 	void SpritePlayer::tick() {
+		deltaTime();
 		if (moving) {
 			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
 		}
-		deltaTime();
+		
 		if (jumped) {
 			//std::cout << "hoppar" << std::endl;
 			rect.y -= (dt * JUMP_SPEED - (dtJump() * 10));
