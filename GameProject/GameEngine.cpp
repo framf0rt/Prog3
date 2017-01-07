@@ -6,6 +6,7 @@
 #include "SpritePlayer.h"
 #include <SDL_image.h>
 #include "SpriteEnemy.h"
+#include "SpriteStationary.h"
 #include <iostream>
 using namespace std;
 
@@ -23,6 +24,7 @@ namespace engine {
 
 		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/Player.png");
 		SpriteEnemy* se = SpriteEnemy::getInstance({ 200,200, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png", 20, s);
+		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,100,100 }, "c:/Prog3/assets/Sprites/GrassSprite.png");
 		cout << se->getHp() << endl;
 
 		const int TIDPERVARV = 1000 / FPS;
@@ -55,8 +57,50 @@ namespace engine {
 			
 			s->draw();
 			se->draw();
+			sg->draw();
 			SDL_RenderPresent(getRen());
 
+
+			//COLLISION START 
+			SDL_Rect *A = &(s->getRect());
+			SDL_Rect *B = &sg->getRect();
+			SDL_Rect result = { 0,0,0,0 };
+			SDL_Rect *r = &(result);
+
+
+			if (SDL_HasIntersection(A, B)) {
+
+				SDL_UnionRect(A, B, r);
+				if ((result.x > 25) && (result.y > 25)) {
+					if ((A->y) < (B->y)) { 
+
+						// OM DEN ÄR ÖVER PLAYER SKA DET INTE RÄKNAS SOM MARK
+						// DO SOMETHING ON RECT COLLISION
+					s->grounded(); // Grounded för att stoppa jump
+					cout << "Träffa" << endl;
+					}
+				
+				}
+				else {
+					int y = 0;
+					for (int x = 0; x < result.x + 1; x++) {
+						for (; y < result.y + 1; y++) {
+							int alphaS = s->getAlphaXY(x, y);
+							int alphaT = se->getAlphaXY(x, y);
+							if (alphaS > 0 && alphaT > 0) {
+								// DO SOMETHING ON PER PIXEL COLLISION
+								//s->ground();
+								break;
+							}
+						}
+					}
+				}
+			}
+			else {
+				cout << "FALL" << endl;
+				s->ungrounded();
+			}
+			//COLLISION END
 		
 			int delay = nextTick - SDL_GetTicks();
 			if (delay > 0)

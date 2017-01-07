@@ -10,6 +10,8 @@ namespace engine {
 
 	public:
 		static SpritePlayer* getInstance(const SDL_Rect& r, std::string t);
+		void grounded();
+		void ungrounded();
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
 		void tick();
@@ -17,6 +19,7 @@ namespace engine {
 	protected:
 		SpritePlayer(const SDL_Rect& r, std::string path);
 	private:
+
 		//void deltaTime();
 		float dtJump();
 		Uint32 timeOfJump;

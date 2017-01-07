@@ -8,6 +8,7 @@ namespace engine {
 	{
 	public:
 		SDL_Rect getRect() const { return rect; }
+		int getAlphaXY(int x, int y);
 		void draw();
 		virtual void keyDown(const SDL_Event& eve) {};
 		virtual void tick() {};
@@ -22,8 +23,7 @@ namespace engine {
 	private:
 		
 		SDL_Texture* texture;
-
-		
+		SDL_Surface* surface;
 		Sprite(const Sprite&) = delete;
 		const Sprite& operator=(const Sprite&) = delete;
 	};

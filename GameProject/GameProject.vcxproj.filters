@@ -30,6 +30,9 @@
     <ClInclude Include="SpriteMovable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteStationary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SpriteMovable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteStationary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

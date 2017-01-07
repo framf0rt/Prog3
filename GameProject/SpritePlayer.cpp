@@ -107,6 +107,14 @@ namespace engine {
 		
 	}
 
+	void SpritePlayer::grounded() {
+		jumped = false;
+	}
+
+	void SpritePlayer::ungrounded() {
+		jumped = true;
+	}
+
 
 	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path):SpriteMovable(r,path)
 	{
