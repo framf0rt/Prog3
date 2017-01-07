@@ -1,4 +1,5 @@
 #include "SpritePlayer.h"
+#include <SDL_image.h>
 #include <SDL.h>
 #include <iostream>
 
@@ -8,8 +9,8 @@
 namespace engine {
 
 
-	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path) {
-		return new SpritePlayer(r, path);
+	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving) {
+		return new SpritePlayer(r, path, pathMoving);
 	}
 
 	//void SpritePlayer::deltaTime() {
@@ -98,11 +99,16 @@ namespace engine {
 		deltaTime();
 		if (moving) {
 			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
+			animation(*textureMoving);
+		}
+		else {
+			animation(*textureStationary);
 		}
 		
 		if (jumped) {
 			//std::cout << "hoppar" << std::endl;
 			rect.y -= (dt * JUMP_SPEED - (dtJump() * 10));
+			animation(*textureMoving);
 		}
 		
 	}
@@ -116,9 +122,10 @@ namespace engine {
 	}
 
 
-	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path):SpriteMovable(r,path)
+	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving):SpriteMovable(r,path)
 	{
-
+	textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
+	textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
 	}
 
 

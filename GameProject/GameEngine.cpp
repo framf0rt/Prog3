@@ -22,9 +22,10 @@ namespace engine {
 		
 		
 
-		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/Player.png");
+		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png");
 		SpriteEnemy* se = SpriteEnemy::getInstance({ 200,200, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png", 20, s);
 		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,100,100 }, "c:/Prog3/assets/Sprites/GrassSprite.png");
+		SpriteStationary* sg2 = SpriteStationary::getInstance({ 500,500,100,100 }, "c:/Prog3/assets/Sprites/GrassSprite.png");
 		cout << se->getHp() << endl;
 
 		const int TIDPERVARV = 1000 / FPS;
@@ -63,21 +64,18 @@ namespace engine {
 
 			//COLLISION START 
 			SDL_Rect *A = &(s->getRect());
-			SDL_Rect *B = &sg->getRect();
+			SDL_Rect *B = &(sg->getRect());
 			SDL_Rect result = { 0,0,0,0 };
 			SDL_Rect *r = &(result);
 
 
 			if (SDL_HasIntersection(A, B)) {
 
-				SDL_UnionRect(A, B, r);
-				if ((result.x > 25) && (result.y > 25)) {
-					if ((A->y) < (B->y)) { 
-
-						// OM DEN ÄR ÖVER PLAYER SKA DET INTE RÄKNAS SOM MARK
-						// DO SOMETHING ON RECT COLLISION
+				SDL_UnionRect(A, B, r); 
+				if ((result.x > 10) && (result.y > 10)) {
+					if ((A->y + (A->h - 4)) < (B->y)) { // Höjden på A måste tas bort för att översta vänstra hörnet räknas. 
+														//-4 För lösa problemet med att UnionRect måste vara större än 1
 					s->grounded(); // Grounded för att stoppa jump
-					cout << "Träffa" << endl;
 					}
 				
 				}
@@ -97,8 +95,8 @@ namespace engine {
 				}
 			}
 			else {
-				cout << "FALL" << endl;
-				s->ungrounded();
+			//	cout << "FALL" << endl;
+				s->ungrounded(); // Startar fall
 			}
 			//COLLISION END
 		

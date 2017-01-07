@@ -33,6 +33,10 @@ namespace engine {
 		}
 	}
 
+	void Sprite::animation(SDL_Texture &anitexture) {
+		texture = &(anitexture);
+
+	}
 
 	Sprite::~Sprite()
 	{

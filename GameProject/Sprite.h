@@ -2,6 +2,7 @@
 #define SPRITE_H
 #include <SDL.h>
 #include <string>
+#include <SDL_image.h>
 #include "GameEngine.h"
 namespace engine {
 	class Sprite
@@ -18,7 +19,8 @@ namespace engine {
 		~Sprite();
 		Sprite(const SDL_Rect& r, std::string path);
 		virtual void move(const SDL_Event& eve) {};
-		
+		void animation(SDL_Texture &anitexture);
+		SDL_Texture* getTexture() const { return texture; }
 		SDL_Rect rect;
 	private:
 		

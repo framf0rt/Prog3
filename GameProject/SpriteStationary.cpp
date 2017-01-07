@@ -14,4 +14,6 @@ namespace engine {
 	SpriteStationary::~SpriteStationary()
 	{
 	}
+
+
 }

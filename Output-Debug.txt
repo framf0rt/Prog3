@@ -1,0 +1,95 @@
+﻿'GameProject.exe' (Win32): Loaded 'C:\Users\Gaming-PC-2\Source\Repos\Prog3\Debug\GameProject.exe'. Symbols loaded.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ntdll.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\kernel32.dll'
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\KernelBase.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Program Files\Bitdefender\Bitdefender 2017\active virus control\Avc3_00099_004\avcuf32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\SDL2-2.0.5\lib\x86\SDL2.dll'. Module was built without symbols.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\advapi32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcrt.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\sechost.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\rpcrt4.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\sspicli.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\cryptbase.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\bcryptprimitives.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\gdi32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\gdi32full.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\user32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\win32u.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\imm32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ole32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\combase.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ucrtbase.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\oleaut32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcp_win.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\shell32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\cfgmgr32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\windows.storage.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\powrprof.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\shlwapi.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\kernel.appcore.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\SHCore.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\profapi.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\SDL2_image-2.0.1\lib\x86\SDL2_image.dll'. Module was built without symbols.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msvcp140d.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\vcruntime140d.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ucrtbased.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\version.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winmm.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\winmmbase.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\uxtheme.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dwmapi.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\clbcatq.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\XAudio2_7.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\MMDevAPI.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\devobj.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\propsys.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\dinput8.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\hid.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\setupapi.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\wintrust.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msasn1.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\crypt32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\XInput1_4.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\msctf.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\d3d9.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\aticfx32.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\atiu9pag.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\atiu9pag.dll'
+'GameProject.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\atiu9pag.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\atiumdag.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\atiumdva.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\amdihk32.dll'. Module was built without symbols.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\detoured.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Loaded 'C:\Windows\SysWOW64\ResourcePolicyClient.dll'. Cannot find or open the PDB file.
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\ResourcePolicyClient.dll'
+'GameProject.exe' (Win32): Loaded 'C:\SDL2_image-2.0.1\lib\x86\libpng16-16.dll'. Module was built without symbols.
+'GameProject.exe' (Win32): Loaded 'C:\SDL2_image-2.0.1\lib\x86\zlib1.dll'. Module was built without symbols.
+The thread 0x1b5c has exited with code 0 (0x0).
+The thread 0x24fc has exited with code 0 (0x0).
+The thread 0x11b4 has exited with code 0 (0x0).
+The thread 0xa5c has exited with code 0 (0x0).
+The thread 0x27cc has exited with code 0 (0x0).
+The thread 0x7c4 has exited with code 0 (0x0).
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\detoured.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\amdihk32.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\atiumdva.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\atiumdag.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\atiu9pag.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\System32\DriverStore\FileRepository\c0309270.inf_amd64_47c09dd18e1ee4c5\aticfx32.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\d3d9.dll'
+The thread 0x27c4 has exited with code 0 (0x0).
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\XInput1_4.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\msasn1.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\crypt32.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\wintrust.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\setupapi.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\hid.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\dinput8.dll'
+'GameProject.exe' (Win32): Unloaded 'C:\Windows\SysWOW64\XAudio2_7.dll'
+The thread 0x14a4 has exited with code 0 (0x0).
+The thread 0x1924 has exited with code 0 (0x0).
+The thread 0x287c has exited with code 0 (0x0).
+The thread 0x1c10 has exited with code 0 (0x0).
+The program '[5408] GameProject.exe' has exited with code 0 (0x0).

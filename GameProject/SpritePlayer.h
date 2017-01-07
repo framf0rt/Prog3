@@ -9,7 +9,7 @@ namespace engine {
 	{
 
 	public:
-		static SpritePlayer* getInstance(const SDL_Rect& r, std::string t);
+		static SpritePlayer* getInstance(const SDL_Rect& r, std::string t, std::string pathMoving);
 		void grounded();
 		void ungrounded();
 		~SpritePlayer();
@@ -17,7 +17,7 @@ namespace engine {
 		void tick();
 		void move(const SDL_Event& eve);
 	protected:
-		SpritePlayer(const SDL_Rect& r, std::string path);
+		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving);
 	private:
 
 		//void deltaTime();
@@ -32,7 +32,8 @@ namespace engine {
 		bool moving;
 		Uint32 tKeyDownRight;
 		Uint32 tKeyDownLeft;
-	
+		SDL_Texture* textureMoving;
+		SDL_Texture* textureStationary;
 
 	};
 }

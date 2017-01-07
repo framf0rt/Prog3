@@ -14,6 +14,7 @@ namespace engine {
 		void deltaTime();
 		float dt;
 		long last = SDL_GetTicks();
+		
 	};
 }
 #endif
