@@ -13,8 +13,10 @@ using namespace std;
 #define FPS 120
 
 namespace engine {
+
+
 	//void GameEngine::addSprite(Sprite* sprite) {
-		//sprites.push_back(sprite);
+	//	sprites.push_back(sprite);
 	//}
 	
 	void GameEngine::run() {
@@ -25,6 +27,7 @@ namespace engine {
 		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png");
 		SpriteEnemy* se = SpriteEnemy::getInstance({ 200,200, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png", 20, s);
 		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,100,100 }, "c:/Prog3/assets/Sprites/GrassSprite.png");
+	
 		cout << se->getHp() << endl;
 
 		const int TIDPERVARV = 1000 / FPS;
@@ -58,7 +61,11 @@ namespace engine {
 			s->draw();
 			se->draw();
 			sg->draw();
+
+			
 			SDL_RenderPresent(getRen());
+
+
 
 
 			//COLLISION START 

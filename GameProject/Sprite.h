@@ -13,7 +13,7 @@ namespace engine {
 		void draw();
 		virtual void keyDown(const SDL_Event& eve) {};
 		virtual void tick() {};
-
+		
 	protected:
 		
 		~Sprite();
@@ -28,6 +28,7 @@ namespace engine {
 		SDL_Surface* surface;
 		Sprite(const Sprite&) = delete;
 		const Sprite& operator=(const Sprite&) = delete;
+		
 	};
 }
 #endif
