@@ -33,6 +33,8 @@ namespace engine {
 	void SpritePlayer::keyDown(const SDL_Event& eve) {
 		
 	}
+
+	
 	void SpritePlayer::move(const SDL_Event& eve) {
 		switch (eve.type)
 		{
@@ -97,18 +99,22 @@ namespace engine {
 	}
 	void SpritePlayer::tick() {
 		deltaTime();
-		if (moving) {
-			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
-			animation(*textureMoving);
+
+		animationCount += 3;
+		if (animationCount > 100) {
+			animation(*textureMoving); // Animation, byter texture
+			animationCount = 0;
 		}
-		else {
-			animation(*textureStationary);
+		if (animationCount > 50 && animationCount < 100) {
+			animation(*textureStationary); // Animation, byter texture
 		}
 		
+
+		if (moving) {
+			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
+		}
 		if (jumped) {
-			//std::cout << "hoppar" << std::endl;
 			rect.y -= (dt * JUMP_SPEED - (dtJump() * 10));
-			animation(*textureMoving);
 		}
 		
 	}

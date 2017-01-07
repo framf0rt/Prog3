@@ -17,6 +17,7 @@ namespace engine {
 	{
 		surface = IMG_Load(path.c_str());
 		texture = IMG_LoadTexture(ge.getRen(), path.c_str());
+		
 		if (texture == nullptr) {
 			cout << "Bild hittas inte" << endl;
 		}
@@ -35,7 +36,7 @@ namespace engine {
 
 	void Sprite::animation(SDL_Texture &anitexture) {
 		texture = &(anitexture);
-
+		
 	}
 
 	Sprite::~Sprite()

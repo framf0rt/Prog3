@@ -5,14 +5,19 @@
 
 namespace engine {
 
-	SpriteEnemy::SpriteEnemy(const SDL_Rect& r, std::string path, int hp, SpritePlayer* p) :SpriteMovable(r, path)
+	SpriteEnemy::SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, SpritePlayer* p) :SpriteMovable(r, path)
 	{
 		this->hp = hp;
 		this->player = p;
+		textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
+		textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
 		
 	}
 	void SpriteEnemy::tick() {
 		deltaTime();
+
+
+
 		if (player != nullptr) {
 			SDL_Rect pr = player->getRect();
 			int px = pr.x + (pr.w/2);
@@ -25,13 +30,14 @@ namespace engine {
 
 		}
 	}
-	SpriteEnemy* SpriteEnemy::getInstance(const SDL_Rect& r, std::string path, int hp, SpritePlayer* p) {
-		return new SpriteEnemy(r, path, hp, p);
+	SpriteEnemy* SpriteEnemy::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, SpritePlayer* p) {
+		return new SpriteEnemy(r, path, pathMoving, hp, p);
 	}
 	int SpriteEnemy::getHp() {
 		return hp;
 	}
 	SpriteEnemy::~SpriteEnemy()
 	{
+
 	}
 }

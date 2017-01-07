@@ -8,13 +8,13 @@ namespace engine {
 		public SpriteMovable
 	{
 	public:
-		static SpriteEnemy* getInstance(const SDL_Rect& r, std::string path, int hp, SpritePlayer* p);
+		static SpriteEnemy* getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, SpritePlayer* p);
 		~SpriteEnemy();
 		int getHp();
 		void tick();
 
 	protected:
-		SpriteEnemy(const SDL_Rect& r, std::string path, int hp, SpritePlayer* p);
+		SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, SpritePlayer* p);
 
 	private:
 		int hp;

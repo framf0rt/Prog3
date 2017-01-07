@@ -7,6 +7,7 @@ namespace engine {
 	{
 	public:
 		virtual void tick() {};
+		void draw();
 		~SpriteMovable();
 		
 	protected:
@@ -14,7 +15,10 @@ namespace engine {
 		void deltaTime();
 		float dt;
 		long last = SDL_GetTicks();
-		
+		int direction;
+		int animationCount;
+		SDL_Texture* textureMoving;
+		SDL_Texture* textureStationary;
 	};
 }
 #endif

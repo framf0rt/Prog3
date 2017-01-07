@@ -13,6 +13,20 @@ namespace engine {
 		}
 	}
 
+	
+	void SpriteMovable ::draw() {
+		
+
+		SDL_Rect *rect = &getRect();
+		SDL_Texture *texture = getTexture();
+		if (direction == 1) {
+			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, rect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+		else {
+			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
+		}
+	}
+
 	SpriteMovable::~SpriteMovable()
 	{
 	}

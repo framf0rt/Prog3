@@ -15,6 +15,7 @@ namespace engine {
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
 		void tick();
+		
 		void move(const SDL_Event& eve);
 	protected:
 		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving);
@@ -27,13 +28,12 @@ namespace engine {
 		/*long last;
 		float dt;*/
 		bool jumped;
-		int direction;
+		
 		const int MOVEMENT_SPEED = 150;
 		bool moving;
 		Uint32 tKeyDownRight;
 		Uint32 tKeyDownLeft;
-		SDL_Texture* textureMoving;
-		SDL_Texture* textureStationary;
+		
 
 	};
 }
