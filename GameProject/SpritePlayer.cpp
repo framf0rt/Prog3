@@ -109,6 +109,7 @@ namespace engine {
 			animation(*textureStationary); // Animation, byter texture
 		}
 		
+		
 
 		if (moving) {
 			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
@@ -125,6 +126,19 @@ namespace engine {
 
 	void SpritePlayer::ungrounded() {
 		jumped = true;
+	}
+
+	void SpritePlayer::onCollision(Sprite* spriteA, Sprite* spriteB) {
+
+		//Kollar om det är en spelare och spritestationary som kolliderat
+		SpriteStationary *ground = dynamic_cast<SpriteStationary*>(spriteB);
+		if (ground != NULL)
+		{
+			grounded();
+		}
+
+
+
 	}
 
 

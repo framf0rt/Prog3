@@ -80,8 +80,9 @@ namespace engine {
 				SDL_UnionRect(A, B, r); 
 				if ((result.x > 10) && (result.y > 10)) {
 					if ((A->y + (A->h - 4)) < (B->y)) { // Höjden på A måste tas bort för att översta vänstra hörnet räknas. 
-														//-4 För lösa problemet med att UnionRect måste vara större än 1
-					s->grounded(); // Grounded för att stoppa jump
+						s->onCollision(s,sg);
+						
+											
 					}
 				
 				}

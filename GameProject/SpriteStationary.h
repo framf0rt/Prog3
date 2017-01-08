@@ -10,11 +10,10 @@ namespace engine {
 	public:
 		static SpriteStationary* getInstance(const SDL_Rect& r, std::string t);
 		~SpriteStationary();
-		bool getCollision() { return collision; }
 		
 	protected:
 		SpriteStationary(const SDL_Rect& r, std::string path);
-		bool collision;
+		
 	};
 }
 

@@ -39,6 +39,10 @@ namespace engine {
 		
 	}
 
+	void Sprite::onCollision(Sprite* spriteA, Sprite* spriteB) {
+
+	}
+
 	Sprite::~Sprite()
 	{
 	}

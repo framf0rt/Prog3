@@ -2,6 +2,7 @@
 #define SPRITEPLAYER_H
 #include "Sprite.h"
 #include "SpriteMovable.h"
+#include "SpriteStationary.h"
 
 namespace engine {
 	class SpritePlayer :
@@ -12,6 +13,7 @@ namespace engine {
 		static SpritePlayer* getInstance(const SDL_Rect& r, std::string t, std::string pathMoving);
 		void grounded();
 		void ungrounded();
+		void onCollision(Sprite* spriteA, Sprite* spriteB);
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
 		void tick();

@@ -11,9 +11,9 @@ namespace engine {
 		SDL_Rect getRect() const { return rect; }
 		int getAlphaXY(int x, int y);
 		void draw();
+		void onCollision(Sprite* spriteA, Sprite* spriteB);
 		virtual void keyDown(const SDL_Event& eve) {};
 		virtual void tick() {};
-		
 	protected:
 		
 		~Sprite();

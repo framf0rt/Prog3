@@ -11,7 +11,7 @@ namespace engine {
 	{
 	public:
 		void run();
-		//void addSprite(Sprite*);
+//		void addSprite(Sprite*);
 		SDL_Renderer* getRen() const { return ren; }
 		GameEngine();
 		~GameEngine();
