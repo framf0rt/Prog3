@@ -10,7 +10,7 @@ namespace engine {
 	public:
 		static SpriteStationary* getInstance(const SDL_Rect& r, std::string t);
 		~SpriteStationary();
-		
+		void draw();
 	protected:
 		SpriteStationary(const SDL_Rect& r, std::string path);
 		

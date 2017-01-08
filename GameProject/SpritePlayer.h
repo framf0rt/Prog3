@@ -4,6 +4,7 @@
 #include "SpriteMovable.h"
 #include "SpriteStationary.h"
 
+
 namespace engine {
 	class SpritePlayer :
 		public SpriteMovable
@@ -22,7 +23,6 @@ namespace engine {
 	protected:
 		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving);
 	private:
-
 		//void deltaTime();
 		float dtJump();
 		Uint32 timeOfJump;

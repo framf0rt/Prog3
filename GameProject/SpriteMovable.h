@@ -16,6 +16,8 @@ namespace engine {
 		float dt;
 		long last = SDL_GetTicks();
 		int direction;
+		
+		int rotation;
 		int animationCount;
 		SDL_Texture* textureMoving;
 		SDL_Texture* textureStationary;

@@ -1,4 +1,6 @@
 #include "SpriteMovable.h"
+#include <iostream>
+#include <SDL.h>
 
 
 namespace engine {
@@ -14,16 +16,16 @@ namespace engine {
 	}
 
 	
-	void SpriteMovable ::draw() {
-		
-
-		SDL_Rect *rect = &getRect();
+	void SpriteMovable::draw() {
+		SDL_Rect *dstRect = &getRect();
 		SDL_Texture *texture = getTexture();
+
 		if (direction == 1) {
-			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, rect, 0, nullptr, SDL_FLIP_HORIZONTAL);
+			std::cout << rotation << std::endl;
+			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, dstRect, rotation, nullptr, SDL_FLIP_NONE);
 		}
 		else {
-			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, dstRect, rotation, nullptr, SDL_FLIP_NONE);
 		}
 	}
 

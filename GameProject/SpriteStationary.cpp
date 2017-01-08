@@ -10,6 +10,13 @@ namespace engine {
 	{
 	}
 
+	void SpriteStationary::draw() {
+	SDL_Rect *rect = &getRect();
+	SDL_Texture *texture = getTexture();
+	SDL_RenderCopyEx(ge.getRen(), texture, nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
+		
+	}
+
 
 	SpriteStationary::~SpriteStationary()
 	{

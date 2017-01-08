@@ -25,7 +25,7 @@ namespace engine {
 			//float distance = sqrt(((rect.x+(rect.w/2)) - px) ^ 2 + ((rect.y+(rect.h/2)) - pr.y) ^ 2);
 			float distance =  sqrt(pow(((rect.x + rect.w / 2) - px), 2)+ pow(((rect.y + rect.h / 2) - py), 2));
 			if (distance < 100) {
-				std::cout << "rör sig mot target" << std::endl;
+			//	std::cout << "rör sig mot target" << std::endl;
 			}
 
 		}

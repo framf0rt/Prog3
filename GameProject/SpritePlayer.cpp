@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 #include <SDL.h>
 #include <iostream>
-
+#include "SpriteEnemy.h"
 
 
 
@@ -99,20 +99,36 @@ namespace engine {
 	}
 	void SpritePlayer::tick() {
 		deltaTime();
-
-		animationCount += 3;
-		if (animationCount > 100) {
-			animation(*textureMoving); // Animation, byter texture
-			animationCount = 0;
-		}
-		if (animationCount > 50 && animationCount < 100) {
-			animation(*textureStationary); // Animation, byter texture
-		}
-		
-		
-
 		if (moving) {
 			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
+
+			if (direction < 1) {
+				if (rotation == 360) {
+					rotation = 0;
+				}
+				else {
+					rotation -= 5;
+				}
+			}
+			else {
+				if (rotation == 360) {
+					rotation = 0;
+				}
+				else {
+					rotation += 5;
+				}
+			}
+			
+			
+
+			//if (animationCount > 100) {
+			//	animation(*textureMoving); // Animation, byter texture
+			//	animationCount = 0;
+			//}
+			//if (animationCount > 50 && animationCount < 100) {
+			//	animation(*textureStationary); // Animation, byter texture
+			//}
+
 		}
 		if (jumped) {
 			rect.y -= (dt * JUMP_SPEED - (dtJump() * 10));
@@ -132,11 +148,17 @@ namespace engine {
 
 		//Kollar om det är en spelare och spritestationary som kolliderat
 		SpriteStationary *ground = dynamic_cast<SpriteStationary*>(spriteB);
+		SpriteEnemy *enemy = dynamic_cast<SpriteEnemy*>(spriteB);
 		if (ground != NULL)
 		{
 			grounded();
+			return;
 		}
 
+		if(enemy != NULL){
+			// What do we do know?
+		std::cout << "Enemy hit" << std::endl;
+		}
 
 
 	}
@@ -147,6 +169,8 @@ namespace engine {
 	textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
 	textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
 	}
+
+	
 
 
 	SpritePlayer::~SpritePlayer()

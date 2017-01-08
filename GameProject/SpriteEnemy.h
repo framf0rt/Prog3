@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "SpriteMovable.h"
 #include "SpritePlayer.h"
+
 namespace engine {
 	class SpriteEnemy :
 		public SpriteMovable
