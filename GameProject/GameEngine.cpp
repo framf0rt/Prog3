@@ -24,10 +24,10 @@ namespace engine {
 		
 		
 
-		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/BallSprite_cut_0.png", "c:/Prog3/assets/Sprites/BallSprite_cut_180.png");
-		SpriteEnemy* se = SpriteEnemy::getInstance({ 200,200, 100, 100 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite.png", 20, s);
-		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite.png");
-		SpriteStationary* sg1 = SpriteStationary::getInstance({ 300,300,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite.png");
+		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png");
+		SpriteEnemy* se = SpriteEnemy::getInstance({ 600,200, 120, 70 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
+		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
+		SpriteStationary* sg1 = SpriteStationary::getInstance({ 300,300,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
 		cout << se->getHp() << endl;
 
 
@@ -64,11 +64,12 @@ namespace engine {
 			// RENDERING START
 			SDL_RenderClear(getRen());
 			for(Sprite *sprite : sprites) {
-				SpriteMovable *p = dynamic_cast<SpriteMovable*>(sprite);
-				if (p != NULL)
+
+				SpriteMovable *movable = dynamic_cast<SpriteMovable*>(sprite);
+				if (movable != NULL)
 				{
-					p->tick();
-					p->draw();
+					movable->tick();
+					movable->draw();
 				}
 				else {
 				sprite->tick();

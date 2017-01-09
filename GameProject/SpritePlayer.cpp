@@ -21,6 +21,10 @@ namespace engine {
 	//	}
 	//}
 
+	void SpritePlayer::draw() {
+		
+	}
+
 	float SpritePlayer::dtJump() {
 		float jdt = 0;
 		Uint32 now = SDL_GetTicks();
@@ -83,6 +87,12 @@ namespace engine {
 			case SDLK_SPACE:
 				timeOfJump = SDL_GetTicks();
 				jumped = true;
+				dropped = false;
+				std::cout << "SPACE" << std::endl;
+				break;
+			case SDLK_DOWN: // Neråt från en platform man står på
+				timeOfJump = SDL_GetTicks();
+				dropped = true;
 				std::cout << "SPACE" << std::endl;
 				break;
 			default:
@@ -130,14 +140,19 @@ namespace engine {
 			//}
 
 		}
-		if (jumped) {
+		if (jumped && (dropped == false)) {
 			rect.y -= (dt * JUMP_SPEED - (dtJump() * 10));
+		}
+
+		if (dropped) {
+			rect.y -= (dt *- JUMP_SPEED - (dtJump() * 10));
 		}
 		
 	}
 
 	void SpritePlayer::grounded() {
 		jumped = false;
+		dropped = false; 
 	}
 
 	void SpritePlayer::ungrounded() {
@@ -168,6 +183,7 @@ namespace engine {
 	{
 	textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
 	textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
+	textureSwap = false;
 	}
 
 	

@@ -19,8 +19,10 @@ namespace engine {
 
 	private:
 		int hp;
-		int direction = 1;
+		int direction = -1;
+		int directionY = -1;
 		int speed;
+		int startY;
 		SpritePlayer* player;
 	};
 }

@@ -20,13 +20,19 @@ namespace engine {
 		SDL_Rect *dstRect = &getRect();
 		SDL_Texture *texture = getTexture();
 
-		if (direction == 1) {
 			std::cout << rotation << std::endl;
-			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, dstRect, rotation, nullptr, SDL_FLIP_NONE);
-		}
-		else {
-			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, dstRect, rotation, nullptr, SDL_FLIP_NONE);
-		}
+			if(textureSwap == true){
+				if (direction == 1) {
+					texture = textureMoving;
+					SDL_RenderCopyEx(ge.getRen(), texture, nullptr, dstRect, rotation, nullptr, SDL_FLIP_HORIZONTAL);
+				}
+				else if(direction == -1){
+					SDL_RenderCopyEx(ge.getRen(), texture, nullptr, dstRect, rotation, nullptr, SDL_FLIP_NONE);
+				}
+			}
+			else {
+					SDL_RenderCopyEx(ge.getRen(), texture, nullptr, dstRect, rotation, nullptr, SDL_FLIP_NONE);
+			}
 	}
 
 	SpriteMovable::~SpriteMovable()

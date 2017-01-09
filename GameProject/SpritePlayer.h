@@ -14,6 +14,7 @@ namespace engine {
 		static SpritePlayer* getInstance(const SDL_Rect& r, std::string t, std::string pathMoving);
 		void grounded();
 		void ungrounded();
+		void draw();
 		void onCollision(Sprite* spriteA, Sprite* spriteB);
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
@@ -30,6 +31,7 @@ namespace engine {
 		/*long last;
 		float dt;*/
 		bool jumped;
+		bool dropped;
 		
 		const int MOVEMENT_SPEED = 150;
 		bool moving;
