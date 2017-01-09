@@ -9,8 +9,8 @@
 namespace engine {
 
 
-	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving) {
-		return new SpritePlayer(r, path, pathMoving);
+	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize) {
+		return new SpritePlayer(r, path, pathMoving, colliderSize);
 	}
 
 	//void SpritePlayer::deltaTime() {
@@ -111,6 +111,7 @@ namespace engine {
 			case SDLK_DOWN: // Neråt från en platform man står på
 				timeOfDrop = SDL_GetTicks();
 				dropped = true;
+				rect.y += 10;
 				//std::cout << "SPACE" << std::endl;
 				break;
 			default:
@@ -163,7 +164,7 @@ namespace engine {
 		}
 
 		if (dropped) {
-			rect.y -= (dt *- JUMP_SPEED - (dtDrop() * 5));
+			rect.y -= (dt *- (JUMP_SPEED) - (dtDrop() * 5));
 		}
 		if (falling) {
 			rect.y -= (dt *-JUMP_SPEED - (dtFall() * 5));
@@ -185,25 +186,39 @@ namespace engine {
 	void SpritePlayer::onCollision(Sprite* spriteA, Sprite* spriteB) {
 
 		//Kollar om det är en spelare och spritestationary som kolliderat
-		SpriteStationary *ground = dynamic_cast<SpriteStationary*>(spriteB);
+		SpriteGround *ground = dynamic_cast<SpriteGround*>(spriteB);
 		SpriteEnemy *enemy = dynamic_cast<SpriteEnemy*>(spriteB);
 		if (ground != NULL)
 		{
-			grounded();
-			return;
+			if (!(jumped && dropped && falling)) {
+				SDL_Rect groundR = ground->getCollider();
+				rect.y = groundR.y - rect.h + 1;
+				grounded();
+				return;
+			}
 		}
 
 		if(enemy != NULL){
 			// What do we do know?
-		std::cout << "Enemy hit" << std::endl;
+			std::cout << "Enemy hit" << std::endl;
 		}
 
 
 	}
 
+	SDL_Rect SpritePlayer::getCollider() {
+		SDL_Rect A = getRect();
+		int size =static_cast<int>(A.w*colliderSize);
+		//std::cout << size << std::endl;
+		int middlePoint = A.w / 2;
+		boxCollider = {A.x + middlePoint-(size/2),A.y + A.h-2,size,2 };
+		return boxCollider;
+	}
 
-	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving):SpriteMovable(r,path)
+
+	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize):SpriteMovable(r,path)
 	{
+	this->colliderSize = colliderSize;
 	textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
 	textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
 	textureSwap = false;

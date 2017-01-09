@@ -7,6 +7,7 @@
 #include <SDL_image.h>
 #include "SpriteEnemy.h"
 #include "SpriteStationary.h"
+#include "SpriteGround.h"
 #include <iostream>
 using namespace std;
 
@@ -24,10 +25,11 @@ namespace engine {
 		
 		
 
-		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 50, 50 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png");
+		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 50, 50 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4);
 		SpriteEnemy* se = SpriteEnemy::getInstance({ 600,200, 60, 35 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
-		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,100,50 }, "c:/Prog3/assets/Sprites/PlankSprite_Cut.png");
-		SpriteStationary* sg1 = SpriteStationary::getInstance({ 200,200,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
+		SpriteGround* sg = SpriteGround::getInstance({ 300,300,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
+		SpriteGround* sg1 = SpriteGround::getInstance({ 100,300,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
+		SpriteGround* sg2 = SpriteGround::getInstance({ 200,500,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
 		//cout << se->getHp() << endl;
 
 
@@ -35,6 +37,8 @@ namespace engine {
 		sprites.push_back(s);
 		sprites.push_back(se);
 		sprites.push_back(sg);
+		sprites.push_back(sg1);
+		sprites.push_back(sg2);
 
 
 		const int TIDPERVARV = 1000 / FPS;
@@ -86,29 +90,63 @@ namespace engine {
 
 			//COLLISION START 
 			for (unsigned i = 0; i < sprites.size(); i++) {
-				Sprite* spriteA = sprites[0];
-				Sprite* spriteB = sprites[2];
-
-				
-				SDL_Rect *A = &(spriteA->getRect());
-				SDL_Rect *B = &(spriteB->getRect());
-				SDL_Rect result = { 0,0,0,0 };
-				SDL_Rect *r = &(result);
-
-
-				if (SDL_HasIntersection(A, B)) {
+				Sprite* spriteA = sprites[i];
+				for (unsigned x = 0; x < sprites.size(); x++) {
+					Sprite* spriteB = sprites[x];
+					SpritePlayer *player = dynamic_cast<SpritePlayer*>(spriteA);
+					SpriteGround *ground = dynamic_cast<SpriteGround*>(spriteB);
+					SpriteEnemy *enemy = dynamic_cast<SpriteEnemy*>(spriteB);
 					
-					SDL_UnionRect(A, B, r);
-					if ((result.w > 5) && (result.h > 5)) {
-						cout << "rektangel collision" << endl;
-						if ((A->y + (A->h - 10)) < (B->y)) { // Höjden på A måste tas bort för att översta vänstra hörnet räknas. 
-							s->onCollision(s, sg);
-							
-						}
 
-					}
+					if (ground != NULL && player != NULL) {
+						SDL_Rect *groundCollider = &(player->getCollider());
+						SDL_Rect *playerCollider = &(ground->getCollider());
+						if (SDL_HasIntersection(playerCollider, groundCollider)) {
+							s->onCollision(spriteA, spriteB);
+							}
+						}
 					else {
-						int y = 0;
+						if (player != NULL) {
+							if (!s->hasJumped() && !s->hasDropped() && !s->isFalling()) {
+								s->ungrounded(); // Startar fall
+							}
+						}
+					}
+					
+					if (enemy != NULL && player != NULL) {
+						cout << "pixel collision" << endl;
+					SDL_Rect *A = &(spriteA->getRect());
+					SDL_Rect *B = &(spriteB->getRect());
+					SDL_Rect result = { 0,0,0,0 };
+					SDL_Rect *r = &(result);
+					int y = 0;
+					for (int x = 0; x < result.x + 1; x++) {
+						for (; y < result.y + 1; y++) {
+							int alphaS = s->getAlphaXY(x, y);
+							int alphaT = sg->getAlphaXY(x, y);
+							if (alphaS > 0 && alphaT > 0) {
+								player->onCollision(player, enemy);
+								cout << "pixel collision" << endl;
+								break;
+								}
+							}
+						}
+					}
+				}
+
+				//if (SDL_HasIntersection(A, B)) {
+				//
+				//	SDL_UnionRect(A, B, r);
+				//	if ((result.w > 5) && (result.h > 5)) {
+				//		//cout << "rektangel collision" << endl;
+				//		
+				//		if ((A->y + (A->h - 10)) < (B->y)) { // Höjden på A måste tas bort för att översta vänstra hörnet räknas. 
+				//		//	s->onCollision(s, sg);
+				//			
+				//		}
+				//	}
+				/*	else {
+						
 						for (int x = 0; x < result.x + 1; x++) {
 							for (; y < result.y + 1; y++) {
 								int alphaS = s->getAlphaXY(x, y);
@@ -122,13 +160,8 @@ namespace engine {
 							}
 						}
 					}
-				}
-				else {
-					if (!s->hasJumped() && !s->hasDropped() && !s->isFalling()) {
-						//	cout << "FALL" << endl;
-						s->ungrounded(); // Startar fall
-					}
-				}
+				}*/
+					
 				//COLLISION END
 
 

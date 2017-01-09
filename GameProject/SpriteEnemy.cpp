@@ -31,10 +31,10 @@ namespace engine {
 		// Movement 
 		rect.x += (int)(ge.getDeltaTime()*150*direction);
 		//std::cout << rect.y << " "<< startY <<std::endl;
-		if (rect.y == startY + 50 ) {
+		if (rect.y >= startY + 50 ) {
 			directionY = 1;
 		} 
-		if (rect.y == startY - 50) {
+		if (rect.y <= startY - 50) {
 			directionY = -1;
 		}
 		if (directionY == -1) {
