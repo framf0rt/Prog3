@@ -24,10 +24,10 @@ namespace engine {
 		
 		
 
-		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 100, 100 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png");
-		SpriteEnemy* se = SpriteEnemy::getInstance({ 600,200, 120, 70 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
-		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
-		SpriteStationary* sg1 = SpriteStationary::getInstance({ 300,300,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
+		SpritePlayer* s = SpritePlayer::getInstance({ 100, 100, 50, 50 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png");
+		SpriteEnemy* se = SpriteEnemy::getInstance({ 600,200, 60, 35 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
+		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,100,50 }, "c:/Prog3/assets/Sprites/PlankSprite_Cut.png");
+		SpriteStationary* sg1 = SpriteStationary::getInstance({ 200,200,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
 		cout << se->getHp() << endl;
 
 

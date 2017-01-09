@@ -8,6 +8,7 @@ namespace engine {
 	SpriteEnemy::SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, SpritePlayer* p) :SpriteMovable(r, path)
 	{
 		startY = rect.y;
+		startX = rect.x;
 		this->hp = hp;
 		this->player = p;
 		textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
@@ -41,6 +42,9 @@ namespace engine {
 		}
 		if (directionY == 1) {
 			rect.y += (int)(dt * 125 * direction);
+		}
+		if (rect.x < - 200) {
+			rect.x = startX;
 		}
 
 

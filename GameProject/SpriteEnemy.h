@@ -23,6 +23,7 @@ namespace engine {
 		int directionY = -1;
 		int speed;
 		int startY;
+		int startX;
 		SpritePlayer* player;
 	};
 }
