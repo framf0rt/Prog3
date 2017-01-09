@@ -12,9 +12,7 @@ namespace engine {
 		
 	protected:
 		SpriteMovable(const SDL_Rect& r, std::string path);
-		void deltaTime();
-		float dt;
-		long last = SDL_GetTicks();
+		
 		int direction;
 		bool textureSwap;
 		int rotation;

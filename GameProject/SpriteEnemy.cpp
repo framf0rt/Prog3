@@ -16,7 +16,7 @@ namespace engine {
 		
 	}
 	void SpriteEnemy::tick() {
-		deltaTime();
+		float dt = ge.getDeltaTime();
 		
 		// Animation
 		animationCount += 3;
@@ -29,8 +29,8 @@ namespace engine {
 		}
 
 		// Movement 
-		rect.x += (int)(dt*150*direction);
-		std::cout << rect.y << " "<< startY <<std::endl;
+		rect.x += (int)(ge.getDeltaTime()*150*direction);
+		//std::cout << rect.y << " "<< startY <<std::endl;
 		if (rect.y == startY + 50 ) {
 			directionY = 1;
 		} 

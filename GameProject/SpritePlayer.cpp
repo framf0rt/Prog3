@@ -33,6 +33,22 @@ namespace engine {
 		}
 		return jdt;
 	}
+	float SpritePlayer::dtFall() {
+		float fdt = 0;
+		Uint32 now = SDL_GetTicks();
+		if (now > timeOfFall) {
+			fdt = ((float)(now - timeOfFall)) / 1000;
+		}
+		return fdt;
+	}
+	float SpritePlayer::dtDrop() {
+		float ddt = 0;
+		Uint32 now = SDL_GetTicks();
+		if (now > timeOfDrop) {
+			ddt = ((float)(now - timeOfDrop)) / 1000;
+		}
+		return ddt;
+	}
 
 	void SpritePlayer::keyDown(const SDL_Event& eve) {
 		
@@ -47,14 +63,14 @@ namespace engine {
 			case SDLK_LEFT:
 				if (SDL_GetTicks() - tKeyDownRight > 60) {
 					moving = false;
-					std::cout << "left upp" << std::endl;
-					std::cout << SDL_GetTicks() << std::endl;
+					//std::cout << "left upp" << std::endl;
+					//std::cout << SDL_GetTicks() << std::endl;
 				}
 				break;
 			case SDLK_RIGHT:
 				if (SDL_GetTicks() - tKeyDownLeft > 60) {
-					std::cout << "right up" << std::endl;
-					std::cout << SDL_GetTicks() << std::endl;
+					//std::cout << "right up" << std::endl;
+					//std::cout << SDL_GetTicks() << std::endl;
 					moving = false;
 				}
 				break;
@@ -72,8 +88,8 @@ namespace engine {
 				direction = 1;
 				moving = true;
 				tKeyDownRight = SDL_GetTicks();
-				std::cout << "Right" << std::endl;
-				std::cout << SDL_GetTicks() << std::endl;
+				//std::cout << "Right" << std::endl;
+				//std::cout << SDL_GetTicks() << std::endl;
 
 				break;
 			case SDLK_LEFT:
@@ -81,19 +97,21 @@ namespace engine {
 				tKeyDownLeft = SDL_GetTicks();
 				moving = true;
 
-				std::cout << "LEFT" << std::endl;
-				std::cout << SDL_GetTicks() << std::endl;
+				//std::cout << "LEFT" << std::endl;
+				//std::cout << SDL_GetTicks() << std::endl;
 				break;
 			case SDLK_SPACE:
 				timeOfJump = SDL_GetTicks();
 				jumped = true;
 				dropped = false;
+				falling = false;
+				
 				std::cout << "SPACE" << std::endl;
 				break;
 			case SDLK_DOWN: // Neråt från en platform man står på
-				timeOfJump = SDL_GetTicks();
+				timeOfDrop = SDL_GetTicks();
 				dropped = true;
-				std::cout << "SPACE" << std::endl;
+				//std::cout << "SPACE" << std::endl;
 				break;
 			default:
 				break;
@@ -108,7 +126,7 @@ namespace engine {
 		
 	}
 	void SpritePlayer::tick() {
-		deltaTime();
+		float dt = ge.getDeltaTime();
 		if (moving) {
 			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
 
@@ -141,11 +159,14 @@ namespace engine {
 
 		}
 		if (jumped && (dropped == false)) {
-			rect.y -= (dt * JUMP_SPEED - (dtJump() * 10));
+			rect.y -= (dt * JUMP_SPEED - (dtJump() * 5));
 		}
 
 		if (dropped) {
-			rect.y -= (dt *- JUMP_SPEED - (dtJump() * 10));
+			rect.y -= (dt *- JUMP_SPEED - (dtDrop() * 5));
+		}
+		if (falling) {
+			rect.y -= (dt *-JUMP_SPEED - (dtFall() * 5));
 		}
 		
 	}
@@ -153,10 +174,12 @@ namespace engine {
 	void SpritePlayer::grounded() {
 		jumped = false;
 		dropped = false; 
+		falling = false;
 	}
 
 	void SpritePlayer::ungrounded() {
-		jumped = true;
+		falling = true;
+		timeOfFall = SDL_GetTicks();
 	}
 
 	void SpritePlayer::onCollision(Sprite* spriteA, Sprite* spriteB) {

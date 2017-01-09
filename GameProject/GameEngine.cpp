@@ -28,7 +28,7 @@ namespace engine {
 		SpriteEnemy* se = SpriteEnemy::getInstance({ 600,200, 60, 35 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
 		SpriteStationary* sg = SpriteStationary::getInstance({ 300,300,100,50 }, "c:/Prog3/assets/Sprites/PlankSprite_Cut.png");
 		SpriteStationary* sg1 = SpriteStationary::getInstance({ 200,200,200,100 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
-		cout << se->getHp() << endl;
+		//cout << se->getHp() << endl;
 
 
 		std::vector<Sprite*> sprites;
@@ -39,6 +39,7 @@ namespace engine {
 
 		const int TIDPERVARV = 1000 / FPS;
 		while (running) {
+			deltaTime();
 			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
 
 			SDL_Event eve;
@@ -96,11 +97,13 @@ namespace engine {
 
 
 				if (SDL_HasIntersection(A, B)) {
-
+					
 					SDL_UnionRect(A, B, r);
-					if ((result.x > 10) && (result.y > 10)) {
-						if ((A->y + (A->h - 4)) < (B->y)) { // Höjden på A måste tas bort för att översta vänstra hörnet räknas. 
+					if ((result.w > 5) && (result.h > 5)) {
+						cout << "rektangel collision" << endl;
+						if ((A->y + (A->h - 10)) < (B->y)) { // Höjden på A måste tas bort för att översta vänstra hörnet räknas. 
 							s->onCollision(s, sg);
+							
 						}
 
 					}
@@ -109,10 +112,11 @@ namespace engine {
 						for (int x = 0; x < result.x + 1; x++) {
 							for (; y < result.y + 1; y++) {
 								int alphaS = s->getAlphaXY(x, y);
-								int alphaT = se->getAlphaXY(x, y);
+								int alphaT = sg->getAlphaXY(x, y);
 								if (alphaS > 0 && alphaT > 0) {
-									s->onCollision(s, se);
-									se->onCollision(se, s);
+									s->onCollision(s, sg);
+									sg->onCollision(sg, s);
+									cout << "pixel collision" << endl;
 									break;
 								}
 							}
@@ -120,8 +124,10 @@ namespace engine {
 					}
 				}
 				else {
-					//	cout << "FALL" << endl;
-					s->ungrounded(); // Startar fall
+					if (!s->hasJumped() && !s->hasDropped() && !s->isFalling()) {
+						//	cout << "FALL" << endl;
+						s->ungrounded(); // Startar fall
+					}
 				}
 				//COLLISION END
 
@@ -136,7 +142,13 @@ namespace engine {
 
 	}
 	
-
+	void GameEngine::deltaTime() {
+		Uint32 now = SDL_GetTicks();
+		if (now > last) {
+			dt = ((float)(now - last)) / 1000;
+			last = now;
+		}
+	}
 
 
 	GameEngine::GameEngine()

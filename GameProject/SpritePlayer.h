@@ -19,6 +19,9 @@ namespace engine {
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
 		void tick();
+		bool isFalling() const { return falling; };
+		bool hasJumped() const { return jumped; };
+		bool hasDropped() const { return dropped; };
 		
 		void move(const SDL_Event& eve);
 	protected:
@@ -26,12 +29,18 @@ namespace engine {
 	private:
 		//void deltaTime();
 		float dtJump();
+		float dtFall();
+		float dtDrop();
 		Uint32 timeOfJump;
+		Uint32 timeOfFall = SDL_GetTicks();
+		Uint32 timeOfDrop;
 		const int JUMP_SPEED = 300;
 		/*long last;
 		float dt;*/
 		bool jumped;
 		bool dropped;
+		bool falling;
+		
 		
 		const int MOVEMENT_SPEED = 150;
 		bool moving;
