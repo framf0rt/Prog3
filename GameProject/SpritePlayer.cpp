@@ -21,9 +21,7 @@ namespace engine {
 	//	}
 	//}
 
-	void SpritePlayer::draw() {
-		
-	}
+
 
 	float SpritePlayer::dtJump() {
 		float jdt = 0;
@@ -126,7 +124,11 @@ namespace engine {
 		}
 		
 	}
+	void SpritePlayer::setInvunerability() {
+		invulnerable = true;
+	}
 	void SpritePlayer::tick() {
+		
 		float dt = ge.getDeltaTime();
 		if (moving) {
 			rect.x += (int)(dt*MOVEMENT_SPEED*direction);

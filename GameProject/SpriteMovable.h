@@ -12,7 +12,7 @@ namespace engine {
 		
 	protected:
 		SpriteMovable(const SDL_Rect& r, std::string path);
-		
+		float alphaModifier;
 		int direction;
 		bool textureSwap;
 		int rotation;

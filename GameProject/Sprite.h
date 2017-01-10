@@ -4,6 +4,7 @@
 #include <string>
 #include <SDL_image.h>
 #include "GameEngine.h"
+
 namespace engine {
 	class Sprite
 	{

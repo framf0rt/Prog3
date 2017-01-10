@@ -24,6 +24,8 @@ namespace engine {
 		bool isFalling() const { return falling; };
 		bool hasJumped() const { return jumped; };
 		bool hasDropped() const { return dropped; };
+		bool hasInvunerability() const { return invulnerable; };
+		void setInvunerability();
 		void move(const SDL_Event& eve);
 
 	protected:
@@ -42,6 +44,7 @@ namespace engine {
 		bool jumped;
 		bool dropped;
 		bool falling;
+		bool invulnerable;
 		const int MOVEMENT_SPEED = 150;
 		bool moving;
 		SDL_Rect boxCollider;
