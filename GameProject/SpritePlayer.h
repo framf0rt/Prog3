@@ -44,7 +44,7 @@ namespace engine {
 		bool jumped;
 		bool dropped;
 		bool falling;
-		bool invulnerable;
+	
 		const int MOVEMENT_SPEED = 150;
 		bool moving;
 		SDL_Rect boxCollider;

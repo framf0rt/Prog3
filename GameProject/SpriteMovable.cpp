@@ -15,6 +15,7 @@ namespace engine {
 		SDL_Texture *texture = getTexture();
 
 		//std::cout << rotation << std::endl;
+		
 		if (textureSwap == true) {
 			if (direction == 1) {
 				texture = textureMoving;
@@ -27,6 +28,10 @@ namespace engine {
 		else {
 			SDL_RenderCopyEx(ge.getRen(), texture, nullptr, dstRect, rotation, nullptr, SDL_FLIP_NONE);
 		}
+		if (alphaModifier != 255.0) {
+			SDL_SetTextureAlphaMod(texture, alphaModifier);
+		}
+
 	}
 
 	SpriteMovable::~SpriteMovable()

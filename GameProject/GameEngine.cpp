@@ -32,21 +32,23 @@ namespace engine {
 			// MOVEMENT START
 			for (Sprite *sprite : sprites) {
 				SpritePlayer *playerMove = dynamic_cast<SpritePlayer*>(sprite);
-				SDL_Event eve;
-				while (SDL_PollEvent(&eve)) {
-					switch (eve.type)
-					{
-					case SDL_KEYDOWN:
-						playerMove->move(eve);
-						break;
-					case SDL_KEYUP:
-						playerMove->move(eve);
-						break;
-					case SDL_QUIT:
-						running = false;
-						break;
-					default:
-						break;
+				if (playerMove != NULL) {
+					SDL_Event eve;
+					while (SDL_PollEvent(&eve)) {
+						switch (eve.type)
+						{
+						case SDL_KEYDOWN:
+							playerMove->move(eve);
+							break;
+						case SDL_KEYUP:
+							playerMove->move(eve);
+							break;
+						case SDL_QUIT:
+							running = false;
+							break;
+						default:
+							break;
+						}
 					}
 				}
 			} // MOVEMENT END
@@ -119,12 +121,18 @@ namespace engine {
 			SDL_Rect *r = &(result);
 			SDL_UnionRect(A, B, r);
 			int y = 0;
-			if (result.x > 0 && result.x > 0) {
-				for (int x = 0; x < result.x + 1; x++) {
-					for (; y < result.y + 1; y++) {
-						int alphaS = p->getAlphaXY(x, y);
-						int alphaT = e->getAlphaXY(x, y);
-						if (alphaS > 0 && alphaT > 0) {
+			int x = 0;
+			if (result.w > 0 && result.h > 0) {
+				for (; x < result.w + 1; x++) {
+					for (; y < result.h + 1; y++) {
+						int alphaX = x;
+						int alphaY = y;
+						int alphaS = p->getAlphaXY(alphaX , alphaY);
+						int alphaT = e->getAlphaXY(alphaX, alphaY);
+						cout << "Y:" << alphaY << " X:"<< alphaX << endl;
+						cout << "P:" << alphaS << " E:" << alphaT << endl;
+						if (alphaS > 0 && alphaT >0 ) {
+							cout << "Collision" << endl;
 							p->onCollision(p, e);
 							p->setInvunerability();
 							return;

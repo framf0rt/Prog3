@@ -23,14 +23,21 @@ namespace engine {
 		}
 	}
 
+
 	int Sprite::getAlphaXY(int x, int y) {
 		if (x < surface->w && y < surface->h) {
 			SDL_LockSurface(surface);
 			Uint32* pixels = static_cast<Uint32*>(surface->pixels);
 			Uint32 pixel = pixels[y*surface->w + x];
 			SDL_UnlockSurface(surface);
+			int red = pixel & 0XFF;
+			int green = (pixel >> 8) & 0xFF;
+			int blue = (pixel >> 16) & 0xFF;
 			int alpha = (pixel >> 24) & 0xFF;
 			return alpha;
+		}
+		else {
+			return 0;
 		}
 	}
 

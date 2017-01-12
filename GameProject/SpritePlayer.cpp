@@ -126,10 +126,27 @@ namespace engine {
 	}
 	void SpritePlayer::setInvunerability() {
 		invulnerable = true;
+		fadeOutIn = true;
 	}
+
 	void SpritePlayer::tick() {
-		
 		float dt = ge.getDeltaTime();
+
+
+		if (alphaModifier <= 256 && alphaModifier > 125 && fadeOutIn == true) {
+			alphaModifier -= 100 * dt;	
+		}
+		else if (alphaModifier < 255){
+			alphaModifier += 100 * dt;
+			fadeOutIn = false;
+			if (alphaModifier >= 254) {
+				invulnerable = false;
+			}
+		}
+
+		
+
+
 		if (moving) {
 			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
 
@@ -186,6 +203,7 @@ namespace engine {
 	}
 
 	void SpritePlayer::onCollision(Sprite* spriteA, Sprite* spriteB) {
+		float dt = ge.getDeltaTime();
 
 		//Kollar om det är en spelare och spritestationary som kolliderat
 		SpriteGround *ground = dynamic_cast<SpriteGround*>(spriteB);
@@ -200,9 +218,9 @@ namespace engine {
 			}
 		}
 
-		if(enemy != NULL){
-			// What do we do know?
-			std::cout << "Enemy hit" << std::endl;
+		if (enemy != NULL) {
+
+
 		}
 
 
