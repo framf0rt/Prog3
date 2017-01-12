@@ -63,16 +63,16 @@ namespace engine {
 					}
 				}
 
-
+			
 			}//COLLISION END
-
+			
 			// MOVEMENT START
 			for (Sprite *sprite : sprites) {
 				SpritePlayer *playerMove = dynamic_cast<SpritePlayer*>(sprite);
 				if (playerMove != NULL) {
 					SDL_Event eve;
 					while (SDL_PollEvent(&eve)) {
-						switch (eve.type)
+						/*switch (eve.type)
 						{
 						case SDL_KEYDOWN:
 							playerMove->move(eve);
@@ -85,7 +85,8 @@ namespace engine {
 							break;
 						default:
 							break;
-						}
+						}*/
+						playerMove->move(eve);
 					}
 				}
 			} // MOVEMENT END

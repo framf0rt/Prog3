@@ -42,6 +42,9 @@ namespace engine {
 		Uint32 getTKeyDownRight() const { return tKeyDownRight; }
 		Uint32 getTkeyDownLeft() const { return tKeyDownLeft; }
 		void setYCoordAtEvent() { yCoordAtEvent = rect.y; }
+		void speedOnCollision();
+		void setYSpeed(int i) { ySpeed = i; }
+		int getJumpSpeed() const { return JUMP_SPEED; }
 
 	protected:
 		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f);
@@ -53,7 +56,8 @@ namespace engine {
 		Uint32 timeOfJump;
 		Uint32 timeOfFall = SDL_GetTicks();
 		Uint32 timeOfDrop;
-		const int JUMP_SPEED = 300;
+		const int JUMP_SPEED = -500;
+		int ySpeed = 200;
 		/*long last;
 		float dt;*/
 		bool jumped;

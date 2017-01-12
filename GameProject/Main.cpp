@@ -23,8 +23,9 @@ void moveRight(SpritePlayer& p) {
 }
 
 void jump(SpritePlayer& p) {
-	if (!p.hasJumped()) {
+	if (!p.hasJumped()&& !p.hasDropped() && !p.isFalling()) {
 		ge.resetTimeSinceEvent();
+		p.setYSpeed(p.getJumpSpeed());
 		p.setJumped(true);
 		p.setDropped(false);
 		p.setFalling(false);
@@ -39,6 +40,9 @@ void drop(SpritePlayer& p) {
 	if (!p.hasJumped()) {
 		ge.resetTimeSinceEvent();
 		p.setDropped(true);
+		p.setJumped(false);
+		p.setFalling(false);
+		p.setYSpeed(200);
 		p.setRectY(p.getRectY() + 10);
 		p.setYCoordAtEvent();
 	}
@@ -73,7 +77,7 @@ int main(int argvc, char* argv[]) {
 	SpritePlayer* s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,events);
 	SpriteEnemy* se = SpriteEnemy::getInstance({ 600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
 
-	SpriteGround* sg = SpriteGround::getInstance({ 300,300,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
+	SpriteGround* sg = SpriteGround::getInstance({ 300,200,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
 	SpriteGround* sg1 = SpriteGround::getInstance({ 100,300,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
 	SpriteGround* sg2 = SpriteGround::getInstance({ 200,500,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
 

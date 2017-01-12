@@ -16,40 +16,6 @@ namespace engine {
 		return new SpritePlayer(r, path, pathMoving, colliderSize, f);
 	}
 
-	//void SpritePlayer::deltaTime() {
-	//	Uint32 now = SDL_GetTicks();
-	//	if (now > last) {
-	//		dt = ((float)(now - last)) / 1000;
-	//			last = now;
-	//	}
-	//}
-
-
-
-	//float SpritePlayer::dtJump() {
-	//	float jdt = 0;
-	//	Uint32 now = SDL_GetTicks();
-	//	if (now > timeOfJump) {
-	//		jdt = ((float)(now - timeOfJump)) / 1000;
-	//	}
-	//	return jdt;
-	//}
-	//float SpritePlayer::dtFall() {
-	//	float fdt = 0;
-	//	Uint32 now = SDL_GetTicks();
-	//	if (now > timeOfFall) {
-	//		fdt = ((float)(now - timeOfFall)) / 1000;
-	//	}
-	//	return fdt;
-	//}
-	//float SpritePlayer::dtDrop() {
-	//	float ddt = 0;
-	//	Uint32 now = SDL_GetTicks();
-	//	if (now > timeOfDrop) {
-	//		ddt = ((float)(now - timeOfDrop)) / 1000;
-	//	}
-	//	return ddt;
-	//}
 
 	void SpritePlayer::keyDown(const SDL_Event& eve) {
 
@@ -67,6 +33,10 @@ namespace engine {
 	void SpritePlayer::setInvunerability() {
 		invulnerable = true;
 		fadeOutIn = true;
+	}
+	
+	void SpritePlayer::speedOnCollision() {
+		ySpeed = -0.6*(ySpeed + ge.getTimeSinceEvent() * 600);
 	}
 
 	void SpritePlayer::tick() {
@@ -105,15 +75,19 @@ namespace engine {
 				}
 			}
 		}
-		if (jumped && (dropped == false)) {
-			rect.y = yCoordAtEvent - (edt * JUMP_SPEED - (300*edt*edt/2));
+	/*	if (jumped && (dropped == false)) {
+			rect.y = yCoordAtEvent + edt * ySpeed + (600*edt*edt/2);
 		}
 
 		if (dropped) {
-			rect.y = yCoordAtEvent + 200*edt + (edt*edt*300/2);
+			rect.y = yCoordAtEvent + ySpeed*edt + (edt*edt*600/2);
 		}
 		if (falling) {
-			rect.y = yCoordAtEvent + (edt*edt * 300 / 2);
+			cout << "faller" << endl;
+			rect.y = yCoordAtEvent + ySpeed*edt +(edt*edt*600/2);
+		}*/
+		if (jumped || dropped || falling) {
+			rect.y = yCoordAtEvent + ySpeed*edt + (edt*edt * 600 / 2);
 		}
 		
 
@@ -127,6 +101,8 @@ namespace engine {
 
 	void SpritePlayer::ungrounded() {
 		falling = true;
+		jumped = false;
+		dropped = false;
 		ge.resetTimeSinceEvent();
 		setYCoordAtEvent();
 	}
@@ -140,9 +116,26 @@ namespace engine {
 		if (ground != NULL)
 		{
 			if (!(jumped && dropped && falling)) {
-				SDL_Rect groundR = ground->getCollider();
-				rect.y = groundR.y - rect.h + 1;
-				grounded();
+				
+				speedOnCollision();
+				//jumped = false;
+				//dropped = false;
+				//falling = true;
+				//cout << ySpeed << endl;
+				rect.y -= 2;
+				yCoordAtEvent = rect.y;
+				cout << ySpeed << endl;
+				
+				if (abs(ySpeed) < 70) {
+					
+					ySpeed = 0;
+					SDL_Rect groundR = ground->getCollider();
+					rect.y = groundR.y - rect.h + 1;
+					grounded();
+					
+				}
+				ge.resetTimeSinceEvent();
+				
 				return;
 			}
 		}
@@ -161,11 +154,11 @@ namespace engine {
 						SDL_Rect result = { 0,0,0,0 };
 						SDL_Rect* r = &(result);
 						SDL_UnionRect(A, B, r);
-						std::cout << "UnionRect: "<< r->x << " " << r->y << " " << r->w << " " << r->h << std::endl;
-						std::cout <<"A: "<< aRect.x << " " << aRect.y << " " << aRect.w << " " << aRect.h << std::endl;
-						std::cout <<"B: "<< bRect.x << " " << bRect.y << " " << bRect.w << " " << bRect.h << std::endl;
+						//std::cout << "UnionRect: "<< r->x << " " << r->y << " " << r->w << " " << r->h << std::endl;
+						//std::cout <<"A: "<< aRect.x << " " << aRect.y << " " << aRect.w << " " << aRect.h << std::endl;
+						//std::cout <<"B: "<< bRect.x << " " << bRect.y << " " << bRect.w << " " << bRect.h << std::endl;
 						setInvunerability();
-						std::cout << "HIT" << std::endl;
+						//std::cout << "HIT" << std::endl;
 						return;
 					}
 				}
