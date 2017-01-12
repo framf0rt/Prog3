@@ -12,6 +12,7 @@ namespace engine {
 		void setDirection(int i) { direction = i; }
 	protected:
 		SpriteMovable(const SDL_Rect& r, std::string path);
+		void setPixelColliders();
 		SDL_Rect pc = { 0,0,0,0 };
 		float alphaModifier = 255;
 		int direction;
