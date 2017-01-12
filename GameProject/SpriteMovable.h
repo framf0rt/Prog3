@@ -10,6 +10,7 @@ namespace engine {
 		void draw();
 		std::vector<SDL_Rect> getPixelCollisionRects() { return pixelCollisionRects; }
 		~SpriteMovable();
+		void setDirection(int i) { direction = i; }
 	protected:
 		int width = 0;
 		SDL_Rect rt = { 0,0,0,0 };

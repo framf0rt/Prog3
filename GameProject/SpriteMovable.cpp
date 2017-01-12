@@ -40,9 +40,11 @@ namespace engine {
 	}
 
 
+
 	void SpriteMovable::draw() {
 		SDL_Rect *dstRect = &getRect();
 		SDL_Texture *texture = getTexture();
+
 
 		for (SDL_Rect aRect : pixelCollisionRects) {
 			aRect = { aRect.x + rect.x,aRect.y + rect.y,aRect.w,aRect.h };
@@ -51,7 +53,6 @@ namespace engine {
 
 
 		}
-
 
 		if (textureSwap == true) {
 			if (direction == 1) {
