@@ -8,8 +8,15 @@ namespace engine {
 	public:
 		virtual void tick() {};
 		void draw();
+		std::vector<SDL_Rect> getPixelCollisionRects() { return pixelCollisionRects; }
 		~SpriteMovable();
 	protected:
+		int width = 0;
+		SDL_Rect rt = { 0,0,0,0 };
+		int y = 0;
+		int x = 0;
+		std::vector<SDL_Rect> pixelCollisionRects;
+
 		SpriteMovable(const SDL_Rect& r, std::string path);
 		void setPixelColliders();
 		SDL_Rect pc = { 0,0,0,0 };

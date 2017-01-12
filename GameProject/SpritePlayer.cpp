@@ -219,11 +219,29 @@ namespace engine {
 		}
 
 		if (enemy != NULL) {
-
-
+			std::vector<SDL_Rect> pixelCollisionRectsB = enemy->getPixelCollisionRects();
+			for (SDL_Rect aRect : pixelCollisionRects){
+				aRect = { aRect.x + rect.x - aRect.x,aRect.y + rect.y,aRect.w,aRect.h };
+				for (SDL_Rect bRect : pixelCollisionRectsB) {
+					SDL_Rect enemyRect = enemy->getRect();
+					bRect = { bRect.x + enemyRect.x - bRect.x,bRect.y + enemyRect.y,bRect.w,bRect.h };
+					SDL_Rect *A = &(aRect);
+					SDL_Rect *B = &(bRect);
+					
+					if (SDL_HasIntersection(A, B)) {
+						SDL_Rect result = { 0,0,0,0 };
+						SDL_Rect* r = &(result);
+						SDL_UnionRect(A, B, r);
+						std::cout << "UnionRect: "<< r->x << " " << r->y << " " << r->w << " " << r->h << std::endl;
+						std::cout <<"A: "<< aRect.x << " " << aRect.y << " " << aRect.w << " " << aRect.h << std::endl;
+						std::cout <<"B: "<< bRect.x << " " << bRect.y << " " << bRect.w << " " << bRect.h << std::endl;
+						setInvunerability();
+						std::cout << "HIT" << std::endl;
+						return;
+					}
+				}
+			}
 		}
-
-
 	}
 
 	SDL_Rect SpritePlayer::getCollider() {
