@@ -130,29 +130,7 @@ namespace engine {
 		SDL_Rect *A = &(p->getRect());
 		SDL_Rect *B = &(e->getRect());
 		if (SDL_HasIntersection(A, B)) {
-			SDL_Rect result = { 0,0,0,0 };
-			SDL_Rect *r = &(result);
-			SDL_UnionRect(A, B, r);
-			int y = 0;
-			int x = 0;
-			if (result.w > 0 && result.h > 0) {
-				for (; x < result.w + 1; x++) {
-					for (; y < result.h + 1; y++) {
-						int alphaX = x;
-						int alphaY = y;
-						int alphaS = p->getAlphaXY(alphaX , alphaY);
-						int alphaT = e->getAlphaXY(alphaX, alphaY);
-						//cout << "Y:" << alphaY << " X:"<< alphaX << endl;
-						//cout << "P:" << alphaS << " E:" << alphaT << endl;
-						if (alphaS > 0 && alphaT >0 ) {
-							//cout << "Collision" << endl;
-							p->onCollision(p, e);
-							p->setInvunerability();
-							return;
-						}
-					}
-				}
-			}
+			p->onCollision(p, e);
 		}
 	}
 
