@@ -20,6 +20,9 @@ namespace engine {
 		~GameEngine();
 		void deltaTime();
 		inline float getDeltaTime() const { return dt; };
+		void updateTimeSinceEvent() { timeSinceEvent += dt; }
+		float getTimeSinceEvent() const { return timeSinceEvent;}
+		void resetTimeSinceEvent() { timeSinceEvent = 0; }
 
 	private:
 	
@@ -28,7 +31,8 @@ namespace engine {
 		SDL_Renderer* ren;
 		long last = SDL_GetTicks();
 		float dt;
-
+		float timeSinceEvent;
+		Uint32 timeOfDelay;
 	};
 	extern GameEngine ge;
 }

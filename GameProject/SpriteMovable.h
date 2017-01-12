@@ -9,6 +9,7 @@ namespace engine {
 		virtual void tick() {};
 		void draw();
 		~SpriteMovable();
+		void setDirection(int i) { direction = i; }
 	protected:
 		SpriteMovable(const SDL_Rect& r, std::string path);
 		SDL_Rect pc = { 0,0,0,0 };

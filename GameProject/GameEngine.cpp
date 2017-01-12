@@ -11,6 +11,7 @@
 #include <iostream>
 using namespace std;
 
+
 #define FPS 120
 
 namespace engine {
@@ -19,15 +20,51 @@ namespace engine {
 	void GameEngine::addSprite(Sprite* s) {
 		sprites.push_back(s);
 	}
-
+	
 	void GameEngine::run() {
 		bool running = true;
 
 
 		const int TIDPERVARV = 1000 / FPS;
+		dt = (float)TIDPERVARV / 1000;
 		while (running) {
-			deltaTime();
+			//deltaTime();
+			
+			//cout << dt << " " << timeSinceEvent << endl;
+			
 			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
+
+			//COLLISION START 
+			for (unsigned i = 0; i < sprites.size(); i++) {
+				Sprite* spriteA = sprites[i];
+				for (unsigned x = 0; x < sprites.size(); x++) {
+					Sprite* spriteB = sprites[x];
+					SpritePlayer *player = dynamic_cast<SpritePlayer*>(spriteA);
+					SpriteGround *ground = dynamic_cast<SpriteGround*>(spriteB);
+					SpriteEnemy *enemy = dynamic_cast<SpriteEnemy*>(spriteB);
+					if (ground != NULL && player != NULL) {
+						SDL_Rect *groundCollider = &(player->getCollider());
+						SDL_Rect *playerCollider = &(ground->getCollider());
+						if (SDL_HasIntersection(playerCollider, groundCollider)) {
+							player->onCollision(spriteA, spriteB);
+						}
+					}
+					else {
+						if (player != NULL) {
+							if (!player->hasJumped() && !player->hasDropped() && !player->isFalling()) {
+								player->ungrounded(); // Startar fall
+							}
+						}
+					}
+					if (enemy != NULL && player != NULL) {
+						if (player->hasInvunerability() == false) {
+							pixelCollision(player, enemy);
+						}
+					}
+				}
+
+
+			}//COLLISION END
 
 			// MOVEMENT START
 			for (Sprite *sprite : sprites) {
@@ -54,6 +91,7 @@ namespace engine {
 			} // MOVEMENT END
 
 			// RENDERING START
+			updateTimeSinceEvent();
 			SDL_RenderClear(getRen());
 			for (Sprite *sprite : sprites) {
 
@@ -75,39 +113,14 @@ namespace engine {
 
 
 
-			//COLLISION START 
-			for (unsigned i = 0; i < sprites.size(); i++) {
-				Sprite* spriteA = sprites[i];
-				for (unsigned x = 0; x < sprites.size(); x++) {
-					Sprite* spriteB = sprites[x];
-					SpritePlayer *player = dynamic_cast<SpritePlayer*>(spriteA);
-					SpriteGround *ground = dynamic_cast<SpriteGround*>(spriteB);
-					SpriteEnemy *enemy = dynamic_cast<SpriteEnemy*>(spriteB);
-					if (ground != NULL && player != NULL) {
-						SDL_Rect *groundCollider = &(player->getCollider());
-						SDL_Rect *playerCollider = &(ground->getCollider());
-						if (SDL_HasIntersection(playerCollider, groundCollider)) {
-							player->onCollision(spriteA, spriteB);
-						}
-					}
-					else {
-						if (player != NULL) {
-							if (!player->hasJumped() && !player->hasDropped() && !player->isFalling()) {
-								player->ungrounded(); // Startar fall
-							}
-						}
-					}
-					if (enemy != NULL && player != NULL) {
-						if (player->hasInvunerability() == false)
-							pixelCollision(player, enemy);
-					}
-				} //COLLISION END
 
-				int delay = nextTick - SDL_GetTicks();
-				if (delay > 0)
-					SDL_Delay(delay);
-
+			Uint32 before = SDL_GetTicks();
+			int delay = nextTick - SDL_GetTicks();
+			if (delay > 0) {
+				SDL_Delay(delay);
 			}
+			Uint32 timeOfDelay = SDL_GetTicks() - before;
+			//cout << timePassed << endl;
 		}
 	}
 
@@ -129,10 +142,10 @@ namespace engine {
 						int alphaY = y;
 						int alphaS = p->getAlphaXY(alphaX , alphaY);
 						int alphaT = e->getAlphaXY(alphaX, alphaY);
-						cout << "Y:" << alphaY << " X:"<< alphaX << endl;
-						cout << "P:" << alphaS << " E:" << alphaT << endl;
+						//cout << "Y:" << alphaY << " X:"<< alphaX << endl;
+						//cout << "P:" << alphaS << " E:" << alphaT << endl;
 						if (alphaS > 0 && alphaT >0 ) {
-							cout << "Collision" << endl;
+							//cout << "Collision" << endl;
 							p->onCollision(p, e);
 							p->setInvunerability();
 							return;
@@ -146,7 +159,7 @@ namespace engine {
 	void GameEngine::deltaTime() {
 		Uint32 now = SDL_GetTicks();
 		if (now > last) {
-			dt = ((float)(now - last)) / 1000;
+			dt = ((float)(now - last + timeOfDelay)) / 1000;
 			last = now;
 		}
 	}

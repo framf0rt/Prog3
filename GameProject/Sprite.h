@@ -15,6 +15,8 @@ namespace engine {
 		void onCollision(Sprite* spriteA, Sprite* spriteB);
 		virtual void keyDown(const SDL_Event& eve) {};
 		virtual void tick() {};
+		void setRectY(int y) { rect.y = y; }
+		int getRectY() const { return rect.y; }
 	protected:
 		
 		~Sprite();

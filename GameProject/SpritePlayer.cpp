@@ -3,14 +3,17 @@
 #include <SDL.h>
 #include <iostream>
 #include "SpriteEnemy.h"
+#include <map>
+#include "math.h"
+using namespace std;
 
 
 
 namespace engine {
 
 
-	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize) {
-		return new SpritePlayer(r, path, pathMoving, colliderSize);
+	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f) {
+		return new SpritePlayer(r, path, pathMoving, colliderSize, f);
 	}
 
 	//void SpritePlayer::deltaTime() {
@@ -23,106 +26,43 @@ namespace engine {
 
 
 
-	float SpritePlayer::dtJump() {
-		float jdt = 0;
-		Uint32 now = SDL_GetTicks();
-		if (now > timeOfJump) {
-			jdt = ((float)(now - timeOfJump)) / 1000;
-		}
-		return jdt;
-	}
-	float SpritePlayer::dtFall() {
-		float fdt = 0;
-		Uint32 now = SDL_GetTicks();
-		if (now > timeOfFall) {
-			fdt = ((float)(now - timeOfFall)) / 1000;
-		}
-		return fdt;
-	}
-	float SpritePlayer::dtDrop() {
-		float ddt = 0;
-		Uint32 now = SDL_GetTicks();
-		if (now > timeOfDrop) {
-			ddt = ((float)(now - timeOfDrop)) / 1000;
-		}
-		return ddt;
-	}
+	//float SpritePlayer::dtJump() {
+	//	float jdt = 0;
+	//	Uint32 now = SDL_GetTicks();
+	//	if (now > timeOfJump) {
+	//		jdt = ((float)(now - timeOfJump)) / 1000;
+	//	}
+	//	return jdt;
+	//}
+	//float SpritePlayer::dtFall() {
+	//	float fdt = 0;
+	//	Uint32 now = SDL_GetTicks();
+	//	if (now > timeOfFall) {
+	//		fdt = ((float)(now - timeOfFall)) / 1000;
+	//	}
+	//	return fdt;
+	//}
+	//float SpritePlayer::dtDrop() {
+	//	float ddt = 0;
+	//	Uint32 now = SDL_GetTicks();
+	//	if (now > timeOfDrop) {
+	//		ddt = ((float)(now - timeOfDrop)) / 1000;
+	//	}
+	//	return ddt;
+	//}
 
 	void SpritePlayer::keyDown(const SDL_Event& eve) {
-		
+
 	}
 
-	
+
 	void SpritePlayer::move(const SDL_Event& eve) {
-		switch (eve.type)
-		{
-		case SDL_KEYUP:
-			switch (eve.key.keysym.sym) {
-			case SDLK_LEFT:
-				if (SDL_GetTicks() - tKeyDownRight > 60) {
-					moving = false;
-					//std::cout << "left upp" << std::endl;
-					//std::cout << SDL_GetTicks() << std::endl;
-				}
-				break;
-			case SDLK_RIGHT:
-				if (SDL_GetTicks() - tKeyDownLeft > 60) {
-					//std::cout << "right up" << std::endl;
-					//std::cout << SDL_GetTicks() << std::endl;
-					moving = false;
-				}
-				break;
-			default:
-				break;
-			}
-			break;
-
-		case SDL_KEYDOWN:
-			switch (eve.key.keysym.sym)
-			{
-			case SDLK_RIGHT:
-				//rect.x += (int)(300 * dt);
-				//std::cout << "RIGHT"<<std::endl;
-				direction = 1;
-				moving = true;
-				tKeyDownRight = SDL_GetTicks();
-				//std::cout << "Right" << std::endl;
-				//std::cout << SDL_GetTicks() << std::endl;
-
-				break;
-			case SDLK_LEFT:
-				direction = -1;
-				tKeyDownLeft = SDL_GetTicks();
-				moving = true;
-
-				//std::cout << "LEFT" << std::endl;
-				//std::cout << SDL_GetTicks() << std::endl;
-				break;
-			case SDLK_SPACE:
-				timeOfJump = SDL_GetTicks();
-				jumped = true;
-				dropped = false;
-				falling = false;
-				
-				std::cout << "SPACE" << std::endl;
-				break;
-			case SDLK_DOWN: // Neråt från en platform man står på
-				timeOfDrop = SDL_GetTicks();
-				dropped = true;
-				rect.y += 10;
-				//std::cout << "SPACE" << std::endl;
-				break;
-			default:
-				break;
-			}
-			
-			break;
 		
-
-		default:
-			break;
+		if (commands.count(eve.type)) {
+			if (commands[eve.type].count(eve.key.keysym.sym)) {
+				commands[eve.type][eve.key.keysym.sym](*this);
+			}
 		}
-		
 	}
 	void SpritePlayer::setInvunerability() {
 		invulnerable = true;
@@ -131,12 +71,12 @@ namespace engine {
 
 	void SpritePlayer::tick() {
 		float dt = ge.getDeltaTime();
-
+		float edt = ge.getTimeSinceEvent();
 
 		if (alphaModifier <= 256 && alphaModifier > 125 && fadeOutIn == true) {
-			alphaModifier -= 100 * dt;	
+			alphaModifier -= 100 * dt;
 		}
-		else if (alphaModifier < 255){
+		else if (alphaModifier < 255) {
 			alphaModifier += 100 * dt;
 			fadeOutIn = false;
 			if (alphaModifier >= 254) {
@@ -144,62 +84,51 @@ namespace engine {
 			}
 		}
 
-		
-
-
 		if (moving) {
 			rect.x += (int)(dt*MOVEMENT_SPEED*direction);
-
 			if (direction < 1) {
-				if (rotation == 360) {
+				
+				if (rotation < -360) {
 					rotation = 0;
 				}
 				else {
-					rotation -= 5;
+					rotation -= (int)(dt*400);
 				}
 			}
 			else {
-				if (rotation == 360) {
+				
+				if (rotation > 360) {
 					rotation = 0;
 				}
 				else {
-					rotation += 5;
+					rotation += (int)(dt * 400);
 				}
 			}
-			
-			
-
-			//if (animationCount > 100) {
-			//	animation(*textureMoving); // Animation, byter texture
-			//	animationCount = 0;
-			//}
-			//if (animationCount > 50 && animationCount < 100) {
-			//	animation(*textureStationary); // Animation, byter texture
-			//}
-
 		}
 		if (jumped && (dropped == false)) {
-			rect.y -= (dt * JUMP_SPEED - (dtJump() * 5));
+			rect.y = yCoordAtEvent - (edt * JUMP_SPEED - (300*edt*edt/2));
 		}
 
 		if (dropped) {
-			rect.y -= (dt *- (JUMP_SPEED) - (dtDrop() * 5));
+			rect.y = yCoordAtEvent + 200*edt + (edt*edt*300/2);
 		}
 		if (falling) {
-			rect.y -= (dt *-JUMP_SPEED - (dtFall() * 5));
+			rect.y = yCoordAtEvent + (edt*edt * 300 / 2);
 		}
 		
+
 	}
 
 	void SpritePlayer::grounded() {
 		jumped = false;
-		dropped = false; 
+		dropped = false;
 		falling = false;
 	}
 
 	void SpritePlayer::ungrounded() {
 		falling = true;
-		timeOfFall = SDL_GetTicks();
+		ge.resetTimeSinceEvent();
+		setYCoordAtEvent();
 	}
 
 	void SpritePlayer::onCollision(Sprite* spriteA, Sprite* spriteB) {
@@ -223,28 +152,28 @@ namespace engine {
 
 		}
 
-
+		
 	}
 
 	SDL_Rect SpritePlayer::getCollider() {
 		SDL_Rect A = getRect();
-		int size =static_cast<int>(A.w*colliderSize);
+		int size = static_cast<int>(A.w*colliderSize);
 		//std::cout << size << std::endl;
 		int middlePoint = A.w / 2;
-		boxCollider = {A.x + middlePoint-(size/2),A.y + A.h-2,size,2 };
+		boxCollider = { A.x + middlePoint - (size / 2),A.y + A.h - 2,size,2 };
 		return boxCollider;
 	}
 
 
-	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize):SpriteMovable(r,path)
+	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f) :SpriteMovable(r, path), commands(f)
 	{
-	this->colliderSize = colliderSize;
-	textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
-	textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
-	textureSwap = false;
+		this->colliderSize = colliderSize;
+		textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
+		textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
+		textureSwap = false;
 	}
 
-	
+
 
 
 	SpritePlayer::~SpritePlayer()

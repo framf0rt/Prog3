@@ -7,7 +7,7 @@ namespace engine {
 	SpriteMovable::SpriteMovable(const SDL_Rect& r, std::string path) :Sprite(r, path)
 	{
 	}
-
+	
 
 
 	void SpriteMovable::draw() {
