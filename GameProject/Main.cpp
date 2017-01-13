@@ -89,7 +89,7 @@ int main(int argvc, char* argv[]) {
 	shared_ptr<SpriteStationary> sg3 = SpriteStationary::getInstance({ 400,500,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, false, false);
 	shared_ptr<SpriteStationary> wall = SpriteStationary::getInstance({ 300,400,100,50 }, "", false, true, false);
 	
-	//SpriteStationary* kill = SpriteStationary::getInstance({ 200,400,100,50 }, "", true, false, true);
+	shared_ptr<SpriteStationary> kill = SpriteStationary::getInstance({ 200,400,100,50 }, "", true, false, true);
 
 	ge.addSprite(s);
 	ge.addSprite(se);
@@ -97,7 +97,7 @@ int main(int argvc, char* argv[]) {
 	ge.addSprite(sg1);
 	ge.addSprite(sg2);
 	ge.addSprite(sg3);
-	//ge.addSprite(kill);
+	ge.addSprite(kill);
 	ge.addSprite(wall);
 
 	ge.run();

@@ -20,6 +20,7 @@ namespace engine {
 		void ungrounded();
 		void draw();
 		void onCollision(std::shared_ptr<Sprite> spriteA, std::shared_ptr<Sprite> spriteB);
+		
 		SDL_Rect getCollider();
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
@@ -49,7 +50,7 @@ namespace engine {
 	protected:
 		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms);
 	private:
-
+		void killZoneCollision(std::shared_ptr<SpriteStationary> killzone);
 		std::map<int, std::map<int, void(SpritePlayer::*)() >> events;
 		void moveLeft();
 		void moveRight();
