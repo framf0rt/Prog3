@@ -53,7 +53,7 @@ void leftUp(SpritePlayer& p) {
 	}
 }
 void rightUp(SpritePlayer& p) {
-	if (SDL_GetTicks() - p.getTkeyDownLeft() > 60) {
+	if (SDL_GetTicks() - p.getTKeyDownLeft() > 60) {
 		p.setMoving(false);
 	}
 }
@@ -62,18 +62,27 @@ int main(int argvc, char* argv[]) {
 	map<int, void (*)(SpritePlayer&)> keyUpFuncs;
 	map<int, void (*)(SpritePlayer&)> keyDownFuncs;
 	
-	keyUpFuncs.insert(make_pair(SDLK_LEFT, leftUp));
-	keyUpFuncs.insert(make_pair(SDLK_RIGHT, rightUp));
-	keyDownFuncs.insert(make_pair(SDLK_LEFT, moveLeft));
-	keyDownFuncs.insert(make_pair(SDLK_RIGHT, moveRight));
+	
+	keyUpFuncs.insert(make_pair(-1, leftUp));
+	keyUpFuncs.insert(make_pair(-1, rightUp));
+	keyDownFuncs.insert(make_pair(-1, moveLeft));
+	keyDownFuncs.insert(make_pair(-1, moveRight));
 	keyDownFuncs.insert(make_pair(SDLK_SPACE, jump));
-	keyDownFuncs.insert(make_pair(SDLK_DOWN, drop));
+	keyDownFuncs.insert(make_pair(-1, drop));
 	events.insert(make_pair(SDL_KEYUP, keyUpFuncs));
 	events.insert(make_pair(SDL_KEYDOWN, keyDownFuncs));
 	
 	
+	void (SpritePlayer::*pek)();
+	//pek = &SpritePlayer::grounded;
+
+	map<string, int> comms;
+	comms.insert(make_pair("moveLeft", SDLK_LEFT));
+	comms.insert(make_pair("moveRight", SDLK_RIGHT));
+	comms.insert(make_pair("jump", -1));
+	comms.insert(make_pair("drop", SDLK_DOWN));
 	void (*p)(SpritePlayer&) = leftUp;
-	SpritePlayer* s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,events);
+	SpritePlayer* s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,events,comms);
 	SpriteEnemy* se = SpriteEnemy::getInstance({ 600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
 
 	SpriteStationary* sg = SpriteStationary::getInstance({ 300,200,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, true, false);

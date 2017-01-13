@@ -12,8 +12,8 @@ using namespace std;
 namespace engine {
 
 
-	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f) {
-		return new SpritePlayer(r, path, pathMoving, colliderSize, f);
+	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string, int> comms) {
+		return new SpritePlayer(r, path, pathMoving, colliderSize, f, comms);
 	}
 
 
@@ -29,6 +29,18 @@ namespace engine {
 				commands[eve.type][eve.key.keysym.sym](*this);
 			}
 		}
+		auto it = events.find(eve.type);
+		if (it != events.end()) {
+			auto it2 = it->second.find(eve.key.keysym.sym);
+			if (it2 != it->second.end()) {
+				(this->*(it2->second))();
+			}
+		}
+	/*	if (events.count(eve.type)) {
+			if (events[eve.type].count(eve.key.keysym.sym)) {
+				events[eve.type][eve.key.keysym.sym]->*();
+			}
+		}*/
 	}
 	void SpritePlayer::setInvunerability() {
 		invulnerable = true;
@@ -93,6 +105,51 @@ namespace engine {
 
 	}
 
+	void SpritePlayer::moveLeft() {
+		setDirection(-1);
+		setTimeKeyDownLeft(SDL_GetTicks());
+		setMoving(true);
+	}
+
+	void SpritePlayer::moveRight() {
+		setDirection(1);
+		setTimeKeyDownRight(SDL_GetTicks());
+		setMoving(true);
+	}
+
+	void SpritePlayer::jump() {
+		if (!hasJumped() && !hasDropped() && !isFalling()) {
+			ge.resetTimeSinceEvent();
+			setYSpeed(getJumpSpeed());
+			setJumped(true);
+			setDropped(false);
+			setFalling(false);
+			setYCoordAtEvent();
+		}
+	}
+
+	void SpritePlayer::drop() {
+		if (!hasJumped()) {
+			ge.resetTimeSinceEvent();
+			setDropped(true);
+			setJumped(false);
+			setFalling(false);
+			setYSpeed(200);
+			setRectY(getRectY() + 10);
+			setYCoordAtEvent();
+		}
+	}
+	void SpritePlayer::leftUp() {
+		if ((SDL_GetTicks() - getTKeyDownRight()) > 60) {
+			setMoving(false);
+		}
+	}
+
+	void SpritePlayer::rightUp() {
+		if ((SDL_GetTicks() - getTKeyDownLeft()) > 60) {
+			setMoving(false);
+		}
+	}
 	void SpritePlayer::grounded() {
 		jumped = false;
 		dropped = false;
@@ -217,8 +274,26 @@ namespace engine {
 	}
 
 
-	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f) :SpriteMovable(r, path), commands(f)
-	{
+	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string,int> comms) :SpriteMovable(r, path), commands(f)
+	{	
+		map<int, void (SpritePlayer::*)()> keyUp;
+		map<int, void (SpritePlayer::*)()> keyDown;
+		if (comms.count("moveLeft")) {
+			keyDown.insert(make_pair(comms["moveLeft"], &SpritePlayer::moveLeft));
+			keyUp.insert(make_pair(comms["moveLeft"], &SpritePlayer::leftUp));
+		}
+		if (comms.count("moveRight")) {
+			keyDown.insert(make_pair(comms["moveRight"], &SpritePlayer::moveRight));
+			keyUp.insert(make_pair(comms["moveRight"], &SpritePlayer::rightUp));
+		}
+		if (comms.count("jump")) {
+			keyDown.insert(make_pair(comms["jump"], &SpritePlayer::jump));
+		}
+		if (comms.count("drop")) {
+			keyDown.insert(make_pair(comms["drop"], &SpritePlayer::drop));
+		}
+		events.insert(make_pair(SDL_KEYUP, keyUp));
+		events.insert(make_pair(SDL_KEYDOWN, keyDown));
 		this->colliderSize = colliderSize;
 		textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
 		textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());

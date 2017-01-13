@@ -15,8 +15,8 @@ namespace engine {
 	{
 
 	public:
-		static SpritePlayer* getInstance(const SDL_Rect& r, std::string t, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f);
-		void grounded();
+		static SpritePlayer* getInstance(const SDL_Rect& r, std::string t, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms);
+		
 		void ungrounded();
 		void draw();
 		void onCollision(Sprite* spriteA, Sprite* spriteB);
@@ -40,16 +40,26 @@ namespace engine {
 		void setTimeOfDrop(Uint32 time) { timeOfDrop = time; }
 		void setMoving(bool m) { moving = m; }
 		Uint32 getTKeyDownRight() const { return tKeyDownRight; }
-		Uint32 getTkeyDownLeft() const { return tKeyDownLeft; }
+		Uint32 getTKeyDownLeft() const { return tKeyDownLeft; }
 		void setYCoordAtEvent() { yCoordAtEvent = rect.y; }
 		void speedOnCollision();
 		void setYSpeed(int i) { ySpeed = i; }
 		int getJumpSpeed() const { return JUMP_SPEED; }
 
 	protected:
-		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f);
+		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms);
 	private:
+
+		std::map<int, std::map<int, void(SpritePlayer::*)() >> events;
+		void moveLeft();
+		void moveRight();
+		void jump();
+		void drop();
+		void leftUp();
+		void rightUp();
+		void grounded();
 		void kill();
+
 		//void deltaTime();
 		/*float dtJump();
 		float dtFall();
