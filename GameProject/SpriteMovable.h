@@ -11,7 +11,11 @@ namespace engine {
 		std::vector<SDL_Rect> getPixelCollisionRects() { return pixelCollisionRects; }
 		~SpriteMovable();
 		void setDirection(int i) { direction = i; }
+		float getTimeSinceEvent() const { return timeSinceEvent; }
+		void resetTimeSinceEvent() { timeSinceEvent = 0; }
+		void updateTimeSinceEvent() { timeSinceEvent += ge.getDeltaTime(); }
 	protected:
+		
 		int width = 0;
 		SDL_Rect rt = { 0,0,0,0 };
 		int y = 0;
@@ -30,6 +34,8 @@ namespace engine {
 		bool fadeOutIn;
 		SDL_Texture* textureMoving;
 		SDL_Texture* textureStationary;
+	private:
+		float timeSinceEvent;
 	};
 }
 #endif

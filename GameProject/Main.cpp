@@ -23,7 +23,7 @@ void moveRight(SpritePlayer& p) {
 
 void jump(SpritePlayer& p) {
 	if (!p.hasJumped()&& !p.hasDropped() && !p.isFalling()) {
-		ge.resetTimeSinceEvent();
+		p.resetTimeSinceEvent();
 		p.setYSpeed(p.getJumpSpeed());
 		p.setJumped(true);
 		p.setDropped(false);
@@ -37,7 +37,7 @@ void jump(SpritePlayer& p) {
 
 void drop(SpritePlayer& p) {
 	if (!p.hasJumped()) {
-		ge.resetTimeSinceEvent();
+		p.resetTimeSinceEvent();
 		p.setDropped(true);
 		p.setJumped(false);
 		p.setFalling(false);
@@ -62,7 +62,7 @@ int main(int argvc, char* argv[]) {
 	map<int, void (*)(SpritePlayer&)> keyUpFuncs;
 	map<int, void (*)(SpritePlayer&)> keyDownFuncs;
 	
-	
+	//Dessa tar emot egen funktionalitet för spelaren
 	keyUpFuncs.insert(make_pair(-1, leftUp));
 	keyUpFuncs.insert(make_pair(-1, rightUp));
 	keyDownFuncs.insert(make_pair(-1, moveLeft));
@@ -73,9 +73,7 @@ int main(int argvc, char* argv[]) {
 	events.insert(make_pair(SDL_KEYDOWN, keyDownFuncs));
 	
 	
-	void (SpritePlayer::*pek)();
-	//pek = &SpritePlayer::grounded;
-
+	//spelarens inbyggda funktionalitet
 	map<string, int> comms;
 	comms.insert(make_pair("moveLeft", SDLK_LEFT));
 	comms.insert(make_pair("moveRight", SDLK_RIGHT));

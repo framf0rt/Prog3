@@ -48,12 +48,13 @@ namespace engine {
 	}
 
 	void SpritePlayer::speedOnCollision() {
-		ySpeed = -0.6*(ySpeed + ge.getTimeSinceEvent() * 600);
+		ySpeed = -0.6*(ySpeed + getTimeSinceEvent() * 600);
 	}
 
 	void SpritePlayer::tick() {
 		float dt = ge.getDeltaTime();
-		float edt = ge.getTimeSinceEvent();
+		updateTimeSinceEvent();
+		float edt = getTimeSinceEvent();
 
 		if (alphaModifier <= 256 && alphaModifier > 125 && fadeOutIn == true) {
 			alphaModifier -= 100 * dt;
@@ -101,6 +102,7 @@ namespace engine {
 		if (jumped || dropped || falling) {
 			rect.y = yCoordAtEvent + ySpeed*edt + (edt*edt * 600 / 2);
 		}
+		
 
 
 	}
@@ -119,7 +121,7 @@ namespace engine {
 
 	void SpritePlayer::jump() {
 		if (!hasJumped() && !hasDropped() && !isFalling()) {
-			ge.resetTimeSinceEvent();
+			resetTimeSinceEvent();
 			setYSpeed(getJumpSpeed());
 			setJumped(true);
 			setDropped(false);
@@ -130,7 +132,7 @@ namespace engine {
 
 	void SpritePlayer::drop() {
 		if (!hasJumped()) {
-			ge.resetTimeSinceEvent();
+			resetTimeSinceEvent();
 			setDropped(true);
 			setJumped(false);
 			setFalling(false);
@@ -160,7 +162,7 @@ namespace engine {
 		falling = true;
 		jumped = false;
 		dropped = false;
-		ge.resetTimeSinceEvent();
+		resetTimeSinceEvent();
 		setYCoordAtEvent();
 	}
 
@@ -201,7 +203,7 @@ namespace engine {
 						grounded();
 
 					}
-					ge.resetTimeSinceEvent();
+					resetTimeSinceEvent();
 
 					return;
 				}
@@ -258,7 +260,7 @@ namespace engine {
 		falling = true;
 		jumped = false;
 		dropped = false;
-		ge.resetTimeSinceEvent();
+		resetTimeSinceEvent();
 		rect.x = 0;
 		std::cout << rect.x << rect.y << std::endl;
 	
