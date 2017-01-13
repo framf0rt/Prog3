@@ -2,10 +2,10 @@
 
 #include <iostream>
 #include <math.h>
-
+using namespace std;
 namespace engine {
 
-	SpriteEnemy::SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, SpritePlayer* p) :SpriteMovable(r, path)
+	SpriteEnemy::SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, shared_ptr<SpritePlayer> p) :SpriteMovable(r, path)
 	{
 		startY = rect.y;
 		startX = rect.x;
@@ -60,8 +60,8 @@ namespace engine {
 		//	}
 		//}
 	}
-	SpriteEnemy* SpriteEnemy::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, SpritePlayer* p) {
-		return new SpriteEnemy(r, path, pathMoving, hp, p);
+	shared_ptr<SpriteEnemy> SpriteEnemy::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, shared_ptr<SpritePlayer> p) {
+		return shared_ptr<SpriteEnemy>(new SpriteEnemy(r, path, pathMoving, hp, p));
 	}
 	int SpriteEnemy::getHp() {
 		return hp;

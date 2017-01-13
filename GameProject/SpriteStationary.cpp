@@ -1,11 +1,13 @@
+
 #include "SpriteStationary.h"
+using namespace std;
 
 namespace engine {
 
 	
 
-	SpriteStationary* SpriteStationary::getInstance(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone) {
-		return new SpriteStationary(r, path, isGround, isBounceable, isKillZone);
+	shared_ptr<SpriteStationary> SpriteStationary::getInstance(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone) {
+		return shared_ptr<SpriteStationary>(new SpriteStationary(r, path, isGround, isBounceable, isKillZone));
 	}
 
 	SpriteStationary::SpriteStationary(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone):Sprite(r, path)

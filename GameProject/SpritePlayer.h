@@ -15,11 +15,11 @@ namespace engine {
 	{
 
 	public:
-		static SpritePlayer* getInstance(const SDL_Rect& r, std::string t, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms);
+		static std::shared_ptr<SpritePlayer> getInstance(const SDL_Rect& r, std::string t, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms);
 		
 		void ungrounded();
 		void draw();
-		void onCollision(Sprite* spriteA, Sprite* spriteB);
+		void onCollision(std::shared_ptr<Sprite> spriteA, std::shared_ptr<Sprite> spriteB);
 		SDL_Rect getCollider();
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);

@@ -49,7 +49,7 @@ namespace engine {
 		
 	}
 
-	void Sprite::onCollision(Sprite* spriteA, Sprite* spriteB) {
+	void Sprite::onCollision(shared_ptr<Sprite> spriteA, shared_ptr<Sprite> spriteB) {
 
 	}
 

@@ -2,13 +2,14 @@
 #define SPRITESTATIONARY_H
 #include "Sprite.h"
 #include <SDL.h>
+#include <memory>
 
 namespace engine {
 	class SpriteStationary :
 		public Sprite
 	{
 	public:
-		static SpriteStationary* getInstance(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone);
+		static std::shared_ptr<SpriteStationary> getInstance(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone);
 		~SpriteStationary();
 		void draw();
 		bool getIsBounceable() { return isBounceable; }
