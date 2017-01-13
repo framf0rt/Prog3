@@ -180,7 +180,8 @@ namespace engine {
 		if (ground != NULL)
 		{
 			if (ground->getIsKillZone() == 1) {
-			
+				killZoneCollision(ground);
+				return;
 			}
 
 			else if (ground->getIsBounceable() == 1 && ground->getIsGround() != 0 && ground->getIsKillZone() != 1) {
@@ -254,14 +255,28 @@ namespace engine {
 		}
 	}
 
+	void SpritePlayer::killZoneCollision(std::shared_ptr<SpriteStationary> killzone) {
+		SDL_Rect aRect = { 0,0,0,0 };
+		for (SDL_Rect aRect : pixelCollisionRects) {
+			aRect = { aRect.x + rect.x - aRect.x,aRect.y + rect.y,aRect.w,aRect.h };
+			SDL_Rect *A = &(aRect);
+			SDL_Rect *B = &(killzone->getRect());
+			if (SDL_HasIntersection(A, B)) {
+				kill();
+			}
+		}
+			
+	}
 
 	void SpritePlayer::kill() {
 
-		std::cout << startPosX << startPosY << std::endl;
 		setGravity(true);
+		ungrounded();
+		ySpeed = 0;
+		yCoordAtEvent = startPosY;
 		resetTimeSinceEvent();
-		rect.x = 0;
-		std::cout << rect.x << rect.y << std::endl;
+		rect.x = startPosX;
+
 	
 	}
 
