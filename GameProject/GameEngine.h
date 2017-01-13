@@ -23,9 +23,9 @@ namespace engine {
 		void updateTimeSinceEvent() { timeSinceEvent += dt; }
 		float getTimeSinceEvent() const { return timeSinceEvent;}
 		void resetTimeSinceEvent() { timeSinceEvent = 0; }
-
+		SDL_Window* getWindow()const { return win; }
 	private:
-	
+		bool start = false;
 		std::vector<std::shared_ptr<Sprite>> sprites;
 		SDL_Window* win;
 		SDL_Renderer* ren;

@@ -7,6 +7,7 @@
 #include <SDL_image.h>
 #include "SpriteEnemy.h"
 #include "SpriteStationary.h"
+#include "SpriteLabel.h"
 #include <iostream>
 using namespace std;
 
@@ -74,6 +75,7 @@ namespace engine {
 			// MOVEMENT START
 			for (shared_ptr<Sprite> sprite : sprites) {
 				shared_ptr<SpritePlayer> playerMove = dynamic_pointer_cast<SpritePlayer>(sprite);
+				shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
 				if (playerMove != NULL) {
 					SDL_Event eve;
 					while (SDL_PollEvent(&eve)) {
@@ -81,27 +83,58 @@ namespace engine {
 						{
 						case SDL_QUIT:
 							running = false;
-							break;
+						break;
 						default:
 							break;
 						}
 						playerMove->move(eve);
 					}
 				}
+				if ( label != NULL && start == false) {
+					SDL_Event e;
+					while (SDL_PollEvent(&e)) {
+						switch (e.type)
+						{
+						case SDL_QUIT:
+							running = false;
+							break;
+						case SDL_TEXTINPUT:
+							label->addCharacter(e);
+						break;
+						case SDL_KEYDOWN:
+							if (e.key.keysym.sym == SDLK_RETURN) {
+								start = true;
+								label->emptyText(e);
+							}
+							else {
+								label->removeCharacter(e);
+							}
+							break;
+						default:
+							break;
+						}
+					}
+				}
 			} // MOVEMENT END
-
+		
 			// RENDERING START
 			updateTimeSinceEvent();
 			SDL_RenderClear(getRen());
 			for (shared_ptr<Sprite> sprite : sprites) {
 
 				shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprite);
-				if (movable != NULL)
+				shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
+				if (movable != NULL && start != false)
 				{
 					movable->tick();
 					movable->draw();
 				}
-				else {
+				else if (label != NULL && start != true) {
+					//label->tick();
+					label->draw();
+				}
+				
+				else if (start != false){
 					sprite->tick();
 					sprite->draw();
 				}

@@ -89,13 +89,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SDL2_image-2.0.1\include;C:\SDL2-2.0.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\SDL2_ttf-2.0.14\include;C:\SDL2_image-2.0.1\include;C:\SDL2-2.0.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SDL2_image-2.0.1\lib\x86;C:\SDL2-2.0.5\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\SDL2_image-2.0.1\lib\x86;C:\SDL2-2.0.5\lib\x86;C:\SDL2_ttf-2.0.14\lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_ttf.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -152,6 +152,7 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteEnemy.h" />
+    <ClInclude Include="SpriteLabel.h" />
     <ClInclude Include="SpriteMovable.h" />
     <ClInclude Include="SpritePlayer.h" />
     <ClInclude Include="SpriteStationary.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteEnemy.cpp" />
+    <ClCompile Include="SpriteLabel.cpp" />
     <ClCompile Include="SpriteMovable.cpp" />
     <ClCompile Include="SpritePlayer.cpp" />
     <ClCompile Include="SpriteStationary.cpp" />

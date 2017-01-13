@@ -25,9 +25,9 @@ namespace engine {
 		virtual void move(const SDL_Event& eve) {};
 		void animation(SDL_Texture &anitexture);
 		SDL_Texture* getTexture() const { return texture; }
+		void setTexture(SDL_Texture* tex) { texture = tex; }
 		SDL_Rect rect;
 	private:
-		
 		SDL_Texture* texture;
 		SDL_Surface* surface;
 		Sprite(const Sprite&) = delete;

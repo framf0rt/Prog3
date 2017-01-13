@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SpritePlayer.h"
 #include "SpriteEnemy.h"
+#include "SpriteLabel.h"
 #include <map>
 
 using namespace std;
@@ -83,6 +84,8 @@ int main(int argvc, char* argv[]) {
 	shared_ptr<SpritePlayer> s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,events,comms);
 	shared_ptr<SpriteEnemy> se = SpriteEnemy::getInstance({ 600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
 
+	shared_ptr<SpriteLabel> text = SpriteLabel::getInstance({ 0,0,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png");
+
 	shared_ptr<SpriteStationary> sg = SpriteStationary::getInstance({ 300,200,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, true, false);
 	shared_ptr<SpriteStationary> sg1 = SpriteStationary::getInstance({ 100,500,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, true, false);
 	shared_ptr<SpriteStationary> sg2 = SpriteStationary::getInstance({ 200,500,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, false, false);
@@ -91,6 +94,7 @@ int main(int argvc, char* argv[]) {
 	
 	shared_ptr<SpriteStationary> kill = SpriteStationary::getInstance({ 200,400,100,50 }, "", true, false, true);
 
+	ge.addSprite(text);
 	ge.addSprite(s);
 	ge.addSprite(se);
 	ge.addSprite(sg);
