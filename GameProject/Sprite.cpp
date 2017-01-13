@@ -11,6 +11,9 @@ namespace engine {
 
 
 	void Sprite::draw() {
+		if (texture == nullptr) {
+			return;
+		}
 		SDL_RenderCopy(ge.getRen(), texture, NULL, &getRect());
 	}
 	Sprite::Sprite(const SDL_Rect& r, std::string path) :rect(r)

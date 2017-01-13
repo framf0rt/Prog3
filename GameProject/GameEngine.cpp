@@ -7,7 +7,6 @@
 #include <SDL_image.h>
 #include "SpriteEnemy.h"
 #include "SpriteStationary.h"
-#include "SpriteGround.h"
 #include <iostream>
 using namespace std;
 
@@ -20,7 +19,7 @@ namespace engine {
 	void GameEngine::addSprite(Sprite* s) {
 		sprites.push_back(s);
 	}
-	
+
 	void GameEngine::run() {
 		bool running = true;
 
@@ -29,18 +28,17 @@ namespace engine {
 		dt = (float)TIDPERVARV / 1000;
 		while (running) {
 			//deltaTime();
-			
+
 			//cout << dt << " " << timeSinceEvent << endl;
-			
+
 			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
 
-			//COLLISION START 
 			for (unsigned i = 0; i < sprites.size(); i++) {
 				Sprite* spriteA = sprites[i];
 				for (unsigned x = 0; x < sprites.size(); x++) {
 					Sprite* spriteB = sprites[x];
 					SpritePlayer *player = dynamic_cast<SpritePlayer*>(spriteA);
-					SpriteGround *ground = dynamic_cast<SpriteGround*>(spriteB);
+					SpriteStationary *ground = dynamic_cast<SpriteStationary*>(spriteB);
 					SpriteEnemy *enemy = dynamic_cast<SpriteEnemy*>(spriteB);
 					if (ground != NULL && player != NULL) {
 						SDL_Rect *groundCollider = &(player->getCollider());
@@ -50,6 +48,7 @@ namespace engine {
 						}
 					}
 					else {
+						
 						if (player != NULL) {
 							if (!player->hasJumped() && !player->hasDropped() && !player->isFalling()) {
 								player->ungrounded(); // Startar fall
@@ -61,31 +60,31 @@ namespace engine {
 							pixelCollision(player, enemy);
 						}
 					}
+
+					if (ground != NULL && player != NULL) {
+						if (ground->getIsGround() == 0) {
+							player->onCollision(spriteA, spriteB);
+						}
+					}
 				}
 
-			
+
 			}//COLLISION END
-			
+
 			// MOVEMENT START
 			for (Sprite *sprite : sprites) {
 				SpritePlayer *playerMove = dynamic_cast<SpritePlayer*>(sprite);
 				if (playerMove != NULL) {
 					SDL_Event eve;
 					while (SDL_PollEvent(&eve)) {
-						/*switch (eve.type)
+						switch (eve.type)
 						{
-						case SDL_KEYDOWN:
-							playerMove->move(eve);
-							break;
-						case SDL_KEYUP:
-							playerMove->move(eve);
-							break;
 						case SDL_QUIT:
 							running = false;
 							break;
 						default:
 							break;
-						}*/
+						}
 						playerMove->move(eve);
 					}
 				}
