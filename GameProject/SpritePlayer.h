@@ -3,7 +3,7 @@
 #include "Sprite.h"
 #include "SpriteMovable.h"
 #include "SpriteStationary.h"
-#include "SpriteGround.h"
+
 #include <map>
 
 
@@ -49,6 +49,7 @@ namespace engine {
 	protected:
 		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms);
 	private:
+
 		std::map<int, std::map<int, void(SpritePlayer::*)() >> events;
 		void moveLeft();
 		void moveRight();
@@ -56,8 +57,9 @@ namespace engine {
 		void drop();
 		void leftUp();
 		void rightUp();
-
 		void grounded();
+		void kill();
+
 		//void deltaTime();
 		/*float dtJump();
 		float dtFall();
@@ -73,7 +75,9 @@ namespace engine {
 		bool dropped;
 		bool falling;
 		int yCoordAtEvent;
-	
+		
+		int startPosX;
+		int startPosY;
 		const int MOVEMENT_SPEED = 150;
 		bool moving;
 		SDL_Rect boxCollider;

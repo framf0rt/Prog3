@@ -152,7 +152,6 @@
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteEnemy.h" />
-    <ClInclude Include="SpriteGround.h" />
     <ClInclude Include="SpriteMovable.h" />
     <ClInclude Include="SpritePlayer.h" />
     <ClInclude Include="SpriteStationary.h" />
@@ -162,7 +161,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteEnemy.cpp" />
-    <ClCompile Include="SpriteGround.cpp" />
     <ClCompile Include="SpriteMovable.cpp" />
     <ClCompile Include="SpritePlayer.cpp" />
     <ClCompile Include="SpriteStationary.cpp" />
