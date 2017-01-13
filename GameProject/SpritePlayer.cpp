@@ -12,8 +12,8 @@ using namespace std;
 namespace engine {
 
 
-	SpritePlayer* SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string, int> comms) {
-		return new SpritePlayer(r, path, pathMoving, colliderSize, f, comms);
+	shared_ptr<SpritePlayer> SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string, int> comms) {
+		return shared_ptr<SpritePlayer>(new SpritePlayer(r, path, pathMoving, colliderSize, f, comms));
 	}
 
 
@@ -168,12 +168,12 @@ namespace engine {
 
 
 
-	void SpritePlayer::onCollision(Sprite* spriteA, Sprite* spriteB) {
+	void SpritePlayer::onCollision(shared_ptr<Sprite> spriteA, shared_ptr<Sprite> spriteB) {
 		float dt = ge.getDeltaTime();
 
 		//Kollar om det är en spelare och spritestationary som kolliderat
-		SpriteStationary *ground = dynamic_cast<SpriteStationary*>(spriteB);
-		SpriteEnemy *enemy = dynamic_cast<SpriteEnemy*>(spriteB);
+		shared_ptr<SpriteStationary> ground = dynamic_pointer_cast<SpriteStationary>(spriteB);
+		shared_ptr<SpriteEnemy> enemy = dynamic_pointer_cast<SpriteEnemy>(spriteB);
 
 
 		if (ground != NULL)

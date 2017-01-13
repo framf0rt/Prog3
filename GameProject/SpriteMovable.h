@@ -1,6 +1,7 @@
 #ifndef SPRITEMOVABLE_H
 #define SPRITEMOVABLE_H
 #include "Sprite.h"
+#include <memory>
 namespace engine {
 	class SpriteMovable :
 		public Sprite

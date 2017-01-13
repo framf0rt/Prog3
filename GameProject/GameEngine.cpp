@@ -16,7 +16,7 @@ using namespace std;
 namespace engine {
 
 
-	void GameEngine::addSprite(Sprite* s) {
+	void GameEngine::addSprite(shared_ptr<Sprite> s) {
 		sprites.push_back(s);
 	}
 
@@ -34,12 +34,12 @@ namespace engine {
 			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
 
 			for (unsigned i = 0; i < sprites.size(); i++) {
-				Sprite* spriteA = sprites[i];
+				shared_ptr<Sprite> spriteA = sprites[i];
 				for (unsigned x = 0; x < sprites.size(); x++) {
-					Sprite* spriteB = sprites[x];
-					SpritePlayer *player = dynamic_cast<SpritePlayer*>(spriteA);
-					SpriteStationary *ground = dynamic_cast<SpriteStationary*>(spriteB);
-					SpriteEnemy *enemy = dynamic_cast<SpriteEnemy*>(spriteB);
+					shared_ptr<Sprite> spriteB = sprites[x];
+					shared_ptr<SpritePlayer> player = dynamic_pointer_cast<SpritePlayer>(spriteA);
+					shared_ptr<SpriteStationary> ground = dynamic_pointer_cast<SpriteStationary>(spriteB);
+					shared_ptr<SpriteEnemy> enemy = dynamic_pointer_cast<SpriteEnemy>(spriteB);
 					if (ground != NULL && player != NULL) {
 						SDL_Rect *groundCollider = &(player->getCollider());
 						SDL_Rect *playerCollider = &(ground->getCollider());
@@ -72,8 +72,8 @@ namespace engine {
 			}//COLLISION END
 
 			// MOVEMENT START
-			for (Sprite *sprite : sprites) {
-				SpritePlayer *playerMove = dynamic_cast<SpritePlayer*>(sprite);
+			for (shared_ptr<Sprite> sprite : sprites) {
+				shared_ptr<SpritePlayer> playerMove = dynamic_pointer_cast<SpritePlayer>(sprite);
 				if (playerMove != NULL) {
 					SDL_Event eve;
 					while (SDL_PollEvent(&eve)) {
@@ -93,9 +93,9 @@ namespace engine {
 			// RENDERING START
 			updateTimeSinceEvent();
 			SDL_RenderClear(getRen());
-			for (Sprite *sprite : sprites) {
+			for (shared_ptr<Sprite> sprite : sprites) {
 
-				SpriteMovable *movable = dynamic_cast<SpriteMovable*>(sprite);
+				shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprite);
 				if (movable != NULL)
 				{
 					movable->tick();
@@ -124,9 +124,9 @@ namespace engine {
 		}
 	}
 
-	void GameEngine::pixelCollision(Sprite* player, Sprite* enemy) {
-		SpritePlayer *p = dynamic_cast<SpritePlayer*>(player);
-		SpriteEnemy *e = dynamic_cast<SpriteEnemy*>(enemy);
+	void GameEngine::pixelCollision(shared_ptr<Sprite> player, shared_ptr<Sprite> enemy) {
+		shared_ptr<SpritePlayer> p = dynamic_pointer_cast<SpritePlayer>(player);
+		shared_ptr<SpriteEnemy> e = dynamic_pointer_cast<SpriteEnemy>(enemy);
 		SDL_Rect *A = &(p->getRect());
 		SDL_Rect *B = &(e->getRect());
 		if (SDL_HasIntersection(A, B)) {

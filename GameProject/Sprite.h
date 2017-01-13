@@ -4,6 +4,7 @@
 #include <string>
 #include <SDL_image.h>
 #include "GameEngine.h"
+#include <memory>
 
 namespace engine {
 	class Sprite
@@ -12,7 +13,7 @@ namespace engine {
 		SDL_Rect getRect() const { return rect; }
 		int getAlphaXY(int x, int y);
 		void draw();
-		void onCollision(Sprite* spriteA, Sprite* spriteB);
+		void onCollision(std::shared_ptr<Sprite> spriteA, std::shared_ptr<Sprite> spriteB);
 		virtual void keyDown(const SDL_Event& eve) {};
 		virtual void tick() {};
 		void setRectY(int y) { rect.y = y; }

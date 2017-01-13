@@ -1,8 +1,8 @@
-
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
 #include "Sprite.h"
 #include <vector>
+#include <memory>
 class Sprite;
 
 
@@ -13,8 +13,8 @@ namespace engine {
 	{
 	public:
 		void run();
-		void pixelCollision(Sprite * player, Sprite * enemy);
-		void addSprite(Sprite* s);
+		void pixelCollision(std::shared_ptr<Sprite> player, std::shared_ptr<Sprite> enemy);
+		void addSprite(std::shared_ptr<Sprite> s);
 		SDL_Renderer* getRen() const { return ren; }
 		GameEngine();
 		~GameEngine();
@@ -26,7 +26,7 @@ namespace engine {
 
 	private:
 	
-		std::vector<Sprite*> sprites;
+		std::vector<std::shared_ptr<Sprite>> sprites;
 		SDL_Window* win;
 		SDL_Renderer* ren;
 		long last = SDL_GetTicks();
