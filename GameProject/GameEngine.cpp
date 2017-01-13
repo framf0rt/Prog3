@@ -50,7 +50,7 @@ namespace engine {
 					else {
 						
 						if (player != NULL) {
-							if (!player->hasJumped() && !player->hasDropped() && !player->isFalling()) {
+							if (!player->hasGravity()) {
 								player->ungrounded(); // Startar fall
 							}
 						}

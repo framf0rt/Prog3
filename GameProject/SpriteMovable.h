@@ -15,6 +15,8 @@ namespace engine {
 		float getTimeSinceEvent() const { return timeSinceEvent; }
 		void resetTimeSinceEvent() { timeSinceEvent = 0; }
 		void updateTimeSinceEvent() { timeSinceEvent += ge.getDeltaTime(); }
+		void setGravity(bool g) { gravity = g; }
+		bool hasGravity() const { return gravity; };
 	protected:
 		
 		int width = 0;
@@ -36,6 +38,7 @@ namespace engine {
 		SDL_Texture* textureMoving;
 		SDL_Texture* textureStationary;
 	private:
+		bool gravity;
 		float timeSinceEvent;
 	};
 }

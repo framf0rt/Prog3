@@ -22,12 +22,12 @@ void moveRight(SpritePlayer& p) {
 }
 
 void jump(SpritePlayer& p) {
-	if (!p.hasJumped()&& !p.hasDropped() && !p.isFalling()) {
+	if (!p.hasGravity()) {
 		p.resetTimeSinceEvent();
 		p.setYSpeed(p.getJumpSpeed());
-		p.setJumped(true);
-		p.setDropped(false);
-		p.setFalling(false);
+		p.setGravity(true);
+		//p.setDropped(false);
+		//p.setFalling(false);
 		p.setYCoordAtEvent();
 	}
 }
@@ -36,11 +36,11 @@ void jump(SpritePlayer& p) {
 
 
 void drop(SpritePlayer& p) {
-	if (!p.hasJumped()) {
+	if (!p.hasGravity()) {
 		p.resetTimeSinceEvent();
-		p.setDropped(true);
-		p.setJumped(false);
-		p.setFalling(false);
+		p.setGravity(true);
+		//p.setJumped(false);
+		//p.setFalling(false);
 		p.setYSpeed(200);
 		p.setRectY(p.getRectY() + 10);
 		p.setYCoordAtEvent();
