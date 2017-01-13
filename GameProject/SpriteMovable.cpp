@@ -42,10 +42,6 @@ namespace engine {
 
 
 	void SpriteMovable::draw() {
-		if (player = true) {
-			std::cout << rect.x << rect.y << std::endl;
-		}
-		
 		SDL_Rect *dstRect = &getRect();
 		SDL_Texture *texture = getTexture();
 

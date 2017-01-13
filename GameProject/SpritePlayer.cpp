@@ -99,7 +99,7 @@ namespace engine {
 				cout << "faller" << endl;
 				rect.y = yCoordAtEvent + ySpeed*edt +(edt*edt*600/2);
 			}*/
-		if (jumped || dropped || falling) {
+		if (hasGravity()) {
 			rect.y = yCoordAtEvent + ySpeed*edt + (edt*edt * 600 / 2);
 		}
 		
@@ -120,22 +120,22 @@ namespace engine {
 	}
 
 	void SpritePlayer::jump() {
-		if (!hasJumped() && !hasDropped() && !isFalling()) {
+		if (!hasGravity()) {
 			resetTimeSinceEvent();
 			setYSpeed(getJumpSpeed());
-			setJumped(true);
-			setDropped(false);
-			setFalling(false);
+			setGravity(true);
+			//setDropped(false);
+			//setFalling(false);
 			setYCoordAtEvent();
 		}
 	}
 
 	void SpritePlayer::drop() {
-		if (!hasJumped()) {
+		if (!hasGravity()) {
 			resetTimeSinceEvent();
-			setDropped(true);
-			setJumped(false);
-			setFalling(false);
+			setGravity(true);
+			//setJumped(false);
+			//setFalling(false);
 			setYSpeed(200);
 			setRectY(getRectY() + 10);
 			setYCoordAtEvent();
@@ -153,15 +153,16 @@ namespace engine {
 		}
 	}
 	void SpritePlayer::grounded() {
-		jumped = false;
-		dropped = false;
-		falling = false;
+		setGravity(false);
+		//jumped = false;
+		//dropped = false;
+		//falling = false;
 	}
 
 	void SpritePlayer::ungrounded() {
-		falling = true;
-		jumped = false;
-		dropped = false;
+		setGravity(true);
+		//jumped = false;
+		//dropped = false;
 		resetTimeSinceEvent();
 		setYCoordAtEvent();
 	}
@@ -184,7 +185,7 @@ namespace engine {
 
 			else if (ground->getIsBounceable() == 1 && ground->getIsGround() != 0 && ground->getIsKillZone() != 1) {
 
-				if (!(jumped && dropped && falling)) {
+				if (hasGravity()) {
 
 					speedOnCollision();
 					//jumped = false;
@@ -257,9 +258,7 @@ namespace engine {
 	void SpritePlayer::kill() {
 
 		std::cout << startPosX << startPosY << std::endl;
-		falling = true;
-		jumped = false;
-		dropped = false;
+		setGravity(true);
 		resetTimeSinceEvent();
 		rect.x = 0;
 		std::cout << rect.x << rect.y << std::endl;

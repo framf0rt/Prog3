@@ -8,7 +8,10 @@ using namespace std;
 
 namespace engine {
 
-
+	Sprite:: ~Sprite() {
+		SDL_FreeSurface(surface);
+		SDL_DestroyTexture(texture);
+	}
 
 	void Sprite::draw() {
 		if (texture == nullptr) {
@@ -53,8 +56,6 @@ namespace engine {
 
 	}
 
-	Sprite::~Sprite()
-	{
-	}
+	
 }
 

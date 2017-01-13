@@ -24,9 +24,9 @@ namespace engine {
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
 		void tick();
-		bool isFalling() const { return falling; };
-		bool hasJumped() const { return jumped; };
-		bool hasDropped() const { return dropped; };
+		
+		//bool hasJumped() const { return jumped; };
+		//bool hasDropped() const { return dropped; };
 		bool hasInvunerability() const { return invulnerable; };
 		void setInvunerability();
 		void move(const SDL_Event& eve);
@@ -34,9 +34,9 @@ namespace engine {
 		void setTimeKeyDownRight(Uint32 time) { tKeyDownRight = time; }
 		//void setMoving(bool moving) { this->moving = moving; }
 		void setTimeOfJump(Uint32 time) { timeOfJump = time; }
-		void setJumped(bool j) { jumped = j; }
-		void setDropped(bool d) { dropped = d; }
-		void setFalling(bool f) { falling = f; }
+		
+		//void setDropped(bool d) { dropped = d; }
+		//void setFalling(bool f) { falling = f; }
 		void setTimeOfDrop(Uint32 time) { timeOfDrop = time; }
 		void setMoving(bool m) { moving = m; }
 		Uint32 getTKeyDownRight() const { return tKeyDownRight; }
@@ -71,9 +71,9 @@ namespace engine {
 		int ySpeed = 200;
 		/*long last;
 		float dt;*/
-		bool jumped;
-		bool dropped;
-		bool falling;
+		
+		//bool dropped;
+		//bool falling;
 		int yCoordAtEvent;
 		
 		int startPosX;
