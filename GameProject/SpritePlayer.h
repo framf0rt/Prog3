@@ -7,8 +7,6 @@
 
 
 namespace engine {
-	//using Func = void(*)(SpritePlayer&);
-	//typedef void (*Func)(SpritePlayer&);
 	class SpritePlayer :
 		public SpriteMovable
 	{
@@ -22,20 +20,11 @@ namespace engine {
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
 		void tick(float dt);
-		
-		//bool hasJumped() const { return jumped; };
-		//bool hasDropped() const { return dropped; };
 		bool hasInvunerability() const { return invulnerable; };
 		void setInvunerability();
 		void move(const std::vector<SDL_Event>& eve);
 		void setTimeKeyDownLeft(Uint32 time) { tKeyDownLeft = time; }
 		void setTimeKeyDownRight(Uint32 time) { tKeyDownRight = time; }
-		//void setMoving(bool moving) { this->moving = moving; }
-		//void setTimeOfJump(Uint32 time) { timeOfJump = time; }
-		
-		//void setDropped(bool d) { dropped = d; }
-		//void setFalling(bool f) { falling = f; }
-		//void setTimeOfDrop(Uint32 time) { timeOfDrop = time; }
 		void setMoving(bool m) { moving = m; }
 		Uint32 getTKeyDownRight() const { return tKeyDownRight; }
 		Uint32 getTKeyDownLeft() const { return tKeyDownLeft; }
@@ -58,29 +47,13 @@ namespace engine {
 		void rightUp();
 		void grounded();
 		void kill();
-		//void deltaTime();
-		/*float dtJump();
-		float dtFall();
-		float dtDrop();*/
-		//Uint32 timeOfJump;
-		//Uint32 timeOfFall = SDL_GetTicks();
-		//Uint32 timeOfDrop;
 		const int JUMP_SPEED = -500;
-		
-		/*long last;
-		float dt;*/
-		
-		//bool dropped;
-		//bool falling;
-		
-		
 		int startPosX;
 		int startPosY;
 		const int MOVEMENT_SPEED = 150;
 		bool moving;
 		SDL_Rect boxCollider;
 		float colliderSize;
-
 		Uint32 tKeyDownRight;
 		Uint32 tKeyDownLeft;
 		std::map<int, std::map<int, void(*)(SpritePlayer&)>> commands;

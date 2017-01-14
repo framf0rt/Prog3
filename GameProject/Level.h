@@ -14,12 +14,9 @@ namespace engine {
 		void addSp(std::shared_ptr<Sprite> s);
 		void fadeOut();
 		~Level();
-	protected:
-		
 	private:
 		Level(int x);
-		std::vector<std::shared_ptr<Sprite>> sprites;
-		
+		std::vector<std::shared_ptr<Sprite>> sprites;	
 	};
 
 }

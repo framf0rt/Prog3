@@ -7,7 +7,7 @@ using namespace std;
 namespace engine {
 
 	shared_ptr<SpriteLabelEditable> SpriteLabelEditable::getInstance(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, SDL_Renderer* re) {
-		return shared_ptr<SpriteLabelEditable>(new SpriteLabelEditable(r, path, locX, locY, text, charLimit,re));
+		return shared_ptr<SpriteLabelEditable>(new SpriteLabelEditable(r, path, locX, locY, text, charLimit, re));
 	}
 
 	SpriteLabelEditable::SpriteLabelEditable(const SDL_Rect & r, std::string path, int locX, int locY, std::string text, int charLimit, SDL_Renderer* re) :SpriteLabel(r, path, locX, locY, text, charLimit, re)
@@ -29,13 +29,11 @@ namespace engine {
 			return;
 		}
 		else {
-
 			gFont = TTF_OpenFont("arial.ttf", 28);
 			if (gFont == NULL) {
 				cout << "Hittar inte font" << endl;
 				return;
 			}
-
 			SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, inputText.c_str(), textColor);
 			if (textSurface != NULL)
 			{
@@ -53,12 +51,10 @@ namespace engine {
 				}
 			}
 		}
-
 	}
 
 	void SpriteLabelEditable::addCharacter(const SDL_Event& e)
 	{
-
 		fontRect = { 0,0,0,0 };
 		if (changed == true && inputText.size() < charLimit) {
 			inputText += e.text.text;
