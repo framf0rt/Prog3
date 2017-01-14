@@ -1,6 +1,7 @@
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
 #include "Sprite.h"
+#include "Level.h"
 #include <vector>
 #include <memory>
 #include <map>
@@ -34,7 +35,7 @@ namespace engine {
 		void resume();
 		bool paused = false;
 		bool start = false;
-		//std::vector<std::shared_ptr<Level>> levels;
+		std::vector<std::shared_ptr<Level>> levels;
 		std::vector<std::shared_ptr<Sprite>> sprites;
 		SDL_Window* win;
 		SDL_Renderer* ren;

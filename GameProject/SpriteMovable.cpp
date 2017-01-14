@@ -46,13 +46,11 @@ namespace engine {
 		SDL_Texture *texture = getTexture();
 
 
-		for (SDL_Rect aRect : pixelCollisionRects) {
+	/*	for (SDL_Rect aRect : pixelCollisionRects) {
 			aRect = { aRect.x + rect.x,aRect.y + rect.y,aRect.w,aRect.h };
 			SDL_Rect *A = &(aRect);
 			SDL_RenderCopyEx(ge.getRen(), textureStationary, nullptr, A, 0, nullptr, SDL_FLIP_NONE);
-
-
-		}
+		}*/
 
 		if (textureSwap == true) {
 			if (direction == 1) {
