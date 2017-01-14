@@ -1,5 +1,5 @@
-#ifndef SPRITEPLAYER_H
-#define SPRITEPLAYER_H
+#ifndef SPRITEPLAYER_H_INCLUDED
+#define SPRITEPLAYER_H_INCLUDED
 #include "Sprite.h"
 #include "SpriteMovable.h"
 #include "SpriteStationary.h"
@@ -14,19 +14,14 @@ namespace engine {
 	{
 
 	public:
-		static std::shared_ptr<SpritePlayer> getInstance(const SDL_Rect& r, std::string t, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms);
+		static std::shared_ptr<SpritePlayer> getInstance(const SDL_Rect& r, std::string t, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms, SDL_Renderer* re);
 		
 		void ungrounded();
-		void draw();
-		void onCollision(std::shared_ptr<Sprite> spriteA, std::shared_ptr<Sprite> spriteB);
-
-		void enemyCollision(std::shared_ptr<Sprite> spriteB);
-		
-		
+		void onCollision(std::shared_ptr<Sprite> spriteA, std::shared_ptr<Sprite> spriteB, float dt);
 		SDL_Rect getCollider();
 		~SpritePlayer();
 		void keyDown(const SDL_Event& eve);
-		void tick();
+		void tick(float dt);
 		
 		//bool hasJumped() const { return jumped; };
 		//bool hasDropped() const { return dropped; };
@@ -50,8 +45,9 @@ namespace engine {
 		int getJumpSpeed() const { return JUMP_SPEED; }
 
 	protected:
-		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms);
+		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms, SDL_Renderer* re);
 	private:
+		void enemyCollision(std::shared_ptr<Sprite> spriteB);
 		void killZoneCollision(std::shared_ptr<SpriteStationary> killzone);
 		std::map<int, std::map<int, void(SpritePlayer::*)() >> events;
 		void moveLeft();
@@ -62,7 +58,6 @@ namespace engine {
 		void rightUp();
 		void grounded();
 		void kill();
-
 		//void deltaTime();
 		/*float dtJump();
 		float dtFall();

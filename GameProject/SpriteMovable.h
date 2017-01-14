@@ -1,5 +1,5 @@
-#ifndef SPRITEMOVABLE_H
-#define SPRITEMOVABLE_H
+#ifndef SPRITEMOVABLE_H_INCLUDED
+#define SPRITEMOVABLE_H_INCLUDED
 #include "Sprite.h"
 #include <memory>
 namespace engine {
@@ -7,14 +7,14 @@ namespace engine {
 		public Sprite
 	{
 	public:
-		virtual void tick() {};
+		virtual void tick(float dt) {};
 		void draw();
 		std::vector<SDL_Rect> getPixelCollisionRects() { return pixelCollisionRects; }
 		~SpriteMovable();
 		void setDirection(int i) { direction = i; }
 		float getTimeSinceEvent() const { return timeSinceEvent; }
 		void resetTimeSinceEvent() { timeSinceEvent = 0; }
-		void updateTimeSinceEvent() { timeSinceEvent += ge.getDeltaTime(); }
+		void updateTimeSinceEvent(float dt) { timeSinceEvent += dt; }
 		void setGravity(bool g) { gravity = g; }
 		bool hasGravity() const { return gravity; };
 	protected:
@@ -26,7 +26,7 @@ namespace engine {
 		int y = 0;
 		int x = 0;
 		std::vector<SDL_Rect> pixelCollisionRects;
-		SpriteMovable(const SDL_Rect& r, std::string path);
+		SpriteMovable(const SDL_Rect& r, std::string path, SDL_Renderer* re);
 		void setPixelColliders();
 		SDL_Rect pc = { 0,0,0,0 };
 		float alphaModifier = 255;

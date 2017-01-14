@@ -1,5 +1,5 @@
-#ifndef SPRITELABELEDITABLE_H
-#define SPRITELABELEDITABLE_H
+#ifndef SPRITELABELEDITABLE_H_INCLUDED
+#define SPRITELABELEDITABLE_H_INCLUDED
 #include "SpriteLabel.h"
 #include <memory>
 #include <SDL_ttf.h>
@@ -9,14 +9,14 @@ namespace engine {
 		public SpriteLabel
 	{
 	public:
-		static 	std::shared_ptr<SpriteLabelEditable> getInstance(const SDL_Rect & r, std::string path, int locX, int locY, std::string text, int charLimit);
+		static 	std::shared_ptr<SpriteLabelEditable> getInstance(const SDL_Rect & r, std::string path, int locX, int locY, std::string text, int charLimit, SDL_Renderer* re);
 		~SpriteLabelEditable();
 		void draw();
 		void addCharacter(const SDL_Event& e);
 		void removeCharacter(const SDL_Event& e);
 		void emptyText(const SDL_Event& e);
 	protected:
-		SpriteLabelEditable(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit);
+		SpriteLabelEditable(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, SDL_Renderer* re);
 	};
 }
 #endif

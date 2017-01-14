@@ -88,7 +88,7 @@ namespace engine {
 							SDL_Rect *groundCollider = &(player->getCollider());
 							SDL_Rect *playerCollider = &(ground->getCollider());
 							if (SDL_HasIntersection(playerCollider, groundCollider)) {
-								player->onCollision(spriteA, spriteB);
+								player->onCollision(spriteA, spriteB,dt);
 							}
 						}
 						else {
@@ -107,7 +107,7 @@ namespace engine {
 
 						if (ground != NULL && player != NULL) {
 							if (ground->getIsGround() == 0) {
-								player->onCollision(spriteA, spriteB);
+								player->onCollision(spriteA, spriteB, dt);
 							}
 						}
 					}
@@ -173,7 +173,7 @@ namespace engine {
 				shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprite);
 				if (movable != NULL && start != false)
 				{
-					movable->tick();
+					movable->tick(dt);
 					movable->draw();
 				}
 				else if ((labelEdit != NULL || label != NULL) && start != true) {
@@ -187,7 +187,7 @@ namespace engine {
 				}
 
 				else if (start != false && labelEdit == NULL && label == NULL) {
-					sprite->tick();
+					sprite->tick(dt);
 					sprite->draw();
 				}
 			}
@@ -220,7 +220,7 @@ namespace engine {
 		SDL_Rect *A = &(p->getRect());
 		SDL_Rect *B = &(e->getRect());
 		if (SDL_HasIntersection(A, B)) {
-			p->onCollision(p, e);
+			p->onCollision(p, e,dt);
 		}
 	}
 

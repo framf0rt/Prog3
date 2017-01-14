@@ -7,11 +7,11 @@ using namespace std;
 
 namespace engine {
 
-	shared_ptr<SpriteLabel> SpriteLabel::getInstance(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit) {
-		return shared_ptr<SpriteLabel>(new SpriteLabel(r, path,locX,locY,text,charLimit));
+	shared_ptr<SpriteLabel> SpriteLabel::getInstance(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, SDL_Renderer* re) {
+		return shared_ptr<SpriteLabel>(new SpriteLabel(r, path,locX,locY,text,charLimit,re));
 	}
 
-	SpriteLabel::SpriteLabel(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit) :Sprite(r, path)
+	SpriteLabel::SpriteLabel(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, SDL_Renderer* re) :Sprite(r, path,re)
 	{
 		this->locX = locX;
 		this->locY = locY;
@@ -42,7 +42,7 @@ namespace engine {
 				SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, inputText.c_str(), textColor);
 				if (textSurface != NULL)
 				{
-					tex = SDL_CreateTextureFromSurface(ge.getRen(), textSurface);
+					tex = SDL_CreateTextureFromSurface(getRen(), textSurface);
 					setTexture(tex);
 					if (getTexture() == NULL) {
 						return;
@@ -52,7 +52,7 @@ namespace engine {
 						const char *cstr = inputText.c_str();
 						TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
 						fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
-						SDL_RenderCopyEx(ge.getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
+						SDL_RenderCopyEx(getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
 					}
 				}
 			}

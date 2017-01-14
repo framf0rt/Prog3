@@ -1,10 +1,8 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#ifndef LEVEL_H_INCLUDED
+#define LEVEL_H_INCLUDED
 #include <memory>
 #include <vector>
 #include "Sprite.h"
-class Sprite;
-
 
 namespace engine {
 
@@ -12,14 +10,14 @@ namespace engine {
 	{
 	public:
 		std::vector<std::shared_ptr<Sprite>> getSprites() const { return sprites; }
-		static std::shared_ptr<Level> getInstance();
+		static std::shared_ptr<Level> getInstance(int x);
 		void addSp(std::shared_ptr<Sprite> s);
 		void fadeOut();
 		~Level();
 	protected:
 		
 	private:
-		Level();
+		Level(int x);
 		std::vector<std::shared_ptr<Sprite>> sprites;
 		
 	};

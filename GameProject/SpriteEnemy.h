@@ -1,5 +1,5 @@
-#ifndef SPRITEENEMY_H
-#define SPRITEENEMY_H
+#ifndef SPRITEENEMY_H_INCLUDED
+#define SPRITEENEMY_H_INCLUDED
 #include "Sprite.h"
 #include "SpriteMovable.h"
 #include "SpritePlayer.h"
@@ -10,13 +10,13 @@ namespace engine {
 		public SpriteMovable
 	{
 	public:
-		static std::shared_ptr<SpriteEnemy> getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p);
+		static std::shared_ptr<SpriteEnemy> getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p, SDL_Renderer* re);
 		~SpriteEnemy();
 		int getHp();
-		void tick();
+		void tick(float dt);
 
 	protected:
-		SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p);
+		SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p, SDL_Renderer* re);
 
 	private:
 		int hp;

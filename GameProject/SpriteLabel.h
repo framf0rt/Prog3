@@ -1,5 +1,5 @@
-#ifndef SPRITELABEL_H
-#define SPRITELABEL_H
+#ifndef SPRITELABEL_H_INCLUDED
+#define SPRITELABEL_H_INCLUDED
 #include "Sprite.h"
 #include <memory>
 #include <SDL_ttf.h>
@@ -10,11 +10,11 @@ namespace engine {
 	{
 	public:
 		
-		static 	std::shared_ptr<SpriteLabel> getInstance(const SDL_Rect & r, std::string path,int locX, int locY, std::string text, int charLimit);
+		static 	std::shared_ptr<SpriteLabel> getInstance(const SDL_Rect & r, std::string path,int locX, int locY, std::string text, int charLimit, SDL_Renderer* re);
 		~SpriteLabel();
 		void draw();
 	protected:
-		SpriteLabel(const SDL_Rect& r, std::string path, int locX, int locY,std::string text, int charLimit);
+		SpriteLabel(const SDL_Rect& r, std::string path, int locX, int locY,std::string text, int charLimit, SDL_Renderer* re);
 		int locX;
 		int locY;
 		int charLimit;
