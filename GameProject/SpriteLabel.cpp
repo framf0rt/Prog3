@@ -47,7 +47,7 @@ namespace engine {
 				SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, inputText.c_str(), textColor);
 				if (textSurface != NULL)
 				{
-					
+
 					tex = SDL_CreateTextureFromSurface(getRen(), textSurface);
 					SDL_FreeSurface(textSurface);
 					setTexture(tex);
@@ -59,7 +59,7 @@ namespace engine {
 						TTF_Quit();
 						return;
 					}
-					
+
 					rect = &(fontRect);
 					cstr = inputText.c_str();
 					TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
@@ -74,6 +74,7 @@ namespace engine {
 				else {
 					SDL_FreeSurface(textSurface);
 					TTF_CloseFont(gFont);
+
 				}
 			}
 

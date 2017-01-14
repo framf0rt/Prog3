@@ -32,11 +32,12 @@ namespace engine {
 		void speedOnCollision();
 		void setYSpeed(int i) { ySpeed = i; }
 		int getJumpSpeed() const { return JUMP_SPEED; }
-
+		bool victoryCollision(std::shared_ptr<SpriteStationary> victory);
 	protected:
 		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms, SDL_Renderer* re, bool g);
 	private:
 		void enemyCollision(std::shared_ptr<Sprite> spriteB);
+
 		void killZoneCollision(std::shared_ptr<SpriteStationary> killzone);
 		std::map<int, std::map<int, void(SpritePlayer::*)() >> events;
 		void moveLeft();
