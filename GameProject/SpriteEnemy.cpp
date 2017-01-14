@@ -17,7 +17,7 @@ namespace engine {
 	}
 	void SpriteEnemy::tick(float dt) {
 
-		
+
 		// Animation
 		animationCount += 3;
 		if (animationCount > 100) {
@@ -27,25 +27,30 @@ namespace engine {
 		if (animationCount > 50 && animationCount < 100) {
 			animation(*textureStationary);
 		}
-
-		// Movement 
-		rect.x += (int)(dt*150*direction);
-		//std::cout << rect.y << " "<< startY <<std::endl;
-		if (rect.y >= startY + 50 ) {
-			directionY = 1;
-		} 
-		if (rect.y <= startY - 50) {
-			directionY = -1;
+		if (movementPointer != 0) {
+			movementPointer(*this);
 		}
-		if (directionY == -1) {
-			rect.y += (int)(dt * -125 * direction);
+		else {
+			// Movement 
+			rect.x += (int)(dt * 150 * direction);
+			//std::cout << rect.y << " "<< startY <<std::endl;
+			if (rect.y >= startY + 50) {
+				directionY = 1;
+			}
+			if (rect.y <= startY - 50) {
+				directionY = -1;
+			}
+			if (directionY == -1) {
+				rect.y += (int)(dt * -125 * direction);
+			}
+			if (directionY == 1) {
+				rect.y += (int)(dt * 125 * direction);
+			}
+			if (rect.x < -200) {
+				rect.x = startX;
+			}
 		}
-		if (directionY == 1) {
-			rect.y += (int)(dt * 125 * direction);
-		}
-		if (rect.x < - 200) {
-			rect.x = startX;
-		}
+	
 
 
 
