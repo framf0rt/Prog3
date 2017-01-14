@@ -36,13 +36,15 @@ namespace engine {
 		const int TIDPERVARV = 1000 / FPS;
 		dt = (float)TIDPERVARV / 1000;
 
-		getNextLevel();
+		setLevel(0);
 		while (running) {
+
 			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
 				events.push_back(event);
 			}
+
 			for (int i = 0; i < events.size(); i++) {
 				//här anropas callBack funktioner till main
 				if (!callBack.empty()) {
@@ -55,7 +57,6 @@ namespace engine {
 
 				switch (events[i].type)
 				{
-
 				case SDL_KEYDOWN:
 					if (events[i].key.keysym.sym == pauseKey) {
 						((*this).*pausePointer)();
@@ -67,7 +68,6 @@ namespace engine {
 				default:
 					break;
 				}
-
 			}
 
 			if (!paused) {
@@ -127,7 +127,6 @@ namespace engine {
 
 					}
 					if (label != NULL && start == false) {
-						//SDL_Event e;
 						for (int i = 0; i < events.size(); i++) {
 							switch (events[i].type)
 							{
@@ -142,13 +141,10 @@ namespace engine {
 
 							case SDL_KEYDOWN:
 								if (events[i].key.keysym.sym == SDLK_RETURN) {
-									levelNumber++;
-									getNextLevel();
-									
-
 									if (labelEdit != NULL) {
 										labelEdit->emptyText(events[i]);
-										
+										getNextLevel(levelNumber+=1);
+
 									}
 								}
 								else {
@@ -164,25 +160,7 @@ namespace engine {
 					}
 				} // MOVEMENT END
 
-			//Delete objects
 
-
-
-				bool found = false;
-			
-				auto it = sprites.begin();
-				
-				while (it != sprites.end()) {
-					if ((*it)->getDead()) {
-						it = sprites.erase(it);
-					}
-					else {
-						it++;
-					}
-				}
-					//om sprite=dead
-					//it = sprites.erase(it);
-				//}
 			// RENDERING START
 			updateTimeSinceEvent();
 			SDL_RenderClear(getRen());
@@ -214,15 +192,7 @@ namespace engine {
 			SDL_RenderPresent(getRen());
 			// RENDERING END
 
-
-		
-
-
-
-
-				//cout << timePassed << endl;
-				
-			}
+			} // DELAY START
 			events.clear();
 			Uint32 before = SDL_GetTicks();
 			int delay = nextTick - SDL_GetTicks();
@@ -230,17 +200,18 @@ namespace engine {
 				SDL_Delay(delay);
 			}
 			Uint32 timeOfDelay = SDL_GetTicks() - before;
-		}
+		} // DELAY END
 	}
 
 
-	void GameEngine::getNextLevel() {
-		cout << levelNumber << endl;
-		if (levelNumber < levels.size()) {
-		sprites.assign(levels[levelNumber]->getSprites().begin(), levels[levelNumber]->getSprites().end());
-		}
-		else if(levelNumber == levels.size()){
-			sprites.assign(levels[0]->getSprites().begin(), levels[0]->getSprites().end());
+	void GameEngine::getNextLevel(int level) {
+		setLevel(level);
+	}
+
+	void GameEngine::setLevel(int level) {
+		int size = levels.size();
+		if (level < levels.size()) {
+			sprites.assign(levels[level]->getSprites().begin(), levels[level]->getSprites().end());
 		}
 	}
 
@@ -262,10 +233,6 @@ namespace engine {
 			last = now;
 		}
 	}
-
-	
-
-	
 
 	void GameEngine::pause() {
 		pauseTime = SDL_GetTicks();
