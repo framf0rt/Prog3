@@ -12,8 +12,8 @@ using namespace std;
 namespace engine {
 
 
-	shared_ptr<SpritePlayer> SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string, int> comms, SDL_Renderer* re) {
-		return shared_ptr<SpritePlayer>(new SpritePlayer(r, path, pathMoving, colliderSize, f, comms,re));
+	shared_ptr<SpritePlayer> SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string, int> comms, SDL_Renderer* re,bool g) {
+		return shared_ptr<SpritePlayer>(new SpritePlayer(r, path, pathMoving, colliderSize, f, comms,re, g));
 	}
 
 
@@ -226,6 +226,7 @@ namespace engine {
 					SDL_Rect result = { 0,0,0,0 };
 					SDL_Rect* r = &(result);
 					SDL_UnionRect(A, B, r);
+					setDead(true);
 					setInvunerability();
 					return;
 				}
@@ -267,7 +268,7 @@ namespace engine {
 	}
 
 
-	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string,int> comms, SDL_Renderer* re) :SpriteMovable(r, path,re), commands(f)
+	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string,int> comms, SDL_Renderer* re, bool g) :SpriteMovable(r, path,re, g), commands(f)
 	{	
 		map<int, void (SpritePlayer::*)()> keyUp;
 		map<int, void (SpritePlayer::*)()> keyDown;

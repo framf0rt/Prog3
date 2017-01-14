@@ -28,6 +28,8 @@ namespace engine {
 		std::string textureText;
 		std::string inputText = "Some Text";
 		SDL_Surface* textSurface;
+		SDL_Rect* rect;
+	private:
 	};
 }
 #endif 

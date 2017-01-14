@@ -17,11 +17,19 @@ namespace engine {
 		this->locY = locY;
 		this->inputText = text;
 		this->charLimit = charLimit;
+		SDL_Rect* rect = &(fontRect);
+		const char *cstr = inputText.c_str();
+		TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
+		fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
 	}
 
 
 	SpriteLabel::~SpriteLabel()
 	{
+
+		//TTF_CloseFont(gFont);
+		//SDL_FreeSurface(textSurface);
+		//SDL_DestroyTexture(tex);
 	}
 
 	void SpriteLabel::draw() {
@@ -48,14 +56,16 @@ namespace engine {
 						return;
 					}
 					else {
-						SDL_Rect* rect = &(fontRect);
-						const char *cstr = inputText.c_str();
-						TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
-						fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
+						
 						SDL_RenderCopyEx(getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
 					}
 				}
 			}
+
+			TTF_CloseFont(gFont);
+			SDL_FreeSurface(textSurface);
+			SDL_DestroyTexture(tex);
+			TTF_Quit();
 	
 	}
 

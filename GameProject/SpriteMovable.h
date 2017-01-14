@@ -16,17 +16,19 @@ namespace engine {
 		void resetTimeSinceEvent() { timeSinceEvent = 0; }
 		void updateTimeSinceEvent(float dt) { timeSinceEvent += dt; }
 		void setGravity(bool g) { gravity = g; }
+		void setAntigravity(bool a) { antiGravity = a; }
 		bool hasGravity() const { return gravity; };
+		bool hasAntigravity() const { return antiGravity; }
 	protected:
 		int yCoordAtEvent;
-		int getYDistance() const { return yCoordAtEvent +ySpeed*timeSinceEvent + timeSinceEvent*timeSinceEvent * 600 / 2;}
+		int getYDistance() const { return yCoordAtEvent +((ySpeed*timeSinceEvent + timeSinceEvent*timeSinceEvent * 600 / 2)*((antiGravity)?-1:1));}
 		int ySpeed = 200;
 		int width = 0;
 		SDL_Rect rt = { 0,0,0,0 };
 		int y = 0;
 		int x = 0;
 		std::vector<SDL_Rect> pixelCollisionRects;
-		SpriteMovable(const SDL_Rect& r, std::string path, SDL_Renderer* re);
+		SpriteMovable(const SDL_Rect& r, std::string path, SDL_Renderer* re, bool g);
 		void setPixelColliders();
 		SDL_Rect pc = { 0,0,0,0 };
 		float alphaModifier = 255;
@@ -40,6 +42,7 @@ namespace engine {
 		SDL_Texture* textureMoving;
 		SDL_Texture* textureStationary;
 	private:
+		bool antiGravity;
 		bool gravity;
 		float timeSinceEvent;
 	};
