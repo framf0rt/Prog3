@@ -4,24 +4,27 @@
 #include "SpritePlayer.h"
 #include "SpriteEnemy.h"
 #include "SpriteLabel.h"
+#include "SpriteLabelEditable.h"
+#include "Level.h"
 #include <map>
+
 
 using namespace std;
 using namespace engine;
 
-//anv‰nds inte, men visar pÂ hur man skulle kunna ‰ndra beteende
+//anv√§nds inte, men visar p√• hur man skulle kunna √§ndra beteende
 void moveLeft(SpritePlayer& p) {
 	p.setDirection( -1);
 	p.setTimeKeyDownLeft(SDL_GetTicks());
 	p.setMoving(true);
 }
-//anv‰nds inte, men visar pÂ hur man skulle kunna ‰ndra beteende
+//anv√§nds inte, men visar p√• hur man skulle kunna √§ndra beteende
 void moveRight(SpritePlayer& p) {
 	p.setDirection(1);
 	p.setTimeKeyDownRight(SDL_GetTicks());
 	p.setMoving(true);
 }
-//har samma beteende som ‰r implementerat i player, men visar hur denna gÂr att anv‰nda ist‰llet
+//har samma beteende som √§r implementerat i player, men visar hur denna g√•r att anv√§nda ist√§llet
 void jump(SpritePlayer& p) {
 	if (!p.hasGravity()) {
 		p.resetTimeSinceEvent();
@@ -33,7 +36,7 @@ void jump(SpritePlayer& p) {
 
 
 
-//anv‰nds inte, men visar pÂ hur man skulle kunna ‰ndra beteende
+//anv√§nds inte, men visar p√• hur man skulle kunna √§ndra beteende
 void drop(SpritePlayer& p) {
 	if (!p.hasGravity()) {
 		p.resetTimeSinceEvent();
@@ -60,9 +63,9 @@ int main(int argvc, char* argv[]) {
 	map<int, void (*)(SpritePlayer&)> keyDownFuncs;
 	
 	//Dessa tar emot funktionalitet som kan skapas i main.cpp
-	//samma mapstruktur kan anv‰ndas fˆr att installera egna funktioner till spelmotorn
-	//pekaren blir dock void(*)() eftersom det finns Âtkomst till gameEngine i main.cpp
-	//anv‰nd i sÂ fall ge.installCallBackFunctions(mapName);
+	//samma mapstruktur kan anv√§ndas f√∂r att installera egna funktioner till spelmotorn
+	//pekaren blir dock void(*)() eftersom det finns √•tkomst till gameEngine i main.cpp
+	//anv√§nd i s√• fall ge.installCallBackFunctions(mapName);
 	keyUpFuncs.insert(make_pair(-1, leftUp));
 	keyUpFuncs.insert(make_pair(-1, rightUp));
 	keyDownFuncs.insert(make_pair(-1, moveLeft));
@@ -79,15 +82,21 @@ int main(int argvc, char* argv[]) {
 	comms.insert(make_pair("moveRight", SDLK_RIGHT));
 	comms.insert(make_pair("jump", -1));
 	comms.insert(make_pair("drop", SDLK_DOWN));
-	
-	//s‰tter pauseknapp i gameEngine
+
+	void (*p)(SpritePlayer&) = leftUp;
+
+	shared_ptr<Level> level1 = Level::getInstance();
+
+
+
+	//s√§tter pauseknapp i gameEngine
 	ge.changePauseKey(SDLK_ESCAPE);
 	shared_ptr<SpritePlayer> s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,callBackPlayer,comms);
 	shared_ptr<SpriteEnemy> se = SpriteEnemy::getInstance({ 600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
 
-	//shared_ptr<SpriteLabel> text1 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 50, "Enter Name", 16, false);
-	shared_ptr<SpriteLabel> textEdit = SpriteLabel::getInstance({ 0,0,100,50 }, "",300,100,"Name", 16, true);
-	//shared_ptr<SpriteLabel> text2 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 200, "Enter Name", 16, false);
+	shared_ptr<SpriteLabel> text1 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 50, "Enter Name:", 16);
+	shared_ptr<SpriteLabelEditable> textEdit = SpriteLabelEditable::getInstance({ 0,0,100,50 }, "",300,100,"Name here", 16);
+	shared_ptr<SpriteLabel> text2 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 200, "Press return to play", 100);
 
 	shared_ptr<SpriteStationary> sg = SpriteStationary::getInstance({ 300,200,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, true, false);
 	shared_ptr<SpriteStationary> sg1 = SpriteStationary::getInstance({ 100,500,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, true, false);
@@ -97,8 +106,8 @@ int main(int argvc, char* argv[]) {
 	
 	shared_ptr<SpriteStationary> kill = SpriteStationary::getInstance({ 200,400,100,50 }, "", true, false, true);
 
-	//ge.addSprite(text1);
-	//ge.addSprite(text2);
+	ge.addSprite(text1);
+	ge.addSprite(text2);
 	ge.addSprite(textEdit);
 	ge.addSprite(s);
 	ge.addSprite(se);
@@ -108,6 +117,11 @@ int main(int argvc, char* argv[]) {
 	ge.addSprite(sg3);
 	ge.addSprite(kill);
 	ge.addSprite(wall);
+
+
+	level1->addSp(wall);
+
+
 
 	ge.run();
 	

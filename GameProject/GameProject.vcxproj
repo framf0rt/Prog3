@@ -150,19 +150,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteEnemy.h" />
     <ClInclude Include="SpriteLabel.h" />
+    <ClInclude Include="SpriteLabelEditable.h" />
     <ClInclude Include="SpriteMovable.h" />
     <ClInclude Include="SpritePlayer.h" />
     <ClInclude Include="SpriteStationary.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteEnemy.cpp" />
     <ClCompile Include="SpriteLabel.cpp" />
+    <ClCompile Include="SpriteLabelEditable.cpp" />
     <ClCompile Include="SpriteMovable.cpp" />
     <ClCompile Include="SpritePlayer.cpp" />
     <ClCompile Include="SpriteStationary.cpp" />

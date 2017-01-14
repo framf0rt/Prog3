@@ -8,11 +8,13 @@
 #include "SpriteEnemy.h"
 #include "SpriteStationary.h"
 #include "SpriteLabel.h"
+#include "SpriteLabelEditable.h"
 #include <iostream>
+
 using namespace std;
 
 
-#define FPS 120
+#define FPS 60
 
 namespace engine {
 
@@ -42,7 +44,7 @@ namespace engine {
 			}
 
 			for (int i = 0; i < events.size(); i++){
-				//här anropas callBack funktioner till main
+				//hÃ¤r anropas callBack funktioner till main
 				if (!callBack.empty()) {
 					if (callBack.count(events[i].type)) {
 						if (callBack[events[i].type].count(events[i].key.keysym.sym)) {
@@ -111,6 +113,7 @@ namespace engine {
 					}
 
 
+
 				}//COLLISION END
 
 				// MOVEMENT START
@@ -174,8 +177,40 @@ namespace engine {
 						sprite->draw();
 					}
 				}
-				SDL_RenderPresent(getRen());
-				// RENDERING END
+
+			} // MOVEMENT END
+		
+			// RENDERING START
+			updateTimeSinceEvent();
+			SDL_RenderClear(getRen());
+			for (shared_ptr<Sprite> sprite : sprites) {
+
+				shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprite);
+				shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
+				shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprite);
+				if (movable != NULL && start != false)
+				{
+					movable->tick();
+					movable->draw();
+				}
+				else if ((labelEdit != NULL || label != NULL) && start != true) {
+					
+					if (labelEdit != NULL) {
+						labelEdit->draw();
+					}
+					else {
+						label->draw();
+					}
+				}
+
+				else if (start != false && labelEdit == NULL && label == NULL){
+					sprite->tick();
+					sprite->draw();
+				}
+			}
+			SDL_RenderPresent(getRen());
+			// RENDERING END
+
 
 
 
