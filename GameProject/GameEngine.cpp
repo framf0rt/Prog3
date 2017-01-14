@@ -43,7 +43,7 @@ namespace engine {
 				events.push_back(event);
 			}
 
-			for (int i = 0; i < events.size(); i++){
+			for (int i = 0; i < events.size(); i++) {
 				//här anropas callBack funktioner till main
 				if (!callBack.empty()) {
 					if (callBack.count(events[i].type)) {
@@ -61,7 +61,7 @@ namespace engine {
 						((*this).*pausePointer)();
 					}
 
-					
+
 					break;
 				case SDL_QUIT:
 					running = false;
@@ -120,9 +120,10 @@ namespace engine {
 				for (shared_ptr<Sprite> sprite : sprites) {
 					shared_ptr<SpritePlayer> playerMove = dynamic_pointer_cast<SpritePlayer>(sprite);
 					shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
+					shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprite);
 					if (playerMove != NULL) {
 						//SDL_Event eve;
-					
+
 						playerMove->move(events);
 
 					}
@@ -135,15 +136,23 @@ namespace engine {
 								running = false;
 								break;
 							case SDL_TEXTINPUT:
-								label->addCharacter(events[i]);
+								if (labelEdit != NULL) {
+									labelEdit->addCharacter(events[i]);
+								}
 								break;
+
 							case SDL_KEYDOWN:
 								if (events[i].key.keysym.sym == SDLK_RETURN) {
+
 									start = true;
-									label->emptyText(events[i]);
+									if (labelEdit != NULL) {
+										labelEdit->emptyText(events[i]);
+									}
 								}
 								else {
-									label->removeCharacter(events[i]);
+									if (labelEdit != NULL) {
+										labelEdit->removeCharacter(events[i]);
+									}
 								}
 								break;
 							default:
@@ -153,33 +162,7 @@ namespace engine {
 					}
 				} // MOVEMENT END
 
-				// RENDERING START
-				//deltaTime();
 
-				updateTimeSinceEvent();
-				SDL_RenderClear(getRen());
-				for (shared_ptr<Sprite> sprite : sprites) {
-
-					shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprite);
-					shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
-					if (movable != NULL && start != false)
-					{
-						movable->tick();
-						movable->draw();
-					}
-					else if (label != NULL && start != true) {
-						//label->tick();
-						label->draw();
-					}
-
-					else if (start != false) {
-						sprite->tick();
-						sprite->draw();
-					}
-				}
-
-			} // MOVEMENT END
-		
 			// RENDERING START
 			updateTimeSinceEvent();
 			SDL_RenderClear(getRen());
@@ -194,7 +177,7 @@ namespace engine {
 					movable->draw();
 				}
 				else if ((labelEdit != NULL || label != NULL) && start != true) {
-					
+
 					if (labelEdit != NULL) {
 						labelEdit->draw();
 					}
@@ -203,7 +186,7 @@ namespace engine {
 					}
 				}
 
-				else if (start != false && labelEdit == NULL && label == NULL){
+				else if (start != false && labelEdit == NULL && label == NULL) {
 					sprite->tick();
 					sprite->draw();
 				}
@@ -212,7 +195,7 @@ namespace engine {
 			// RENDERING END
 
 
-
+		
 
 
 
