@@ -15,6 +15,7 @@ namespace engine {
 
 	void Level::addSp(shared_ptr<Sprite> s)
 	{
+		sprites.push_back(s);
 	}
 
 

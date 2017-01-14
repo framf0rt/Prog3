@@ -27,10 +27,8 @@ namespace engine {
 		if (animationCount > 50 && animationCount < 100) {
 			animation(*textureStationary);
 		}
-
 		// Movement 
 		rect.x += (int)(dt*150*direction);
-		//std::cout << rect.y << " "<< startY <<std::endl;
 		if (rect.y >= startY + 50 ) {
 			directionY = 1;
 		} 
