@@ -18,6 +18,8 @@ namespace engine {
 		virtual void tick(float dt) {};
 		void setRectY(int y) { rect.y = y; }
 		int getRectY() const { return rect.y; }
+		bool getDead() const { return dead; }
+		void setDead(bool d) { dead = d; }
 	protected:
 		SDL_Renderer* getRen() { return rend; }
 		~Sprite();
@@ -29,6 +31,7 @@ namespace engine {
 		SDL_Rect rect;
 	
 	private:
+		bool dead;
 		SDL_Renderer* rend;
 		SDL_Texture* texture;
 		SDL_Surface* surface;

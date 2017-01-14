@@ -4,7 +4,7 @@
 
 
 namespace engine {
-	SpriteMovable::SpriteMovable(const SDL_Rect& r, std::string path, SDL_Renderer* re) :Sprite(r, path,re)
+	SpriteMovable::SpriteMovable(const SDL_Rect& r, std::string path, SDL_Renderer* re, bool g) :Sprite(r, path,re),antiGravity(g)
 	{
 		setPixelColliders();
 	}
@@ -45,13 +45,6 @@ namespace engine {
 		SDL_Rect *dstRect = &getRect();
 		SDL_Texture *texture = getTexture();
 
-
-	/*	for (SDL_Rect aRect : pixelCollisionRects) {
-			aRect = { aRect.x + rect.x,aRect.y + rect.y,aRect.w,aRect.h };
-			SDL_Rect *A = &(aRect);
-			SDL_RenderCopyEx(ge.getRen(), textureStationary, nullptr, A, 0, nullptr, SDL_FLIP_NONE);
-		}*/
-
 		if (textureSwap == true) {
 			if (direction == 1) {
 				texture = textureMoving;
@@ -72,5 +65,7 @@ namespace engine {
 
 	SpriteMovable::~SpriteMovable()
 	{
+		SDL_DestroyTexture(textureMoving);
+		SDL_DestroyTexture(textureStationary);
 	}
 }

@@ -12,7 +12,7 @@ namespace engine {
 	{
 
 	public:
-		static std::shared_ptr<SpritePlayer> getInstance(const SDL_Rect& r, std::string t, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms, SDL_Renderer* re);
+		static std::shared_ptr<SpritePlayer> getInstance(const SDL_Rect& r, std::string t, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms, SDL_Renderer* re,bool g);
 		
 		void ungrounded();
 		void onCollision(std::shared_ptr<Sprite> spriteA, std::shared_ptr<Sprite> spriteB, float dt);
@@ -34,7 +34,7 @@ namespace engine {
 		int getJumpSpeed() const { return JUMP_SPEED; }
 
 	protected:
-		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms, SDL_Renderer* re);
+		SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, std::map<std::string, int> comms, SDL_Renderer* re, bool g);
 	private:
 		void enemyCollision(std::shared_ptr<Sprite> spriteB);
 		void killZoneCollision(std::shared_ptr<SpriteStationary> killzone);

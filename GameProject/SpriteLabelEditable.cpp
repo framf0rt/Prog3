@@ -45,15 +45,20 @@ namespace engine {
 					return;
 				}
 				else {
-					SDL_Rect* rect = &(fontRect);
-					const char *cstr = inputText.c_str();
+					rect = &(fontRect);
+					cstr = inputText.c_str();
 					TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
 					fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
 					SDL_RenderCopyEx(getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
 				}
 			}
 		}
-
+		TTF_CloseFont(gFont);
+		TTF_Quit();
+		SDL_StopTextInput();
+		SDL_FreeSurface(textSurface);
+		SDL_DestroyTexture(tex);
+		
 	}
 
 	void SpriteLabelEditable::addCharacter(const SDL_Event& e)
@@ -67,12 +72,20 @@ namespace engine {
 			inputText = e.text.text;
 			changed = true;
 		}
+		//setFontRect();
+	}
+	void SpriteLabelEditable::setFontRect() {
+		rect = &(fontRect);
+		cstr = inputText.c_str();
+		TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
+		fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
 	}
 	void SpriteLabelEditable::removeCharacter(const SDL_Event & e)
 	{
 		if (e.key.keysym.sym == SDLK_BACKSPACE && inputText.length() > 0) {
 			inputText.pop_back();
 		}
+		//setFontRect();
 	}
 
 	void SpriteLabelEditable::emptyText(const SDL_Event & e)

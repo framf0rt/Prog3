@@ -10,14 +10,14 @@ namespace engine {
 		public SpriteMovable
 	{
 	public:
-		static std::shared_ptr<SpriteEnemy> getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p, SDL_Renderer* re);
+		static std::shared_ptr<SpriteEnemy> getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p, SDL_Renderer* re, bool g);
 		~SpriteEnemy();
 		int getHp();
 		void tick(float dt);
 		void installMovement(void(*move)(SpriteEnemy&)) { movementPointer = move; }
 
 	protected:
-		SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p, SDL_Renderer* re);
+		SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p, SDL_Renderer* re, bool g);
 
 	private:
 		void(*movementPointer)(SpriteEnemy&);
