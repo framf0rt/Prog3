@@ -12,39 +12,35 @@
 using namespace std;
 using namespace engine;
 
-//typedef void (*Func)(SpritePlayer&);
+//används inte, men visar på hur man skulle kunna ändra beteende
 void moveLeft(SpritePlayer& p) {
 	p.setDirection( -1);
 	p.setTimeKeyDownLeft(SDL_GetTicks());
 	p.setMoving(true);
 }
-
+//används inte, men visar på hur man skulle kunna ändra beteende
 void moveRight(SpritePlayer& p) {
 	p.setDirection(1);
 	p.setTimeKeyDownRight(SDL_GetTicks());
 	p.setMoving(true);
 }
-
+//har samma beteende som är implementerat i player, men visar hur denna går att använda istället
 void jump(SpritePlayer& p) {
 	if (!p.hasGravity()) {
 		p.resetTimeSinceEvent();
 		p.setYSpeed(p.getJumpSpeed());
 		p.setGravity(true);
-		//p.setDropped(false);
-		//p.setFalling(false);
 		p.setYCoordAtEvent();
 	}
 }
 
 
 
-
+//används inte, men visar på hur man skulle kunna ändra beteende
 void drop(SpritePlayer& p) {
 	if (!p.hasGravity()) {
 		p.resetTimeSinceEvent();
 		p.setGravity(true);
-		//p.setJumped(false);
-		//p.setFalling(false);
 		p.setYSpeed(200);
 		p.setRectY(p.getRectY() + 10);
 		p.setYCoordAtEvent();
@@ -62,19 +58,22 @@ void rightUp(SpritePlayer& p) {
 	}
 }
 int main(int argvc, char* argv[]) {
-	map<int, map<int, void (*)(SpritePlayer&)>> events;
+	map<int, map<int, void (*)(SpritePlayer&)>> callBackPlayer;
 	map<int, void (*)(SpritePlayer&)> keyUpFuncs;
 	map<int, void (*)(SpritePlayer&)> keyDownFuncs;
 	
-	//Dessa tar emot egen funktionalitet f�r spelaren
+	//Dessa tar emot funktionalitet som kan skapas i main.cpp
+	//samma mapstruktur kan användas för att installera egna funktioner till spelmotorn
+	//pekaren blir dock void(*)() eftersom det finns åtkomst till gameEngine i main.cpp
+	//använd i så fall ge.installCallBackFunctions(mapName);
 	keyUpFuncs.insert(make_pair(-1, leftUp));
 	keyUpFuncs.insert(make_pair(-1, rightUp));
 	keyDownFuncs.insert(make_pair(-1, moveLeft));
 	keyDownFuncs.insert(make_pair(-1, moveRight));
 	keyDownFuncs.insert(make_pair(SDLK_SPACE, jump));
 	keyDownFuncs.insert(make_pair(-1, drop));
-	events.insert(make_pair(SDL_KEYUP, keyUpFuncs));
-	events.insert(make_pair(SDL_KEYDOWN, keyDownFuncs));
+	callBackPlayer.insert(make_pair(SDL_KEYUP, keyUpFuncs));
+	callBackPlayer.insert(make_pair(SDL_KEYDOWN, keyDownFuncs));
 	
 	
 	//spelarens inbyggda funktionalitet
@@ -83,12 +82,16 @@ int main(int argvc, char* argv[]) {
 	comms.insert(make_pair("moveRight", SDLK_RIGHT));
 	comms.insert(make_pair("jump", -1));
 	comms.insert(make_pair("drop", SDLK_DOWN));
+
 	void (*p)(SpritePlayer&) = leftUp;
 
 	shared_ptr<Level> level1 = Level::getInstance();
 
 
-	shared_ptr<SpritePlayer> s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,events,comms);
+
+	//sätter pauseknapp i gameEngine
+	ge.changePauseKey(SDLK_ESCAPE);
+	shared_ptr<SpritePlayer> s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,callBackPlayer,comms);
 	shared_ptr<SpriteEnemy> se = SpriteEnemy::getInstance({ 600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
 
 	shared_ptr<SpriteLabel> text1 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 50, "Enter Name:", 16);

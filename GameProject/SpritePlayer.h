@@ -32,7 +32,7 @@ namespace engine {
 		//bool hasDropped() const { return dropped; };
 		bool hasInvunerability() const { return invulnerable; };
 		void setInvunerability();
-		void move(const SDL_Event& eve);
+		void move(const std::vector<SDL_Event>& eve);
 		void setTimeKeyDownLeft(Uint32 time) { tKeyDownLeft = time; }
 		void setTimeKeyDownRight(Uint32 time) { tKeyDownRight = time; }
 		//void setMoving(bool moving) { this->moving = moving; }

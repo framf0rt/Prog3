@@ -22,18 +22,19 @@ namespace engine {
 	}
 
 
-	void SpritePlayer::move(const SDL_Event& eve) {
-
-		if (commands.count(eve.type)) {
-			if (commands[eve.type].count(eve.key.keysym.sym)) {
-				commands[eve.type][eve.key.keysym.sym](*this);
+	void SpritePlayer::move(const vector<SDL_Event>& eve) {
+		for (int i = 0; i < eve.size(); i++) {
+			if (commands.count(eve[i].type)) {
+				if (commands[eve[i].type].count(eve[i].key.keysym.sym)) {
+					commands[eve[i].type][eve[i].key.keysym.sym](*this);
+				}
 			}
-		}
-		auto it = events.find(eve.type);
-		if (it != events.end()) {
-			auto it2 = it->second.find(eve.key.keysym.sym);
-			if (it2 != it->second.end()) {
-				(this->*(it2->second))();
+			auto it = events.find(eve[i].type);
+			if (it != events.end()) {
+				auto it2 = it->second.find(eve[i].key.keysym.sym);
+				if (it2 != it->second.end()) {
+					(this->*(it2->second))();
+				}
 			}
 		}
 	/*	if (events.count(eve.type)) {
@@ -167,7 +168,7 @@ namespace engine {
 		setYCoordAtEvent();
 	}
 
-
+	
 
 	void SpritePlayer::onCollision(shared_ptr<Sprite> spriteA, shared_ptr<Sprite> spriteB) {
 		float dt = ge.getDeltaTime();

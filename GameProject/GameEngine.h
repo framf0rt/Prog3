@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include <vector>
 #include <memory>
+#include <map>
 class Sprite;
 
 
@@ -24,7 +25,14 @@ namespace engine {
 		float getTimeSinceEvent() const { return timeSinceEvent;}
 		void resetTimeSinceEvent() { timeSinceEvent = 0; }
 		SDL_Window* getWindow()const { return win; }
+		void changePauseKey(int i) { pauseKey = i; }
+		void installCallBackFunctions(std::map<int, std::map<int, void(*)()>>& f) { callBack = f; }
 	private:
+		int pauseKey=SDLK_ESCAPE;
+		std::map<int, std::map<int, void(*)()>> callBack;
+		void pause();
+		void resume();
+		bool paused = false;
 		bool start = false;
 		//std::vector<std::shared_ptr<Level>> levels;
 		std::vector<std::shared_ptr<Sprite>> sprites;
@@ -34,6 +42,9 @@ namespace engine {
 		float dt;
 		float timeSinceEvent;
 		Uint32 timeOfDelay;
+		void(GameEngine::*pausePointer)() = &GameEngine::pause;
+	
+		Uint32 pauseTime;
 	};
 	extern GameEngine ge;
 }
