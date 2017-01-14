@@ -4,7 +4,7 @@
 
 
 namespace engine {
-	SpriteMovable::SpriteMovable(const SDL_Rect& r, std::string path, SDL_Renderer* re) :Sprite(r, path,re)
+	SpriteMovable::SpriteMovable(const SDL_Rect& r, std::string path, SDL_Renderer* re, bool g) :Sprite(r, path,re),antiGravity(g)
 	{
 		setPixelColliders();
 	}
@@ -72,5 +72,7 @@ namespace engine {
 
 	SpriteMovable::~SpriteMovable()
 	{
+		SDL_DestroyTexture(textureMoving);
+		SDL_DestroyTexture(textureStationary);
 	}
 }

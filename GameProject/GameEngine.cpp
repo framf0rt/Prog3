@@ -38,17 +38,11 @@ namespace engine {
 
 		getNextLevel();
 		while (running) {
-
-
-
 			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) {
 				events.push_back(event);
 			}
-
-		
-
 			for (int i = 0; i < events.size(); i++) {
 				//här anropas callBack funktioner till main
 				if (!callBack.empty()) {
@@ -75,9 +69,6 @@ namespace engine {
 				}
 
 			}
-
-
-			//cout << dt << " " << timeSinceEvent << endl;
 
 			if (!paused) {
 
@@ -173,7 +164,25 @@ namespace engine {
 					}
 				} // MOVEMENT END
 
+			//Delete objects
 
+
+
+				bool found = false;
+			
+				auto it = sprites.begin();
+				
+				while (it != sprites.end()) {
+					if ((*it)->getDead()) {
+						it = sprites.erase(it);
+					}
+					else {
+						it++;
+					}
+				}
+					//om sprite=dead
+					//it = sprites.erase(it);
+				//}
 			// RENDERING START
 			updateTimeSinceEvent();
 			SDL_RenderClear(getRen());

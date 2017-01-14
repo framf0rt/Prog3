@@ -103,9 +103,9 @@ int main(int argvc, char* argv[]) {
 
 	//sätter pauseknapp i gameEngine
 	ge.changePauseKey(SDLK_ESCAPE);
-	shared_ptr<SpritePlayer> s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,callBackPlayer,comms,ge.getRen());
+	shared_ptr<SpritePlayer> s = SpritePlayer::getInstance({ 100, 100, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,callBackPlayer,comms,ge.getRen(), false);
 	//shared_ptr<SpritePlayer> s2 = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4, callBackPlayer, comms2, ge.getRen());
-	shared_ptr<SpriteEnemy> se = SpriteEnemy::getInstance({ 600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s, ge.getRen());
+	shared_ptr<SpriteEnemy> se = SpriteEnemy::getInstance({ 600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s, ge.getRen(), false);
 	//se->installMovement(moveEnemy);
 	shared_ptr<SpriteLabel> text1 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 50, "Enter Name:", 16, ge.getRen());
 	shared_ptr<SpriteLabelEditable> textEdit = SpriteLabelEditable::getInstance({ 0,0,100,50 }, "",300,100,"Name here", 16, ge.getRen());
@@ -122,10 +122,10 @@ int main(int argvc, char* argv[]) {
 
 
 	//
-	level1->addSp(text1);
-	level1->addSp(text2);
-	level1->addSp(textEdit);
-	ge.addLevel(level1);
+	//level1->addSp(text1);
+	//level1->addSp(text2);
+	//level1->addSp(textEdit);
+	//ge.addLevel(level1);
 	//
 	level2->addSp(textEdit);
 	level2->addSp(s);
@@ -134,7 +134,7 @@ int main(int argvc, char* argv[]) {
 	level2->addSp(sg1);
 	level2->addSp(sg2);
 	level2->addSp(sg3);
-	level2->addSp(kill);
+	//level2->addSp(kill);
 	level2->addSp(wall);
 	ge.addLevel(level2);
 

@@ -17,6 +17,10 @@ namespace engine {
 		void emptyText(const SDL_Event& e);
 	protected:
 		SpriteLabelEditable(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, SDL_Renderer* re);
+	private:
+		const char *cstr;
+		void setFontRect();
+		SDL_Rect* rect;
 	};
 }
 #endif
