@@ -193,7 +193,7 @@ namespace engine {
 					//dropped = false;
 					//falling = true;
 					//cout << ySpeed << endl;
-					rect.y -= 2;
+					rect.y -= 250*dt;
 					yCoordAtEvent = rect.y;
 					//cout << ySpeed << endl;
 
@@ -222,11 +222,11 @@ namespace engine {
 					SDL_Rect *A = &(pRect);
 					if (SDL_HasIntersection(A, gRect)) {
 						if (rect.x < gRect->x) {
-							rect.x = rect.x - 1;
+							rect.x -= dt * MOVEMENT_SPEED;
 							return;
 						}
 						else if (rect.x + rect.w > gRect->x) {
-							rect.x = rect.x + 1;
+							rect.x += dt * MOVEMENT_SPEED;
 							return;
 						}
 					}
@@ -235,25 +235,32 @@ namespace engine {
 		}
 
 		if (enemy != NULL) {
-			std::vector<SDL_Rect> pixelCollisionRectsB = enemy->getPixelCollisionRects();
-			for (SDL_Rect aRect : pixelCollisionRects) {
-				aRect = { aRect.x + rect.x - aRect.x,aRect.y + rect.y,aRect.w,aRect.h };
-				for (SDL_Rect bRect : pixelCollisionRectsB) {
-					SDL_Rect enemyRect = enemy->getRect();
-					bRect = { bRect.x + enemyRect.x - bRect.x,bRect.y + enemyRect.y,bRect.w,bRect.h };
-					SDL_Rect *A = &(aRect);
-					SDL_Rect *B = &(bRect);
-					if (SDL_HasIntersection(A, B)) {
-						SDL_Rect result = { 0,0,0,0 };
-						SDL_Rect* r = &(result);
-						SDL_UnionRect(A, B, r);
-						setInvunerability();
-						return;
-					}
+			enemyCollision(spriteB);
+		}
+	}
+
+	void SpritePlayer::enemyCollision(std::shared_ptr<Sprite> spriteB) {
+		shared_ptr<SpriteEnemy> enemy = dynamic_pointer_cast<SpriteEnemy>(spriteB);
+		SDL_Rect aRect = { 0,0,0,0 };
+		std::vector<SDL_Rect> pixelCollisionRectsB = enemy->getPixelCollisionRects();
+		for (SDL_Rect aRect : pixelCollisionRects) {
+			aRect = { aRect.x + rect.x - aRect.x,aRect.y + rect.y,aRect.w,aRect.h };
+			for (SDL_Rect bRect : pixelCollisionRectsB) {
+				SDL_Rect enemyRect = enemy->getRect();
+				bRect = { bRect.x + enemyRect.x - bRect.x,bRect.y + enemyRect.y,bRect.w,bRect.h };
+				SDL_Rect *A = &(aRect);
+				SDL_Rect *B = &(bRect);
+				if (SDL_HasIntersection(A, B)) {
+					SDL_Rect result = { 0,0,0,0 };
+					SDL_Rect* r = &(result);
+					SDL_UnionRect(A, B, r);
+					setInvunerability();
+					return;
 				}
 			}
 		}
 	}
+
 
 	void SpritePlayer::killZoneCollision(std::shared_ptr<SpriteStationary> killzone) {
 		SDL_Rect aRect = { 0,0,0,0 };
@@ -276,8 +283,7 @@ namespace engine {
 		yCoordAtEvent = startPosY;
 		resetTimeSinceEvent();
 		rect.x = startPosX;
-
-	
+		setInvunerability();
 	}
 
 	SDL_Rect SpritePlayer::getCollider() {

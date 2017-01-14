@@ -4,7 +4,10 @@
 #include "SpritePlayer.h"
 #include "SpriteEnemy.h"
 #include "SpriteLabel.h"
+#include "SpriteLabelEditable.h"
+#include "Level.h"
 #include <map>
+
 
 using namespace std;
 using namespace engine;
@@ -81,12 +84,16 @@ int main(int argvc, char* argv[]) {
 	comms.insert(make_pair("jump", -1));
 	comms.insert(make_pair("drop", SDLK_DOWN));
 	void (*p)(SpritePlayer&) = leftUp;
+
+	shared_ptr<Level> level1 = Level::getInstance();
+
+
 	shared_ptr<SpritePlayer> s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4,events,comms);
 	shared_ptr<SpriteEnemy> se = SpriteEnemy::getInstance({ 600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s);
 
-	//shared_ptr<SpriteLabel> text1 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 50, "Enter Name", 16, false);
-	shared_ptr<SpriteLabel> textEdit = SpriteLabel::getInstance({ 0,0,100,50 }, "",300,100,"Name", 16, true);
-	//shared_ptr<SpriteLabel> text2 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 200, "Enter Name", 16, false);
+	shared_ptr<SpriteLabel> text1 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 50, "Enter Name:", 16);
+	shared_ptr<SpriteLabelEditable> textEdit = SpriteLabelEditable::getInstance({ 0,0,100,50 }, "",300,100,"Name here", 16);
+	shared_ptr<SpriteLabel> text2 = SpriteLabel::getInstance({ 0,0,100,50 }, "", 300, 200, "Press return to play", 100);
 
 	shared_ptr<SpriteStationary> sg = SpriteStationary::getInstance({ 300,200,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, true, false);
 	shared_ptr<SpriteStationary> sg1 = SpriteStationary::getInstance({ 100,500,100,50 }, "c:/Prog3/assets/Sprites/GrassSprite_Cut.png", true, true, false);
@@ -96,8 +103,8 @@ int main(int argvc, char* argv[]) {
 	
 	shared_ptr<SpriteStationary> kill = SpriteStationary::getInstance({ 200,400,100,50 }, "", true, false, true);
 
-	//ge.addSprite(text1);
-	//ge.addSprite(text2);
+	ge.addSprite(text1);
+	ge.addSprite(text2);
 	ge.addSprite(textEdit);
 	ge.addSprite(s);
 	ge.addSprite(se);
@@ -107,6 +114,11 @@ int main(int argvc, char* argv[]) {
 	ge.addSprite(sg3);
 	ge.addSprite(kill);
 	ge.addSprite(wall);
+
+
+	level1->addSp(wall);
+
+
 
 	ge.run();
 	

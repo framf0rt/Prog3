@@ -8,11 +8,13 @@
 #include "SpriteEnemy.h"
 #include "SpriteStationary.h"
 #include "SpriteLabel.h"
+#include "SpriteLabelEditable.h"
 #include <iostream>
+
 using namespace std;
 
 
-#define FPS 120
+#define FPS 60
 
 namespace engine {
 
@@ -75,7 +77,7 @@ namespace engine {
 			// MOVEMENT START
 			for (shared_ptr<Sprite> sprite : sprites) {
 				shared_ptr<SpritePlayer> playerMove = dynamic_pointer_cast<SpritePlayer>(sprite);
-				shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
+				shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprite);
 				if (playerMove != NULL) {
 					SDL_Event eve;
 					while (SDL_PollEvent(&eve)) {
@@ -90,7 +92,7 @@ namespace engine {
 						playerMove->move(eve);
 					}
 				}
-				if ( label != NULL && start == false) {
+				if ( labelEdit != NULL && start == false) {
 					SDL_Event e;
 					while (SDL_PollEvent(&e)) {
 						switch (e.type)
@@ -99,15 +101,15 @@ namespace engine {
 							running = false;
 							break;
 						case SDL_TEXTINPUT:
-							label->addCharacter(e);
+							labelEdit->addCharacter(e);
 						break;
 						case SDL_KEYDOWN:
 							if (e.key.keysym.sym == SDLK_RETURN) {
 								start = true;
-								label->emptyText(e);
+								labelEdit->emptyText(e);
 							}
 							else {
-							label->removeCharacter(e);
+							labelEdit->removeCharacter(e);
 								}
 							break;
 						default:
@@ -124,17 +126,23 @@ namespace engine {
 
 				shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprite);
 				shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
+				shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprite);
 				if (movable != NULL && start != false)
 				{
 					movable->tick();
 					movable->draw();
 				}
-				else if (label != NULL && start != true) {
-					//label->tick();
-					label->draw();
+				else if ((labelEdit != NULL || label != NULL) && start != true) {
+					
+					if (labelEdit != NULL) {
+						labelEdit->draw();
+					}
+					else {
+						label->draw();
+					}
 				}
-				
-				else if (start != false){
+
+				else if (start != false && labelEdit == NULL && label == NULL){
 					sprite->tick();
 					sprite->draw();
 				}

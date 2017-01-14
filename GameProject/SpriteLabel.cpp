@@ -7,17 +7,16 @@ using namespace std;
 
 namespace engine {
 
-	shared_ptr<SpriteLabel> SpriteLabel::getInstance(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, bool inputEnabled) {
-		return shared_ptr<SpriteLabel>(new SpriteLabel(r, path,locX,locY,text,charLimit,inputEnabled));
+	shared_ptr<SpriteLabel> SpriteLabel::getInstance(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit) {
+		return shared_ptr<SpriteLabel>(new SpriteLabel(r, path,locX,locY,text,charLimit));
 	}
 
-	SpriteLabel::SpriteLabel(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, bool inputEnabled) :Sprite(r, path)
+	SpriteLabel::SpriteLabel(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit) :Sprite(r, path)
 	{
 		this->locX = locX;
 		this->locY = locY;
 		this->inputText = text;
 		this->charLimit = charLimit;
-		this->inputEnabled = inputEnabled;
 	}
 
 
@@ -26,8 +25,6 @@ namespace engine {
 	}
 
 	void SpriteLabel::draw() {
-
-			SDL_StartTextInput();
 
 			if (TTF_Init() == -1)
 			{
@@ -63,31 +60,6 @@ namespace engine {
 	}
 
 
-	void SpriteLabel::addCharacter(const SDL_Event& e)
-	{
-		
-		fontRect = { 0,0,0,0 };
-		if (changed == true && inputText.size() < charLimit) {
-			inputText += e.text.text;	
-		}
-		else if (changed == false){
-			inputText = e.text.text;
-			changed = true;
-		}
-	}
-	void SpriteLabel::removeCharacter(const SDL_Event & e)
-	{
-		if (e.key.keysym.sym == SDLK_BACKSPACE && inputText.length() > 0) {
-			inputText.pop_back();
-		}
-	}
-
-	void SpriteLabel::emptyText(const SDL_Event & e)
-	{
-		SDL_DestroyTexture(getTexture());
-		inputText.empty();
-		SDL_StopTextInput();
-	}
 
 	
 }

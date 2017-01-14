@@ -3,7 +3,6 @@
 #include "Sprite.h"
 #include "SpriteMovable.h"
 #include "SpriteStationary.h"
-
 #include <map>
 
 
@@ -20,6 +19,9 @@ namespace engine {
 		void ungrounded();
 		void draw();
 		void onCollision(std::shared_ptr<Sprite> spriteA, std::shared_ptr<Sprite> spriteB);
+
+		void enemyCollision(std::shared_ptr<Sprite> spriteB);
+		
 		
 		SDL_Rect getCollider();
 		~SpritePlayer();
