@@ -5,18 +5,18 @@
 using namespace std;
 namespace engine {
 
-	SpriteEnemy::SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, shared_ptr<SpritePlayer> p) :SpriteMovable(r, path)
+	SpriteEnemy::SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, shared_ptr<SpritePlayer> p, SDL_Renderer* re) :SpriteMovable(r, path, re)
 	{
 		startY = rect.y;
 		startX = rect.x;
 		this->hp = hp;
 		this->player = p;
-		textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
-		textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
+		textureMoving = IMG_LoadTexture(getRen(), pathMoving.c_str());
+		textureStationary = IMG_LoadTexture(getRen(), path.c_str());
 		
 	}
-	void SpriteEnemy::tick() {
-		float dt = ge.getDeltaTime();
+	void SpriteEnemy::tick(float dt) {
+
 		
 		// Animation
 		animationCount += 3;
@@ -29,7 +29,7 @@ namespace engine {
 		}
 
 		// Movement 
-		rect.x += (int)(ge.getDeltaTime()*150*direction);
+		rect.x += (int)(dt*150*direction);
 		//std::cout << rect.y << " "<< startY <<std::endl;
 		if (rect.y >= startY + 50 ) {
 			directionY = 1;
@@ -60,8 +60,8 @@ namespace engine {
 		//	}
 		//}
 	}
-	shared_ptr<SpriteEnemy> SpriteEnemy::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, shared_ptr<SpritePlayer> p) {
-		return shared_ptr<SpriteEnemy>(new SpriteEnemy(r, path, pathMoving, hp, p));
+	shared_ptr<SpriteEnemy> SpriteEnemy::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, shared_ptr<SpritePlayer> p,SDL_Renderer* re) {
+		return shared_ptr<SpriteEnemy>(new SpriteEnemy(r, path, pathMoving, hp, p, re));
 	}
 	int SpriteEnemy::getHp() {
 		return hp;

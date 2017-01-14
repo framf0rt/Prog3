@@ -12,8 +12,8 @@ using namespace std;
 namespace engine {
 
 
-	shared_ptr<SpritePlayer> SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string, int> comms) {
-		return shared_ptr<SpritePlayer>(new SpritePlayer(r, path, pathMoving, colliderSize, f, comms));
+	shared_ptr<SpritePlayer> SpritePlayer::getInstance(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string, int> comms, SDL_Renderer* re) {
+		return shared_ptr<SpritePlayer>(new SpritePlayer(r, path, pathMoving, colliderSize, f, comms,re));
 	}
 
 
@@ -52,9 +52,8 @@ namespace engine {
 		ySpeed = -0.6*(ySpeed + getTimeSinceEvent() * 600);
 	}
 
-	void SpritePlayer::tick() {
-		float dt = ge.getDeltaTime();
-		updateTimeSinceEvent();
+	void SpritePlayer::tick(float dt) {
+		updateTimeSinceEvent(dt);
 		float edt = getTimeSinceEvent();
 
 		if (alphaModifier <= 256 && alphaModifier > 125 && fadeOutIn == true) {
@@ -171,8 +170,7 @@ namespace engine {
 
 	
 
-	void SpritePlayer::onCollision(shared_ptr<Sprite> spriteA, shared_ptr<Sprite> spriteB) {
-		float dt = ge.getDeltaTime();
+	void SpritePlayer::onCollision(shared_ptr<Sprite> spriteA, shared_ptr<Sprite> spriteB, float dt) {
 
 		//Kollar om det är en spelare och spritestationary som kolliderat
 		shared_ptr<SpriteStationary> ground = dynamic_pointer_cast<SpriteStationary>(spriteB);
@@ -298,7 +296,7 @@ namespace engine {
 	}
 
 
-	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string,int> comms) :SpriteMovable(r, path), commands(f)
+	SpritePlayer::SpritePlayer(const SDL_Rect& r, std::string path, std::string pathMoving, float colliderSize, std::map<int, std::map<int, void(*)(SpritePlayer&)>>& f, map<string,int> comms, SDL_Renderer* re) :SpriteMovable(r, path,re), commands(f)
 	{	
 		map<int, void (SpritePlayer::*)()> keyUp;
 		map<int, void (SpritePlayer::*)()> keyDown;
@@ -319,8 +317,8 @@ namespace engine {
 		events.insert(make_pair(SDL_KEYUP, keyUp));
 		events.insert(make_pair(SDL_KEYDOWN, keyDown));
 		this->colliderSize = colliderSize;
-		textureMoving = IMG_LoadTexture(ge.getRen(), pathMoving.c_str());
-		textureStationary = IMG_LoadTexture(ge.getRen(), path.c_str());
+		textureMoving = IMG_LoadTexture(getRen(), pathMoving.c_str());
+		textureStationary = IMG_LoadTexture(getRen(), path.c_str());
 		textureSwap = false;
 		startPosX = r.x;
 		startPosY = r.y;

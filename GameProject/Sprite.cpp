@@ -17,12 +17,12 @@ namespace engine {
 		if (texture == nullptr) {
 			return;
 		}
-		SDL_RenderCopy(ge.getRen(), texture, NULL, &getRect());
+		SDL_RenderCopy(getRen(), texture, NULL, &getRect());
 	}
-	Sprite::Sprite(const SDL_Rect& r, std::string path) :rect(r)
+	Sprite::Sprite(const SDL_Rect& r, std::string path,SDL_Renderer* re) :rect(r),rend(re)
 	{
 		surface = IMG_Load(path.c_str());
-		texture = IMG_LoadTexture(ge.getRen(), path.c_str());
+		texture = IMG_LoadTexture(getRen(), path.c_str());
 		
 		if (texture == nullptr) {
 			cout << "Bild hittas inte" << endl;

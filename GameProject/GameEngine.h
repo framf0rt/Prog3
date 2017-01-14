@@ -1,11 +1,10 @@
-#ifndef GAMEENGINE_H
-#define GAMEENGINE_H
+#ifndef GAMEENGINE_H_INCLUDED
+#define GAMEENGINE_H_INCLUDED
 #include "Sprite.h"
 #include "Level.h"
 #include <vector>
 #include <memory>
 #include <map>
-class Sprite;
 
 
 namespace engine {
