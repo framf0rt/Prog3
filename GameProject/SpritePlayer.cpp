@@ -227,13 +227,25 @@ namespace engine {
 					SDL_Rect* r = &(result);
 					SDL_UnionRect(A, B, r);
 					setDead(true);
-					setInvunerability();
+					kill();
 					return;
 				}
 			}
 		}
 	}
 
+	bool SpritePlayer::victoryCollision(std::shared_ptr<SpriteStationary> victory) {
+		SDL_Rect aRect = { 0,0,0,0 };
+		for (SDL_Rect aRect : pixelCollisionRects) {
+			aRect = { aRect.x + rect.x - aRect.x,aRect.y + rect.y,aRect.w,aRect.h };
+			SDL_Rect *A = &(aRect);
+			SDL_Rect *B = &(victory->getRect());
+			if (SDL_HasIntersection(A, B)) {
+				return true;
+			}
+		}
+
+	}
 
 	void SpritePlayer::killZoneCollision(std::shared_ptr<SpriteStationary> killzone) {
 		SDL_Rect aRect = { 0,0,0,0 };
