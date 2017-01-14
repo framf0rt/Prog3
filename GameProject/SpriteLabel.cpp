@@ -7,12 +7,17 @@ using namespace std;
 
 namespace engine {
 
-	shared_ptr<SpriteLabel> SpriteLabel::getInstance(const SDL_Rect& r, std::string path) {
-		return shared_ptr<SpriteLabel>(new SpriteLabel(r, path));
+	shared_ptr<SpriteLabel> SpriteLabel::getInstance(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, bool inputEnabled) {
+		return shared_ptr<SpriteLabel>(new SpriteLabel(r, path,locX,locY,text,charLimit,inputEnabled));
 	}
 
-	SpriteLabel::SpriteLabel(const SDL_Rect& r, std::string path) :Sprite(r, path)
+	SpriteLabel::SpriteLabel(const SDL_Rect& r, std::string path, int locX, int locY, std::string text, int charLimit, bool inputEnabled) :Sprite(r, path)
 	{
+		this->locX = locX;
+		this->locY = locY;
+		this->inputText = text;
+		this->charLimit = charLimit;
+		this->inputEnabled = inputEnabled;
 	}
 
 
@@ -22,39 +27,39 @@ namespace engine {
 
 	void SpriteLabel::draw() {
 
-		SDL_StartTextInput();
-		
+			SDL_StartTextInput();
 
-
-		if (TTF_Init() == -1)
-		{
-			cout << "TTF NOT INIT" << endl;
-			return;
-		} else {
-		
-			gFont = TTF_OpenFont("arial.ttf", 28);
-			if (gFont == NULL) {
-				cout << "Hittar inte font" << endl;
+			if (TTF_Init() == -1)
+			{
+				cout << "Ttf startar ej" << endl;
 				return;
 			}
-			
-			SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, inputText.c_str(), textColor);
-			if (textSurface != NULL)
-			{
-				tex = SDL_CreateTextureFromSurface(ge.getRen(), textSurface);
-				setTexture(tex);
-				if (getTexture() == NULL) {
+			else {
+
+				gFont = TTF_OpenFont("arial.ttf", 28);
+				if (gFont == NULL) {
+					cout << "Hittar inte font" << endl;
 					return;
 				}
-				else {
-					SDL_Rect* rect = &(fontRect);
-					const char *cstr = inputText.c_str();
-					TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
-					fontRect = { 300-(fontRect.w/2),100,fontRect.w,fontRect.h };
-					SDL_RenderCopyEx(ge.getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
+
+				SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, inputText.c_str(), textColor);
+				if (textSurface != NULL)
+				{
+					tex = SDL_CreateTextureFromSurface(ge.getRen(), textSurface);
+					setTexture(tex);
+					if (getTexture() == NULL) {
+						return;
+					}
+					else {
+						SDL_Rect* rect = &(fontRect);
+						const char *cstr = inputText.c_str();
+						TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
+						fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
+						SDL_RenderCopyEx(ge.getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
+					}
 				}
 			}
-		}
+	
 	}
 
 
@@ -62,7 +67,7 @@ namespace engine {
 	{
 		
 		fontRect = { 0,0,0,0 };
-		if (changed == true && inputText.size() < 16) {
+		if (changed == true && inputText.size() < charLimit) {
 			inputText += e.text.text;	
 		}
 		else if (changed == false){

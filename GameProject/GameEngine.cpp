@@ -107,8 +107,8 @@ namespace engine {
 								label->emptyText(e);
 							}
 							else {
-								label->removeCharacter(e);
-							}
+							label->removeCharacter(e);
+								}
 							break;
 						default:
 							break;
