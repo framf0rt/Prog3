@@ -17,6 +17,7 @@ namespace engine {
 
 	SpriteLabelEditable::~SpriteLabelEditable()
 	{
+		
 	}
 
 	void SpriteLabelEditable::draw() {
@@ -40,7 +41,10 @@ namespace engine {
 			if (textSurface != NULL)
 			{
 				tex = SDL_CreateTextureFromSurface(getRen(), textSurface);
+				SDL_FreeSurface(textSurface);
+				//deleteTexture();
 				setTexture(tex);
+				
 				if (getTexture() == NULL) {
 					return;
 				}
@@ -53,11 +57,12 @@ namespace engine {
 				}
 			}
 		}
+		deleteTexture();
+		SDL_DestroyTexture(tex);
 		TTF_CloseFont(gFont);
 		TTF_Quit();
-		SDL_StopTextInput();
-		SDL_FreeSurface(textSurface);
-		SDL_DestroyTexture(tex);
+		//SDL_StopTextInput();
+		
 		
 	}
 

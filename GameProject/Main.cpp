@@ -122,11 +122,11 @@ int main(int argvc, char* argv[]) {
 
 
 	//
-	//level1->addSp(text1);
-	//level1->addSp(text2);
-	//level1->addSp(textEdit);
-	//ge.addLevel(level1);
-	//
+	level1->addSp(text1);
+	level1->addSp(text2);
+	level1->addSp(textEdit);
+	ge.addLevel(level1);
+	
 
 	shared_ptr<SpriteLabelEditable> textEdit2 = SpriteLabelEditable::getInstance({ 0,0,100,50 }, "", 300, 100, "Name here", 16, ge.getRen());
 	level2->addSp(textEdit2);
