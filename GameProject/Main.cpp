@@ -1,12 +1,12 @@
-#pragma once
+
 #include "GameEngine.h"
 #include <iostream>
 #include "SpritePlayer.h"
 #include "SpriteEnemy.h"
 #include "SpriteLabel.h"
 #include "SpriteLabelEditable.h"
-#include "Level.h"
 #include <map>
+
 
 
 using namespace std;
