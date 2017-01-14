@@ -23,6 +23,11 @@ namespace engine {
 		sprites.push_back(s);
 	}
 
+	void GameEngine::addLevel(shared_ptr<Level> l)
+	{
+		levels.push_back(l);
+	}
+
 	void GameEngine::run() {
 		vector<SDL_Event> events;
 		bool running = true;
@@ -30,18 +35,19 @@ namespace engine {
 
 		const int TIDPERVARV = 1000 / FPS;
 		dt = (float)TIDPERVARV / 1000;
+
+		getNextLevel();
 		while (running) {
-			//deltaTime();
+
+
+
 			Uint32 nextTick = SDL_GetTicks() + TIDPERVARV;
 			SDL_Event event;
-			//SDL_PollEvent(&event);
-			//SDL_Event pauseEvent(event);
-			//SDL_Event pauseEvent;
-			//SDL_PumpEvents();
-			//SDL_PeepEvents(&pauseEvent, 1, SDL_PEEKEVENT, SDL_KEYDOWN, SDL_KEYDOWN);
 			while (SDL_PollEvent(&event)) {
 				events.push_back(event);
 			}
+
+		
 
 			for (int i = 0; i < events.size(); i++) {
 				//här anropas callBack funktioner till main
@@ -60,8 +66,6 @@ namespace engine {
 					if (events[i].key.keysym.sym == pauseKey) {
 						((*this).*pausePointer)();
 					}
-
-
 					break;
 				case SDL_QUIT:
 					running = false;
@@ -84,6 +88,13 @@ namespace engine {
 						shared_ptr<SpritePlayer> player = dynamic_pointer_cast<SpritePlayer>(spriteA);
 						shared_ptr<SpriteStationary> ground = dynamic_pointer_cast<SpriteStationary>(spriteB);
 						shared_ptr<SpriteEnemy> enemy = dynamic_pointer_cast<SpriteEnemy>(spriteB);
+
+						if (ground != NULL && player != NULL && ground->getIsKillZone() == true) {
+							if (ground->getIsGround() == 0) {
+								player->onCollision(spriteA, spriteB, dt);
+							}
+						}
+
 						if (ground != NULL && player != NULL) {
 							SDL_Rect *groundCollider = &(player->getCollider());
 							SDL_Rect *playerCollider = &(ground->getCollider());
@@ -105,11 +116,7 @@ namespace engine {
 							}
 						}
 
-						if (ground != NULL && player != NULL) {
-							if (ground->getIsGround() == 0) {
-								player->onCollision(spriteA, spriteB, dt);
-							}
-						}
+						
 					}
 
 
@@ -117,7 +124,8 @@ namespace engine {
 				}//COLLISION END
 
 				// MOVEMENT START
-				for (shared_ptr<Sprite> sprite : sprites) {
+				for (unsigned i = 0; i < sprites.size(); i++) {
+					shared_ptr<Sprite> sprite = sprites[i];
 					shared_ptr<SpritePlayer> playerMove = dynamic_pointer_cast<SpritePlayer>(sprite);
 					shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
 					shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprite);
@@ -143,10 +151,13 @@ namespace engine {
 
 							case SDL_KEYDOWN:
 								if (events[i].key.keysym.sym == SDLK_RETURN) {
+									levelNumber++;
+									getNextLevel();
+									
 
-									start = true;
 									if (labelEdit != NULL) {
 										labelEdit->emptyText(events[i]);
+										
 									}
 								}
 								else {
@@ -166,17 +177,17 @@ namespace engine {
 			// RENDERING START
 			updateTimeSinceEvent();
 			SDL_RenderClear(getRen());
-			for (shared_ptr<Sprite> sprite : sprites) {
-
-				shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprite);
-				shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprite);
-				shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprite);
-				if (movable != NULL && start != false)
+			for (unsigned i = 0; i < sprites.size(); i++) {
+				shared_ptr<Sprite> sprite = dynamic_pointer_cast<Sprite>(sprites[i]);
+				shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprites[i]);
+				shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprites[i]);
+				shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprites[i]);
+				if (movable != NULL)
 				{
 					movable->tick(dt);
 					movable->draw();
 				}
-				else if ((labelEdit != NULL || label != NULL) && start != true) {
+				else if (labelEdit != NULL || label != NULL) {
 
 					if (labelEdit != NULL) {
 						labelEdit->draw();
@@ -186,7 +197,7 @@ namespace engine {
 					}
 				}
 
-				else if (start != false && labelEdit == NULL && label == NULL) {
+				else if (sprite != NULL && labelEdit == NULL && label == NULL) {
 					sprite->tick(dt);
 					sprite->draw();
 				}
@@ -196,7 +207,6 @@ namespace engine {
 
 
 		
-
 
 
 
@@ -211,6 +221,17 @@ namespace engine {
 				SDL_Delay(delay);
 			}
 			Uint32 timeOfDelay = SDL_GetTicks() - before;
+		}
+	}
+
+
+	void GameEngine::getNextLevel() {
+		cout << levelNumber << endl;
+		if (levelNumber < levels.size()) {
+		sprites.assign(levels[levelNumber]->getSprites().begin(), levels[levelNumber]->getSprites().end());
+		}
+		else if(levelNumber == levels.size()){
+			sprites.assign(levels[0]->getSprites().begin(), levels[0]->getSprites().end());
 		}
 	}
 
@@ -232,6 +253,8 @@ namespace engine {
 			last = now;
 		}
 	}
+
+	
 
 	
 
