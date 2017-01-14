@@ -68,8 +68,6 @@ namespace engine {
 		}
 	
 
-
-
 		//if (player != nullptr) {
 		//	SDL_Rect pr = player->getRect();
 		//	int px = pr.x + (pr.w/2);

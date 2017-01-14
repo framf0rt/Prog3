@@ -14,9 +14,6 @@ namespace engine {
 	{
 	public:
 		void run();
-
-	
-		
 		void pixelCollision(std::shared_ptr<Sprite> player, std::shared_ptr<Sprite> enemy);
 		void addSprite(std::shared_ptr<Sprite> s);
 		SDL_Renderer* getRen() const { return ren; }
@@ -32,7 +29,8 @@ namespace engine {
 		void installCallBackFunctions(std::map<int, std::map<int, void(*)()>>& f) { callBack = f; }
 		void addLevel(std::shared_ptr<Level> l);
 	private:
-		void getNextLevel();
+		void getNextLevel(int level);
+		void setLevel(int level);
 		int pauseKey=SDLK_ESCAPE;
 		bool victoryCondition = true;
 		std::map<int, std::map<int, void(*)()>> callBack;
