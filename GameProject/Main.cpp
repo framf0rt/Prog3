@@ -116,6 +116,7 @@ int main(int argvc, char* argv[]) {
 	ge.addLevel(level1);
 	
 
+
 	shared_ptr<SpritePlayer> s = SpritePlayer::getInstance({ 100, 50, 92, 92 }, "c:/Prog3/assets/Sprites/BallSprite_Cut.png", "c:/Prog3/assets/Sprites/BallSprite_Cut.png", 0.4, callBackPlayer, comms, ge.getRen(),false);
 	
 	shared_ptr<SpriteStationary> sg = SpriteStationary::getInstance({ 300,700,100,50 }, "c:/Prog3/assets/Sprites/PlankSprite_Cut.png", true, false, false, false, ge.getRen());
@@ -142,6 +143,7 @@ int main(int argvc, char* argv[]) {
 
 	shared_ptr<SpriteStationary> kill = SpriteStationary::getInstance({ 0,720,1800,500 }, "", false, false, true, false, ge.getRen());
 	shared_ptr<SpriteEnemy> se = SpriteEnemy::getInstance({ 1600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s, ge.getRen(), false);
+
 
 	level2->addSp(s);
 	

@@ -20,6 +20,7 @@ namespace engine {
 		int getRectY() const { return rect.y; }
 		bool getDead() const { return dead; }
 		void setDead(bool d) { dead = d; }
+		void deleteTexture();
 	protected:
 		SDL_Renderer* getRen() { return rend; }
 		~Sprite();

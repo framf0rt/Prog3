@@ -24,7 +24,7 @@ namespace engine {
 	SpriteLabel::~SpriteLabel()
 	{
 
-		//TTF_CloseFont(gFont);
+		
 		//SDL_FreeSurface(textSurface);
 		//SDL_DestroyTexture(tex);
 	}
@@ -43,29 +43,44 @@ namespace engine {
 					cout << "Hittar inte font" << endl;
 					return;
 				}
-
+				
 				SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, inputText.c_str(), textColor);
 				if (textSurface != NULL)
 				{
-				
+
 					tex = SDL_CreateTextureFromSurface(getRen(), textSurface);
+					SDL_FreeSurface(textSurface);
 					setTexture(tex);
+					
 					if (getTexture() == NULL) {
+						TTF_CloseFont(gFont);
+						SDL_DestroyTexture(tex);
+						deleteTexture();
+						TTF_Quit();
 						return;
 					}
-					else {
-						SDL_Rect* rect = &(fontRect);
-						const char *cstr = inputText.c_str();
-						TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
-						fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
-						SDL_RenderCopyEx(getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
-					}
+
+					rect = &(fontRect);
+					cstr = inputText.c_str();
+					TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
+					//delete[] cstr;
+					fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
+					SDL_RenderCopyEx(getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
+					TTF_CloseFont(gFont);
+					//SDL_FreeSurface(textSurface);
+					
+					
+				}
+				else {
+					SDL_FreeSurface(textSurface);
+					TTF_CloseFont(gFont);
+
 				}
 			}
 
-			TTF_CloseFont(gFont);
-			SDL_FreeSurface(textSurface);
+			
 			SDL_DestroyTexture(tex);
+			deleteTexture();
 			TTF_Quit();
 	
 	}

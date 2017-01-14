@@ -14,7 +14,7 @@
 using namespace std;
 
 
-#define FPS 60
+#define FPS 120
 
 namespace engine {
 
@@ -169,35 +169,45 @@ namespace engine {
 
 
 			// RENDERING START
-			updateTimeSinceEvent();
-			SDL_RenderClear(getRen());
-			for (unsigned i = 0; i < sprites.size(); i++) {
-				shared_ptr<Sprite> sprite = dynamic_pointer_cast<Sprite>(sprites[i]);
-				shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprites[i]);
-				shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprites[i]);
-				shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprites[i]);
-				if (movable != NULL)
-				{
-					movable->tick(dt);
-					movable->draw();
-				}
-				else if (labelEdit != NULL || label != NULL) {
-
-					if (labelEdit != NULL) {
-						labelEdit->draw();
+				auto it = sprites.begin();
+				while (it != sprites.end()) {
+					if ((*it)->getDead()) {
+						it = sprites.erase(it);
 					}
 					else {
-						label->draw();
+						it++;
 					}
 				}
 
-				else if (sprite != NULL && labelEdit == NULL && label == NULL) {
-					sprite->tick(dt);
-					sprite->draw();
+				updateTimeSinceEvent();
+				SDL_RenderClear(getRen());
+				for (unsigned i = 0; i < sprites.size(); i++) {
+					shared_ptr<Sprite> sprite = dynamic_pointer_cast<Sprite>(sprites[i]);
+					shared_ptr<SpriteMovable> movable = dynamic_pointer_cast<SpriteMovable>(sprites[i]);
+					shared_ptr<SpriteLabel> label = dynamic_pointer_cast<SpriteLabel>(sprites[i]);
+					shared_ptr<SpriteLabelEditable> labelEdit = dynamic_pointer_cast<SpriteLabelEditable>(sprites[i]);
+					if (movable != NULL)
+					{
+						movable->tick(dt);
+						movable->draw();
+					}
+					else if (labelEdit != NULL || label != NULL) {
+
+						if (labelEdit != NULL) {
+							labelEdit->draw();
+						}
+						else {
+							label->draw();
+						}
+					}
+
+					else if (sprite != NULL && labelEdit == NULL && label == NULL) {
+						sprite->tick(dt);
+						sprite->draw();
+					}
 				}
-			}
-			SDL_RenderPresent(getRen());
-			// RENDERING END
+				SDL_RenderPresent(getRen());
+				// RENDERING END
 
 			} // DELAY START
 			events.clear();

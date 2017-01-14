@@ -31,6 +31,7 @@ namespace engine {
 		SDL_Surface* textSurface;
 		SDL_Rect* rect;
 	private:
+		const char *cstr;
 	};
 }
 #endif 
