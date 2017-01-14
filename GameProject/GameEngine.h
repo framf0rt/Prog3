@@ -29,6 +29,7 @@ namespace engine {
 		void installCallBackFunctions(std::map<int, std::map<int, void(*)()>>& f) { callBack = f; }
 		void addLevel(std::shared_ptr<Level> l);
 	private:
+		std::string playerName = " ";
 		void getNextLevel(int level);
 		void setLevel(int level);
 		int pauseKey=SDLK_ESCAPE;

@@ -32,6 +32,7 @@ namespace engine {
 	void Sprite::deleteTexture() {
 		SDL_DestroyTexture(texture);
 	}
+
 	int Sprite::getAlphaXY(int x, int y) {
 		if (x < surface->w && y < surface->h) {
 			SDL_LockSurface(surface);

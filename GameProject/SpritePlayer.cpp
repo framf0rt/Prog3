@@ -229,7 +229,6 @@ namespace engine {
 					SDL_Rect result = { 0,0,0,0 };
 					SDL_Rect* r = &(result);
 					SDL_UnionRect(A, B, r);
-					
 					kill();
 					return;
 				}
@@ -264,7 +263,6 @@ namespace engine {
 	}
 
 	void SpritePlayer::kill() {
-
 		setGravity(true);
 		ungrounded();
 		ySpeed = 0;
