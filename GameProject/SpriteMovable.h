@@ -18,7 +18,9 @@ namespace engine {
 		void setGravity(bool g) { gravity = g; }
 		bool hasGravity() const { return gravity; };
 	protected:
-		
+		int yCoordAtEvent;
+		int getYDistance() const { return yCoordAtEvent +ySpeed*timeSinceEvent + timeSinceEvent*timeSinceEvent * 600 / 2;}
+		int ySpeed = 200;
 		int width = 0;
 		SDL_Rect rt = { 0,0,0,0 };
 		int y = 0;
