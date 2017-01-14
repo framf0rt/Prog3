@@ -36,11 +36,11 @@ namespace engine {
 		void setTimeKeyDownLeft(Uint32 time) { tKeyDownLeft = time; }
 		void setTimeKeyDownRight(Uint32 time) { tKeyDownRight = time; }
 		//void setMoving(bool moving) { this->moving = moving; }
-		void setTimeOfJump(Uint32 time) { timeOfJump = time; }
+		//void setTimeOfJump(Uint32 time) { timeOfJump = time; }
 		
 		//void setDropped(bool d) { dropped = d; }
 		//void setFalling(bool f) { falling = f; }
-		void setTimeOfDrop(Uint32 time) { timeOfDrop = time; }
+		//void setTimeOfDrop(Uint32 time) { timeOfDrop = time; }
 		void setMoving(bool m) { moving = m; }
 		Uint32 getTKeyDownRight() const { return tKeyDownRight; }
 		Uint32 getTKeyDownLeft() const { return tKeyDownLeft; }
@@ -67,17 +67,17 @@ namespace engine {
 		/*float dtJump();
 		float dtFall();
 		float dtDrop();*/
-		Uint32 timeOfJump;
-		Uint32 timeOfFall = SDL_GetTicks();
-		Uint32 timeOfDrop;
+		//Uint32 timeOfJump;
+		//Uint32 timeOfFall = SDL_GetTicks();
+		//Uint32 timeOfDrop;
 		const int JUMP_SPEED = -500;
-		int ySpeed = 200;
+		
 		/*long last;
 		float dt;*/
 		
 		//bool dropped;
 		//bool falling;
-		int yCoordAtEvent;
+		
 		
 		int startPosX;
 		int startPosY;

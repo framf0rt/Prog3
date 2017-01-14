@@ -101,7 +101,8 @@ namespace engine {
 				rect.y = yCoordAtEvent + ySpeed*edt +(edt*edt*600/2);
 			}*/
 		if (hasGravity()) {
-			rect.y = yCoordAtEvent + ySpeed*edt + (edt*edt * 600 / 2);
+			rect.y = getYDistance();
+			//rect.y = yCoordAtEvent + ySpeed*edt + (edt*edt * 600 / 2);
 		}
 		
 
