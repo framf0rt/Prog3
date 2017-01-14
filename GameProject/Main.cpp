@@ -97,6 +97,7 @@ int main(int argvc, char* argv[]) {
 	//void (*p)(SpritePlayer&) = leftUp;
 
 	shared_ptr<Level> level1 = Level::getInstance(0);
+	shared_ptr<Level> level2 = Level::getInstance(0);
 
 
 
@@ -118,22 +119,24 @@ int main(int argvc, char* argv[]) {
 	
 	//shared_ptr<SpriteStationary> kill = SpriteStationary::getInstance({ 200,400,100,50 }, "", true, false, true, ge.getRen());
 
-	ge.addSprite(text1);
-	ge.addSprite(text2);
-	ge.addSprite(textEdit);
-	ge.addSprite(s);
-	//ge.addSprite(s2);
-	ge.addSprite(se);
-	ge.addSprite(sg);
-	ge.addSprite(sg1);
-	ge.addSprite(sg2);
-	ge.addSprite(sg3);
-	//ge.addSprite(kill);
-	ge.addSprite(wall);
 
 
-	level1->addSp(wall);
-
+	//
+	level1->addSp(text1);
+	level1->addSp(text2);
+	level1->addSp(textEdit);
+	ge.addLevel(level1);
+	//
+	level2->addSp(textEdit);
+	level2->addSp(s);
+	level2->addSp(se);
+	level2->addSp(sg);
+	level2->addSp(sg1);
+	level2->addSp(sg2);
+	level2->addSp(sg3);
+	level2->addSp(kill);
+	level2->addSp(wall);
+	ge.addLevel(level2);
 
 
 	ge.run();

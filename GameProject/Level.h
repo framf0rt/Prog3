@@ -9,7 +9,7 @@ namespace engine {
 	class Level
 	{
 	public:
-		std::vector<std::shared_ptr<Sprite>> getSprites() const { return sprites; }
+		std::vector<std::shared_ptr<Sprite>>& getSprites(){ return sprites; }
 		static std::shared_ptr<Level> getInstance(int x);
 		void addSp(std::shared_ptr<Sprite> s);
 		void fadeOut();

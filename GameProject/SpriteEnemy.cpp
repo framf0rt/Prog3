@@ -27,8 +27,24 @@ namespace engine {
 		if (animationCount > 50 && animationCount < 100) {
 			animation(*textureStationary);
 		}
+
 		if (movementPointer != 0) {
 			movementPointer(*this);
+
+		// Movement 
+		rect.x += (int)(dt*150*direction);
+		if (rect.y >= startY + 50 ) {
+			directionY = 1;
+		} 
+		if (rect.y <= startY - 50) {
+			directionY = -1;
+		}
+		if (directionY == -1) {
+			rect.y += (int)(dt * -125 * direction);
+		}
+		if (directionY == 1) {
+			rect.y += (int)(dt * 125 * direction);
+
 		}
 		else {
 			// Movement 
@@ -61,7 +77,7 @@ namespace engine {
 		//	//float distance = sqrt(((rect.x+(rect.w/2)) - px) ^ 2 + ((rect.y+(rect.h/2)) - pr.y) ^ 2);
 		//	float distance =  sqrt(pow(((rect.x + rect.w / 2) - px), 2)+ pow(((rect.y + rect.h / 2) - py), 2));
 		//	if (distance < 100) {
-		//	//	std::cout << "rör sig mot target" << std::endl;
+		//	//	std::cout << "rÃ¶r sig mot target" << std::endl;
 		//	}
 		//}
 	}
