@@ -14,7 +14,7 @@
 using namespace std;
 
 
-#define FPS 120
+#define FPS 60
 
 namespace engine {
 
@@ -79,32 +79,20 @@ namespace engine {
 						shared_ptr<SpritePlayer> player = dynamic_pointer_cast<SpritePlayer>(spriteA);
 						shared_ptr<SpriteStationary> ground = dynamic_pointer_cast<SpriteStationary>(spriteB);
 						shared_ptr<SpriteEnemy> enemy = dynamic_pointer_cast<SpriteEnemy>(spriteB);
-
-						if (ground != NULL && player != NULL && ground->getIsVictoryCond() == true){
-							if (player->victoryCollision(ground) == true) {
-								getNextLevel(levelNumber += 1);
-							}
-						}
-
-						if (ground != NULL && player != NULL && ground->getIsKillZone() == true) {
-							if (ground->getIsGround() == 0) {
-								player->onCollision(spriteA, spriteB, dt);
-							}
-						}
-
 						if (ground != NULL && player != NULL) {
 							SDL_Rect *groundCollider = &(player->getCollider());
 							SDL_Rect *playerCollider = &(ground->getCollider());
 							if (SDL_HasIntersection(playerCollider, groundCollider)) {
-								player->onCollision(spriteA, spriteB,dt);
+								player->onCollision(spriteA, spriteB, dt);
+								break;
 							}
-						}
-						else {
+							else {
 
-							if (player != NULL) {
 								if (!player->hasGravity()) {
-									player->ungrounded(); 
+									player->ungrounded(); // Startar fall
+									
 								}
+								
 							}
 						}
 						if (enemy != NULL && player != NULL) {
@@ -113,12 +101,20 @@ namespace engine {
 							}
 						}
 
-						
+						if (ground != NULL && player != NULL) {
+							if (ground->getIsGround() == 0) {
+								player->onCollision(spriteA, spriteB, dt);
+							}
+						}
 					}
 
 
 
-				}//COLLISION END
+				}
+
+
+
+				//COLLISION END
 
 				// MOVEMENT START
 				for (unsigned i = 0; i < sprites.size(); i++) {

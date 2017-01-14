@@ -101,6 +101,7 @@ namespace engine {
 	}
 
 	void SpritePlayer::jump() {
+		cout << "jumping" << endl;
 		if (!hasGravity()) {
 			resetTimeSinceEvent();
 			setYSpeed(getJumpSpeed());
@@ -137,6 +138,7 @@ namespace engine {
 	}
 
 	void SpritePlayer::ungrounded() {
+		//cout << "ungrounded" << endl;
 		setGravity(true);
 		
 		ySpeed = 0;
@@ -160,19 +162,20 @@ namespace engine {
 				return;
 			}
 
-			else if (ground->getIsBounceable() == 1 && ground->getIsGround() != 0 && ground->getIsKillZone() != 1) {
+			if (ground->getIsBounceable() == 1 && ground->getIsGround() != 0 && ground->getIsKillZone() != 1) {
 
 				if (hasGravity()) {
 					speedOnCollision();
 					rect.y -= 250*dt;
 					yCoordAtEvent = rect.y;
 					
-
+					//cout << ySpeed << endl;
 					if (abs(ySpeed) < 70) {
 
 						ySpeed = 0;
 						SDL_Rect groundR = ground->getCollider();
-						rect.y = groundR.y - rect.h + 1;
+						rect.y = groundR.y - rect.h+1;
+						yCoordAtEvent = rect.y;
 						grounded();
 
 					}
@@ -226,7 +229,7 @@ namespace engine {
 					SDL_Rect result = { 0,0,0,0 };
 					SDL_Rect* r = &(result);
 					SDL_UnionRect(A, B, r);
-					setDead(true);
+					
 					kill();
 					return;
 				}
