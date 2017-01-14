@@ -17,11 +17,6 @@ namespace engine {
 	}
 
 
-	void SpritePlayer::keyDown(const SDL_Event& eve) {
-
-	}
-
-
 	void SpritePlayer::move(const vector<SDL_Event>& eve) {
 		for (int i = 0; i < eve.size(); i++) {
 			if (commands.count(eve[i].type)) {
@@ -37,11 +32,7 @@ namespace engine {
 				}
 			}
 		}
-	/*	if (events.count(eve.type)) {
-			if (events[eve.type].count(eve.key.keysym.sym)) {
-				events[eve.type][eve.key.keysym.sym]->*();
-			}
-		}*/
+
 	}
 	void SpritePlayer::setInvunerability() {
 		invulnerable = true;
@@ -88,20 +79,9 @@ namespace engine {
 				}
 			}
 		}
-		/*	if (jumped && (dropped == false)) {
-				rect.y = yCoordAtEvent + edt * ySpeed + (600*edt*edt/2);
-			}
-
-			if (dropped) {
-				rect.y = yCoordAtEvent + ySpeed*edt + (edt*edt*600/2);
-			}
-			if (falling) {
-				cout << "faller" << endl;
-				rect.y = yCoordAtEvent + ySpeed*edt +(edt*edt*600/2);
-			}*/
+	
 		if (hasGravity()) {
 			rect.y = getYDistance();
-			//rect.y = yCoordAtEvent + ySpeed*edt + (edt*edt * 600 / 2);
 		}
 		
 
@@ -125,8 +105,7 @@ namespace engine {
 			resetTimeSinceEvent();
 			setYSpeed(getJumpSpeed());
 			setGravity(true);
-			//setDropped(false);
-			//setFalling(false);
+		
 			setYCoordAtEvent();
 		}
 	}
@@ -135,8 +114,7 @@ namespace engine {
 		if (!hasGravity()) {
 			resetTimeSinceEvent();
 			setGravity(true);
-			//setJumped(false);
-			//setFalling(false);
+		
 			setYSpeed(200);
 			setRectY(getRectY() + 10);
 			setYCoordAtEvent();
@@ -155,15 +133,13 @@ namespace engine {
 	}
 	void SpritePlayer::grounded() {
 		setGravity(false);
-		//jumped = false;
-		//dropped = false;
-		//falling = false;
+	
 	}
 
 	void SpritePlayer::ungrounded() {
 		setGravity(true);
-		//jumped = false;
-		//dropped = false;
+		
+		ySpeed = 0;
 		resetTimeSinceEvent();
 		setYCoordAtEvent();
 	}
@@ -187,15 +163,10 @@ namespace engine {
 			else if (ground->getIsBounceable() == 1 && ground->getIsGround() != 0 && ground->getIsKillZone() != 1) {
 
 				if (hasGravity()) {
-
 					speedOnCollision();
-					//jumped = false;
-					//dropped = false;
-					//falling = true;
-					//cout << ySpeed << endl;
 					rect.y -= 250*dt;
 					yCoordAtEvent = rect.y;
-					//cout << ySpeed << endl;
+					
 
 					if (abs(ySpeed) < 70) {
 
@@ -213,6 +184,7 @@ namespace engine {
 			else if (ground->getIsBounceable() == 0 && ground->getIsGround() == 1 && ground->getIsKillZone() != 1) {
 				SDL_Rect groundR = ground->getCollider();
 				rect.y = groundR.y - rect.h + 1;
+				yCoordAtEvent = rect.y;
 				grounded();
 			}
 			else if (ground->getIsGround() == 0 && ground->getIsKillZone() != 1) {
@@ -289,7 +261,6 @@ namespace engine {
 	SDL_Rect SpritePlayer::getCollider() {
 		SDL_Rect A = getRect();
 		int size = static_cast<int>(A.w*colliderSize);
-		//std::cout << size << std::endl;
 		int middlePoint = A.w / 2;
 		boxCollider = { A.x + middlePoint - (size / 2),A.y + A.h - 2,size,2 };
 		return boxCollider;

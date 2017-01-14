@@ -14,11 +14,13 @@ namespace engine {
 		~SpriteEnemy();
 		int getHp();
 		void tick(float dt);
+		void installMovement(void(*move)(SpriteEnemy&)) { movementPointer = move; }
 
 	protected:
 		SpriteEnemy(const SDL_Rect& r, std::string path, std::string pathMoving, int hp, std::shared_ptr<SpritePlayer> p, SDL_Renderer* re);
 
 	private:
+		void(*movementPointer)(SpriteEnemy&);
 		int hp;
 		int direction = -1;
 		int directionY = -1;
