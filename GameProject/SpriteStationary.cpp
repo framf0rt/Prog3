@@ -6,15 +6,16 @@ namespace engine {
 
 	
 
-	shared_ptr<SpriteStationary> SpriteStationary::getInstance(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone, SDL_Renderer* re) {
-		return shared_ptr<SpriteStationary>(new SpriteStationary(r, path, isGround, isBounceable, isKillZone,re));
+	shared_ptr<SpriteStationary> SpriteStationary::getInstance(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone, bool isVictoryCond, SDL_Renderer* re) {
+		return shared_ptr<SpriteStationary>(new SpriteStationary(r, path, isGround, isBounceable, isKillZone, isVictoryCond,re));
 	}
 
-	SpriteStationary::SpriteStationary(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone, SDL_Renderer* re):Sprite(r, path,re)
+	SpriteStationary::SpriteStationary(const SDL_Rect& r, std::string path, bool isGround, bool isBounceable, bool isKillZone, bool isVictoryCond, SDL_Renderer* re):Sprite(r, path,re)
 	{
 		this->isBounceable = isBounceable;
 		this->isGround = isGround;
 		this->isKillZone = isKillZone;
+		this->isVictoryCond = isVictoryCond;
 	}
 
 	SDL_Rect SpriteStationary::getCollider() {

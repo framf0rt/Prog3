@@ -80,6 +80,12 @@ namespace engine {
 						shared_ptr<SpriteStationary> ground = dynamic_pointer_cast<SpriteStationary>(spriteB);
 						shared_ptr<SpriteEnemy> enemy = dynamic_pointer_cast<SpriteEnemy>(spriteB);
 
+						if (ground != NULL && player != NULL && ground->getIsVictoryCond() == true){
+							if (player->victoryCollision(ground) == true) {
+								getNextLevel(levelNumber += 1);
+							}
+						}
+
 						if (ground != NULL && player != NULL && ground->getIsKillZone() == true) {
 							if (ground->getIsGround() == 0) {
 								player->onCollision(spriteA, spriteB, dt);
@@ -97,7 +103,7 @@ namespace engine {
 
 							if (player != NULL) {
 								if (!player->hasGravity()) {
-									player->ungrounded(); // Startar fall
+									player->ungrounded(); 
 								}
 							}
 						}
@@ -143,6 +149,7 @@ namespace engine {
 								if (events[i].key.keysym.sym == SDLK_RETURN) {
 									if (labelEdit != NULL) {
 										labelEdit->emptyText(events[i]);
+
 										getNextLevel(levelNumber+=1);
 
 									}
@@ -210,9 +217,11 @@ namespace engine {
 
 	void GameEngine::setLevel(int level) {
 		int size = levels.size();
+	
 		if (level < levels.size()) {
 			sprites.assign(levels[level]->getSprites().begin(), levels[level]->getSprites().end());
 		}
+
 	}
 
 	void GameEngine::pixelCollision(shared_ptr<Sprite> player, shared_ptr<Sprite> enemy) {
@@ -250,7 +259,7 @@ namespace engine {
 	GameEngine::GameEngine()
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
-		win = SDL_CreateWindow("GameEngine", 100, 100, 600, 600, 0);
+		win = SDL_CreateWindow("GameEngine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1500, 750, 0);
 		ren = SDL_CreateRenderer(win, -1, 0);
 	}
 

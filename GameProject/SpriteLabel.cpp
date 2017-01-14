@@ -17,10 +17,7 @@ namespace engine {
 		this->locY = locY;
 		this->inputText = text;
 		this->charLimit = charLimit;
-		SDL_Rect* rect = &(fontRect);
-		const char *cstr = inputText.c_str();
-		TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
-		fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
+		
 	}
 
 
@@ -50,13 +47,17 @@ namespace engine {
 				SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, inputText.c_str(), textColor);
 				if (textSurface != NULL)
 				{
+				
 					tex = SDL_CreateTextureFromSurface(getRen(), textSurface);
 					setTexture(tex);
 					if (getTexture() == NULL) {
 						return;
 					}
 					else {
-						
+						SDL_Rect* rect = &(fontRect);
+						const char *cstr = inputText.c_str();
+						TTF_SizeText(gFont, cstr, &(fontRect.w), &(fontRect.h));
+						fontRect = { locX - (fontRect.w / 2),locY,fontRect.w,fontRect.h };
 						SDL_RenderCopyEx(getRen(), getTexture(), nullptr, rect, 0, nullptr, SDL_FLIP_NONE);
 					}
 				}

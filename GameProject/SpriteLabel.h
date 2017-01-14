@@ -12,6 +12,7 @@ namespace engine {
 		
 		static 	std::shared_ptr<SpriteLabel> getInstance(const SDL_Rect & r, std::string path,int locX, int locY, std::string text, int charLimit, SDL_Renderer* re);
 		~SpriteLabel();
+		void drawed();
 		void draw();
 	protected:
 		SpriteLabel(const SDL_Rect& r, std::string path, int locX, int locY,std::string text, int charLimit, SDL_Renderer* re);
