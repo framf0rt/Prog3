@@ -149,7 +149,7 @@ namespace engine {
 								if (events[i].key.keysym.sym == SDLK_RETURN) {
 									if (labelEdit != NULL) {
 										labelEdit->emptyText(events[i]);
-
+										playerName = labelEdit->getInputText();
 										getNextLevel(levelNumber+=1);
 
 									}
@@ -178,6 +178,7 @@ namespace engine {
 						it++;
 					}
 				}
+
 
 				updateTimeSinceEvent();
 				SDL_RenderClear(getRen());
@@ -227,9 +228,11 @@ namespace engine {
 
 	void GameEngine::setLevel(int level) {
 		int size = levels.size();
-	
+		
 		if (level < levels.size()) {
 			sprites.assign(levels[level]->getSprites().begin(), levels[level]->getSprites().end());
+			shared_ptr<SpriteLabel> winText = SpriteLabel::getInstance({ 0,0,100,50 }, "", 150, 0, playerName, 16, ge.getRen());
+			sprites.push_back(winText);
 		}
 
 	}

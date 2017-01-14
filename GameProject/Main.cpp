@@ -141,7 +141,7 @@ int main(int argvc, char* argv[]) {
 	shared_ptr<SpriteStationary> sg15 = SpriteStationary::getInstance({ 1220,370,100,50 }, "c:/Prog3/assets/Sprites/IceSprite_Cut.png", false, false, true, false, ge.getRen());
 	shared_ptr<SpriteStationary> coin = SpriteStationary::getInstance({ 1220,450,100,100 }, "c:/Prog3/assets/Sprites/CoinSprite_Cut.png", true, false, false, true, ge.getRen());
 
-	shared_ptr<SpriteStationary> kill = SpriteStationary::getInstance({ 0,720,1800,500 }, "", false, false, true, false, ge.getRen());
+	shared_ptr<SpriteStationary> kill = SpriteStationary::getInstance({ -200,720,2000,500 }, "", false, false, true, false, ge.getRen());
 	shared_ptr<SpriteEnemy> se = SpriteEnemy::getInstance({ 1600,200, 113, 67 }, "c:/Prog3/assets/Sprites/BirdEnemyIdleSprite_Cut.png", "c:/Prog3/assets/Sprites/BirdEnemyFlapSprite_Cut.png", 20, s, ge.getRen(), false);
 
 
